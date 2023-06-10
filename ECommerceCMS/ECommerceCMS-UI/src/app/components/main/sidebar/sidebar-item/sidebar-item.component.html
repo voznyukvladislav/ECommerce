@@ -1,0 +1,19 @@
+<div class="sidebar-item-container">
+    <div class="sidebar-item" (click)="collapse()" [ngClass]="{'sidebar-item-maximized': isMaximized, 'straight-bottom-border': isCollapsed}">
+        <div class="icon-container">
+            <img class="icon" src="{{sidebarItem.iconSrc}}">
+        </div>    
+        <div class="sidebar-item-extended" [ngClass]="{'maximized': isMaximized}">
+            <a class="sidebar-item-title">
+                {{sidebarItem.title}}
+            </a>
+            <div class="arrow-container">
+                <img class="arrow" [ngClass]="{ 'opacity0': isCollapsed }" src="..\assets\icons\arrow.png">
+                <img class="arrow top opacity0" [ngClass]="{ 'opacity1': isCollapsed }" src="..\assets\icons\arrow.png">
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-sub-items-container" [style.height]=" isCollapsed && isMaximized ? subItemsContainerHeigth : '0' ">
+        <app-sidebar-sub-item *ngFor="let subItem of sidebarItem.subItems" [sidebarSubItem]="subItem" [routerLink]="'/table'" [queryParams]="{'tableName': subItem.link}"></app-sidebar-sub-item>
+    </div>
+</div>

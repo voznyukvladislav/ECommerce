@@ -1,0 +1,12 @@
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\bin\Debug\net7.0\ECommerceCMSAPI.SharedKernel.deps.json
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\bin\Debug\net7.0\ECommerceCMSAPI.SharedKernel.dll
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\bin\Debug\net7.0\ECommerceCMSAPI.SharedKernel.pdb
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.csproj.AssemblyReference.cache
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.GeneratedMSBuildEditorConfig.editorconfig
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.AssemblyInfoInputs.cache
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.AssemblyInfo.cs
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.csproj.CoreCompileInputs.cache
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.dll
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\refint\ECommerceCMSAPI.SharedKernel.dll
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ECommerceCMSAPI.SharedKernel.pdb
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMSAPI\ECommerceCMSAPI\src\ECommerceCMSAPI.SharedKernel\obj\Debug\net7.0\ref\ECommerceCMSAPI.SharedKernel.dll

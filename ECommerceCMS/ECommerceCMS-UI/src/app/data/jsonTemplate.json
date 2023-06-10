@@ -1,0 +1,13 @@
+{
+    "operation": "create, update",
+    "type": "simple, list, load",
+    "inputs": [
+        {
+            "type": "string, check, dependant",
+            "name": "field name",
+            "link": "if dependant, to load dependant data",
+            "value": "if check, some id should be here",
+            "isChecked": "if check is checked"
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+<div class="header-title-container" (mouseenter)="underline()" (mouseleave)="underline()" [routerLink]="'/'">
+    <a class="header-title">{{headerTitle}}</a>
+    <div class="underline" [ngClass]="{ 'underlined': isUnderlined }"></div>
+</div>

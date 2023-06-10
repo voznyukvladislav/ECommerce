@@ -1,0 +1,6 @@
+.sidebar {    
+    display: flex;
+    flex-direction: column;
+    transition: var(--smooth-transition);
+    padding: 10px 5px;
+}

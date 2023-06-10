@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "dgSpecHash": "KngR6Eh+syy9j1fUGBATLVfZOoLbOYm9lQBgj8yijwKdKWJ3T0SatK3XHXoYPKKNh3Dcx6a9csM0n92yz2GtSw==",
+  "success": true,
+  "projectFilePath": "D:\\AngularProjects\\ECommerce\\ECommerceCMS\\ECommerceCMSAPI\\ECommerceCMSAPI\\src\\ECommerceCMSAPI.Core\\ECommerceCMSAPI.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\ardalis.guardclauses\\4.0.1\\ardalis.guardclauses.4.0.1.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\ardalis.result\\7.0.0\\ardalis.result.7.0.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\ardalis.smartenum\\7.0.0\\ardalis.smartenum.7.0.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\ardalis.specification\\6.1.0\\ardalis.specification.6.1.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\autofac\\7.0.0\\autofac.7.0.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\jetbrains.annotations\\2021.3.0\\jetbrains.annotations.2021.3.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\mediatr\\12.0.1\\mediatr.12.0.1.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\system.diagnostics.diagnosticsource\\4.7.1\\system.diagnostics.diagnosticsource.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

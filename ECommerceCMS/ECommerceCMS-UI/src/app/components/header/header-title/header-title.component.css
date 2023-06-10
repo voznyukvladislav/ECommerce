@@ -1,0 +1,26 @@
+.header-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: var(--smooth-transition);
+    padding: 0 30px 0 30px;
+    height: 100%;
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.header-title-container:hover {
+    background-color: var(--sidebar-item-color);
+}
+.underline {
+    height: 2px;
+    width: 0;
+    background-color: white;
+    transition: var(--smooth-transition);
+    border-radius: 20px;
+}
+.underlined {
+    width: 100%;
+}

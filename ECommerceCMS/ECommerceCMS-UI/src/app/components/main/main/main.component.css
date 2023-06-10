@@ -1,0 +1,26 @@
+.main-wrapper {
+    position: relative;
+    width: 100%;
+    height: var(--main-height);
+}
+app-sidebar {
+    position: absolute;
+    z-index: 1;
+    background-color: var(--primary-color);
+    width: var(--sidebar-width);
+    display: block;
+    height: 100%;
+    transition: var(--smooth-transition);
+}
+app-sidebar:hover {
+    width: 20%;
+    overflow-y: hidden;
+}
+
+app-content {
+    display: block;
+    height: 100%;
+    background-color: var(--secondary-color);
+    width: var(--content-width);
+    margin-left: var(--sidebar-width);
+}
