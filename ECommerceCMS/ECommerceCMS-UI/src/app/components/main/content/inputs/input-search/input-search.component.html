@@ -1,0 +1,12 @@
+<div class="input-container">
+    <input class="input" type="text" placeholder="{{input.placeholders[0]}}" [(ngModel)]="input.values[0]" (input)="search()">
+    <div class="results-wrapper" *ngIf="items.length != 0">
+        <div class="results-container">
+            <a class="result" *ngFor="let item of items; let i = index">
+                <a class="result-item" (click)="select(item)">
+                    {{i + 1}}. {{item.output()}}
+                </a>
+            </a>
+        </div>
+    </div>    
+</div>

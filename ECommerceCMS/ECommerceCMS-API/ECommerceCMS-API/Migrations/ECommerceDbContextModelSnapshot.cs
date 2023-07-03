@@ -22,21 +22,6 @@ namespace ECommerceCMS_API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AttributeAttributeSet", b =>
-                {
-                    b.Property<int>("AttributesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("attributeSetsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AttributesId", "attributeSetsId");
-
-                    b.HasIndex("attributeSetsId");
-
-                    b.ToTable("AttributeAttributeSet");
-                });
-
             modelBuilder.Entity("AttributeSetTemplate", b =>
                 {
                     b.Property<int>("AttributeSetsId")
@@ -60,7 +45,7 @@ namespace ECommerceCMS_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("MeasurementId")
+                    b.Property<int?>("MeasurementSetId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -69,7 +54,7 @@ namespace ECommerceCMS_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MeasurementId");
+                    b.HasIndex("MeasurementSetId");
 
                     b.ToTable("Attributes");
                 });
@@ -89,6 +74,29 @@ namespace ECommerceCMS_API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AttributeSets");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Attribute_AttributeSet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AttributeSetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeId");
+
+                    b.HasIndex("AttributeSetId");
+
+                    b.ToTable("Attribute_AttributeSets");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Category", b =>
@@ -155,7 +163,7 @@ namespace ECommerceCMS_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MeasurementsSet");
+                    b.ToTable("MeasurementSets");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order", b =>
@@ -179,6 +187,28 @@ namespace ECommerceCMS_API.Migrations
                     b.ToTable("Orders");
                 });
 
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Photos");
+                });
+
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -187,7 +217,7 @@ namespace ECommerceCMS_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("DiscountId")
+                    b.Property<int?>("DiscountId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -368,10 +398,13 @@ namespace ECommerceCMS_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AttributeId")
+                    b.Property<int?>("AttributeSetId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AttributeSetId")
+                    b.Property<int>("Attribute_AttributeSetId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MeasurementId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -383,9 +416,11 @@ namespace ECommerceCMS_API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttributeId");
-
                     b.HasIndex("AttributeSetId");
+
+                    b.HasIndex("Attribute_AttributeSetId");
+
+                    b.HasIndex("MeasurementId");
 
                     b.HasIndex("ProductId");
 
@@ -437,21 +472,6 @@ namespace ECommerceCMS_API.Migrations
                     b.ToTable("ProductShoppingCart");
                 });
 
-            modelBuilder.Entity("AttributeAttributeSet", b =>
-                {
-                    b.HasOne("ECommerceCMS_API.Core.Entities.Attribute", null)
-                        .WithMany()
-                        .HasForeignKey("AttributesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ECommerceCMS_API.Core.Entities.AttributeSet", null)
-                        .WithMany()
-                        .HasForeignKey("attributeSetsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AttributeSetTemplate", b =>
                 {
                     b.HasOne("ECommerceCMS_API.Core.Entities.AttributeSet", null)
@@ -469,13 +489,30 @@ namespace ECommerceCMS_API.Migrations
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Attribute", b =>
                 {
-                    b.HasOne("ECommerceCMS_API.Core.Entities.Measurement", "Measurement")
-                        .WithMany("Attributes")
-                        .HasForeignKey("MeasurementId")
+                    b.HasOne("ECommerceCMS_API.Core.Entities.MeasurementSet", "MeasurementSet")
+                        .WithMany()
+                        .HasForeignKey("MeasurementSetId");
+
+                    b.Navigation("MeasurementSet");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Attribute_AttributeSet", b =>
+                {
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Attribute", "Attribute")
+                        .WithMany("Attribute_AttributeSet")
+                        .HasForeignKey("AttributeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Measurement");
+                    b.HasOne("ECommerceCMS_API.Core.Entities.AttributeSet", "AttributeSet")
+                        .WithMany("Attribute_AttributeSet")
+                        .HasForeignKey("AttributeSetId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attribute");
+
+                    b.Navigation("AttributeSet");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order", b =>
@@ -489,13 +526,22 @@ namespace ECommerceCMS_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Photo", b =>
+                {
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Product", "Product")
+                        .WithMany("Photos")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Product", b =>
                 {
                     b.HasOne("ECommerceCMS_API.Core.Entities.Discount", "Discount")
                         .WithMany("Products")
-                        .HasForeignKey("DiscountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DiscountId");
 
                     b.HasOne("ECommerceCMS_API.Core.Entities.SubCategory", "SubCategory")
                         .WithMany("Products")
@@ -538,7 +584,7 @@ namespace ECommerceCMS_API.Migrations
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.ShoppingCart", b =>
                 {
                     b.HasOne("ECommerceCMS_API.Core.Entities.User", "User")
-                        .WithMany("ShoppingCart")
+                        .WithMany("ShoppingCarts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -570,17 +616,19 @@ namespace ECommerceCMS_API.Migrations
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Value", b =>
                 {
-                    b.HasOne("ECommerceCMS_API.Core.Entities.Attribute", "Attribute")
+                    b.HasOne("ECommerceCMS_API.Core.Entities.AttributeSet", null)
+                        .WithMany("Values")
+                        .HasForeignKey("AttributeSetId");
+
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Attribute_AttributeSet", "Attribute_AttributeSet")
                         .WithMany()
-                        .HasForeignKey("AttributeId")
+                        .HasForeignKey("Attribute_AttributeSetId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ECommerceCMS_API.Core.Entities.AttributeSet", "AttributeSet")
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Measurement", "Measurement")
                         .WithMany("Values")
-                        .HasForeignKey("AttributeSetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MeasurementId");
 
                     b.HasOne("ECommerceCMS_API.Core.Entities.Product", "Product")
                         .WithMany("Values")
@@ -588,9 +636,9 @@ namespace ECommerceCMS_API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Attribute");
+                    b.Navigation("Attribute_AttributeSet");
 
-                    b.Navigation("AttributeSet");
+                    b.Navigation("Measurement");
 
                     b.Navigation("Product");
                 });
@@ -640,8 +688,15 @@ namespace ECommerceCMS_API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Attribute", b =>
+                {
+                    b.Navigation("Attribute_AttributeSet");
+                });
+
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.AttributeSet", b =>
                 {
+                    b.Navigation("Attribute_AttributeSet");
+
                     b.Navigation("Values");
                 });
 
@@ -657,11 +712,13 @@ namespace ECommerceCMS_API.Migrations
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Measurement", b =>
                 {
-                    b.Navigation("Attributes");
+                    b.Navigation("Values");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Product", b =>
                 {
+                    b.Navigation("Photos");
+
                     b.Navigation("Reviews");
 
                     b.Navigation("Values");
@@ -688,7 +745,7 @@ namespace ECommerceCMS_API.Migrations
 
                     b.Navigation("Reviews");
 
-                    b.Navigation("ShoppingCart");
+                    b.Navigation("ShoppingCarts");
                 });
 #pragma warning restore 612, 618
         }

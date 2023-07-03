@@ -15,7 +15,8 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = role.Id;
             this.Name = role.Name;
-            this.Users = String.Join(", ", role.Users.Select(u => u.Id));
+            if(role.Users.Count != 0)
+                this.Users = String.Join(", ", role.Users.Select(u => u.Id));
         }
     }
 }

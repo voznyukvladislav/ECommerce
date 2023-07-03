@@ -1,13 +1,32 @@
 {
-    "operation": "create, update",
-    "type": "simple, list, load",
     "inputs": [
-        {
-            "type": "string, check, dependant",
-            "name": "field name",
-            "link": "if dependant, to load dependant data",
-            "value": "if check, some id should be here",
-            "isChecked": "if check is checked"
+        { 
+            "type": "simple, oneOfMany, manyOfMany, simpleWithSelector, extensional",
+            "values": [
+                "val1",
+                "val2",
+                "val3"
+            ],
+            "names": [
+                "name1", 
+                "name2",
+                "name3"
+            ],
+            "links": [
+                "link1",
+                "link2",
+                "link3"
+            ],
+            "placeholders": [
+                "placeholder1",
+                "placeholder2",
+                "placeholder3"
+            ]
         }
-    ]
+    ],
+    "inputGroup": {
+        "inputs": [],
+        "commonValue": "common id",
+        "commonName": "common name"
+    }
 }

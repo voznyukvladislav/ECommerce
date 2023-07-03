@@ -1,0 +1,21 @@
+<div class="inputs-block" (click)="output()">
+    <div class="input" *ngFor="let input of inputsBlock.inputDTOs; let i = index">
+        <app-input-simple [input]="inputsBlock.inputDTOs[i]" *ngIf="input.type == 'simple'"></app-input-simple>
+        <app-input-one-of-many [input]="input" *ngIf="input.type == 'oneOfMany'"></app-input-one-of-many>
+        <app-input-many-of-many [input]="input" *ngIf="input.type == 'manyOfMany'"></app-input-many-of-many>
+        <app-input-simple-with-selector [input]="input" *ngIf="input.type == 'simpleWithSelector'"></app-input-simple-with-selector>
+        <app-input-extensional [inputBlockDTO]="inputsBlock" [input]="input" *ngIf="input.type == 'extensional'"></app-input-extensional>
+        <app-input-search [input]="input" *ngIf="input.type == 'search'"></app-input-search>
+    </div>
+    <div class="input-group" *ngFor="let inputGroup of inputsBlock.inputGroupDTOs">
+        <a class="title">{{inputGroup.commonName}}</a>
+        <div class="input" *ngFor="let input of inputGroup.inputDTOs">
+            <app-input-simple [input]="input" *ngIf="input.type == 'simple'"></app-input-simple>
+            <app-input-one-of-many [input]="input" *ngIf="input.type == 'oneOfMany'"></app-input-one-of-many>
+            <app-input-many-of-many [input]="input" *ngIf="input.type == 'manyOfMany'"></app-input-many-of-many>
+            <app-input-simple-with-selector [input]="input" *ngIf="input.type == 'simpleWithSelector'"></app-input-simple-with-selector>
+            <app-input-extensional [inputBlockDTO]="inputsBlock" [input]="input" *ngIf="input.type == 'extensional'"></app-input-extensional>
+            <app-input-search [input]="input" *ngIf="input.type == 'search'"></app-input-search>
+        </div>
+    </div>
+</div>

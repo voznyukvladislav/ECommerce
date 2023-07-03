@@ -8,13 +8,13 @@ namespace ECommerceCMS_API.Core.Entities
         public int Id { get; set; }
         public string Val { get; set; }
 
-        public Product Product { get; set; }
+        public Product Product { get; set; } = new Product();
         public int ProductId { get; set; }
 
-        public AttributeSet AttributeSet { get; set; }
-        public int AttributeSetId { get; set; }
+        public Attribute_AttributeSet Attribute_AttributeSet { get; set; } = new Attribute_AttributeSet();
+        public int Attribute_AttributeSetId { get; set; }
 
-        public Attribute Attribute { get; set; }
-        public int AttributeId { get; set; }
+        public Measurement? Measurement { get; set; }
+        public int? MeasurementId { get; set; } 
     }
 }

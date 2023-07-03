@@ -1,12 +1,57 @@
+<app-popup [click]="insertData"
+ [inputBlockDTO]="inputBlock" 
+ [ngClass]="{'beforePopup': !popupIsOpened, 'afterPopup': popupIsOpened }" 
+ (onPopupInteraction)="popupInteraction()">
+    <app-inputs-handler [inputsBlock]="inputBlock"></app-inputs-handler>
+</app-popup>
+<div class="shading" *ngIf="popupIsOpened" (click)="popupInteraction()"></div>
+
 <div class="table-page-wrapper">
     <div class="table-page">
         <div class="table-header-container">
-            <a class="table-header-title">{{ tableName }}</a>
-            <a class="table-header-add">Add+</a>
+            <a class="table-header-title">{{ tableName | firstToUpper }}</a>
+            <a class="table-header-add" (click)="popupInteraction()">Add+</a>
         </div> 
         <div class="table-wrapper">
-             <app-input [placeholder]="'Search...'" [name]="'fieldName'"></app-input>
-             <app-input-search [placeholder]="'Search...'" [name]="'fieldName'" [link]="''"></app-input-search>
+             <div class='table'>
+                <div class="table-row border-left border-top border-right">
+                    <div class="search-image-container flex5">
+                        <img class="search-image" src="..\assets\icons\search.png">
+                    </div>
+                    <div class="search-input-container flex95">
+                        <app-input-search [input]="inputSearch"></app-input-search>
+                    </div>
+                </div>
+                <div class="table-row">
+                    <div class="table-row-header-item flex01 border-left border-right border-bottom border-top">
+                        #
+                    </div>
+                    <div class="table-row-header-item flex1 border-right border-bottom border-top" *ngFor="let item of tableMetadata">
+                        {{ item }}
+                    </div>
+                </div>
+                <div class="table-row" *ngFor="let data of tableData; let i = index">
+                    <div class="table-row-item flex01 border-left border-right border-bottom">
+                        {{ i + 1 }}
+                    </div>
+                    <div class="table-row-item flex1 border-right border-bottom" *ngFor="let item of data">
+                        {{ item }}
+                    </div>
+                </div>
+                <div class="image-wrapper border-left border-right border-bottom" (click)="load()">
+                    <div class="image-container">
+                        <img class="plus" src="..\assets\icons\plus.png">
+                    </div>
+                </div>
+                <div class="pagination-wrapper border-left border-right border-bottom">
+                    <div class="pagination">
+                        <a class="arrow" (click)="getLeftPage()"><</a>
+                        <a class="current-page">{{pageNum}}</a>
+                        <a class="pages"> ... of {{pagesNum}}</a>
+                        <a class="arrow" (click)="getRightPage()">></a>
+                    </div>
+                </div>
+             </div>
         </div>
     </div>
 </div>

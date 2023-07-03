@@ -6,7 +6,7 @@ namespace ECommerceCMS_API.Core.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string SubCategories { get; set; }
+        public string SubCategories { get; set; } = "";
         public CategoryDTO()
         {
 
@@ -15,7 +15,8 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = category.Id;
             this.Name = category.Name;
-            this.SubCategories = String.Join(", ", category.SubCategories.Select(s => s.Id));
+            if(category.SubCategories.Count != 0)
+                this.SubCategories = String.Join(", ", category.SubCategories.Select(s => s.Id));
         }
     }
 }

@@ -12,7 +12,8 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = discount.Id;
             this.Value = discount.Value;
-            this.Products = String.Join(", ", discount.Products.Select(p => p.Id));
+            if(discount.Products.Count != 0)
+                this.Products = String.Join(", ", discount.Products.Select(p => p.Id));
         }
     }
 }

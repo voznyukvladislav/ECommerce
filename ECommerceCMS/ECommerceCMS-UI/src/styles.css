@@ -19,13 +19,17 @@ html {
     /* Fonts */
     --table-header-font-size: 30px;
     --input-font-size: 18px;
+    --input-item-font-size: 14px;
+    --pagination-font-size: 26px;
 
     /* Colors */
     --header-color: #202020;
     --footer-color: #202020;
     --primary-color: #202020;
+    --second-primary-color: #101010;
     --sidebar-item-color: #2b2b2b;
     --sidebar-item-color-hover: #313131;
+    --table-plus-color-hover: #494949;
     --secondary-color: #4aafdb;
 }
 body {

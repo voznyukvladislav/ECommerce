@@ -7,8 +7,9 @@ namespace ECommerceCMS_API.Core.DTOs
         public int Id { get; set; }
         public string Val { get; set; }
         public int ProductId { get; set; }
+        public int Attribute_AttributeSetId { get; set; }
+        public int AttrubuteId { get; set; }
         public int AttributeSetId { get; set; }
-        public int AttributeId { get; set; }
         public ValueDTO()
         {
 
@@ -18,8 +19,9 @@ namespace ECommerceCMS_API.Core.DTOs
             this.Id = value.Id;
             this.Val = value.Val;
             this.ProductId = value.ProductId;
-            this.AttributeSetId = value.AttributeSetId;
-            this.AttributeId = value.AttributeId;
+            this.Attribute_AttributeSetId = value.Attribute_AttributeSetId;
+            this.AttrubuteId = value.Attribute_AttributeSet.AttributeId;
+            this.AttributeSetId = value.Attribute_AttributeSet.AttributeSetId;
         }
     }
 }

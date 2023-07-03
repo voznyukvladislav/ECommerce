@@ -8,7 +8,7 @@ using ECommerceCMS_API.Core.DTOs;
 
 namespace ECommerceCMS_API.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/tableMetadata")]
     [ApiController]
     public class MetadataController : ControllerBase
     {

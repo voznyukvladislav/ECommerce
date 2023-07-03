@@ -15,7 +15,8 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = measurementSet.Id;
             this.Name = measurementSet.Name;
-            this.Measurements = String.Join(", ", measurementSet.Measurements.Select(m => m.Id));
+            if(measurementSet.Measurements.Count != 0)
+                this.Measurements = String.Join(", ", measurementSet.Measurements.Select(m => m.Id));
         }
     }
 }

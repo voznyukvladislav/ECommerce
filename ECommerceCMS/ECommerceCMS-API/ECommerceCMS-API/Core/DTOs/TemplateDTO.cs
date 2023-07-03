@@ -16,8 +16,10 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = template.Id;
             this.Name = template.Name;
-            this.AttributeSets = String.Join(", ", template.AttributeSets.Select(a => a.Id));
-            this.Products = String.Join(", ", template.Products.Select(p => p.Id));
+            if(template.AttributeSets.Count != 0)
+                this.AttributeSets = String.Join(", ", template.AttributeSets.Select(a => a.Id));
+            if(template.Products.Count != 0)
+                this.Products = String.Join(", ", template.Products.Select(p => p.Id));
         }
     }
 }

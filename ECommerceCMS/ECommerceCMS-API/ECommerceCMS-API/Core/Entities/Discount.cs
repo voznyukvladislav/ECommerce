@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerceCMS_API.Core.DTOs.DbInteractionDTOs;
+using System.ComponentModel.DataAnnotations;
 
 namespace ECommerceCMS_API.Core.Entities
 {
@@ -7,6 +8,17 @@ namespace ECommerceCMS_API.Core.Entities
         [Key]
         public int Id { get; set; }
         public decimal Value { get; set; }
-        public List<Product> Products { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
+        public Discount()
+        {
+
+        }
+        public Discount(InputBlockDTO inputBlockDTO)
+        {
+            Dictionary<string, string> nameValues = inputBlockDTO.GetNameValueDictionary();
+            if (nameValues.ContainsKey("Discount.Id"))
+                this.Id = Int32.Parse(nameValues["Discount.Id"]);
+            this.Value = Decimal.Parse(nameValues["Discount.Value"]);
+        }
     }
 }

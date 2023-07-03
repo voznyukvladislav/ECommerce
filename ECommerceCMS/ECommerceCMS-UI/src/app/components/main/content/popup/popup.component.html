@@ -1,0 +1,25 @@
+<div class="popup-wrapper">    
+    <div class="popup-container" [ngClass]="{ 'scale1': !isOpened, 'scale0': isOpened }">
+        <div class="menu">
+            <div class="title-container">
+                <a class="title">{{ inputBlockDTO.title | firstToUpper }}</a>
+            </div>
+            <a class="close" (click)="popupInteraction()">
+                <img class="close-img" src="../assets/icons/close.png">
+            </a>            
+        </div>
+        <div class="popup-content-wrapper">
+            <div class="popup-content">
+                <ng-content></ng-content>
+            </div>
+        </div>
+        <div class="menu">
+            <a class="close flex1" (click)="click(inputBlockDTO, tableDataService)" (click)="popupInteraction()">
+                <img class="close-img" src="../assets/icons/accept.png">
+            </a>
+            <a class="close flex1" (click)="popupInteraction()">
+                <img class="close-img" src="../assets/icons/close.png">
+            </a>  
+        </div>
+    </div>    
+</div>

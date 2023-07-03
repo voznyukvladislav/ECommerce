@@ -1,0 +1,17 @@
+<div class="input-container">
+    <input class="input" type="text" placeholder="{{input.placeholders[0]}}" [(ngModel)]="input.values[0]">
+    <div class="input-selector-wrapper">
+        <div class="input-selector" (click)="search()">
+            <a class="title">{{title}}</a>
+            <div class="arrow-container">
+                <img class="arrow-img" [ngClass]="{'opacity1': !isOpened, 'opacity0': isOpened }" src="../assets/icons/arrow.png">
+                <img class="arrow-img rotated" [ngClass]="{'opacity1': isOpened, 'opacity0': !isOpened }" src="../assets/icons/arrow.png">
+            </div>
+        </div>
+        <div class="items-container" *ngIf="isOpened">
+            <a class="item" *ngFor="let item of items" (click)="select(item)">
+                Id: {{item.id}}, Name: {{item.name}}
+            </a>
+        </div>
+    </div>
+</div>

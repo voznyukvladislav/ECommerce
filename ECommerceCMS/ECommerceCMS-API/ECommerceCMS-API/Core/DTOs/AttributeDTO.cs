@@ -6,7 +6,7 @@ namespace ECommerceCMS_API.Core.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int MeasurementId { get; set; }
+        public string MeasurementSetId { get; set; }
         public string AttributeSets { get; set; }
         public AttributeDTO()
         { }
@@ -14,8 +14,9 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = attribute.Id;
             this.Name = attribute.Name;
-            this.MeasurementId = attribute.MeasurementId;
-            this.AttributeSets = String.Join(", ", attribute.AttributeSets.Select(a => a.Id));
+            this.MeasurementSetId = attribute.MeasurementSetId.ToString();
+            if (attribute.Attribute_AttributeSet.Count != 0)
+                this.AttributeSets = String.Join(", ", attribute.Attribute_AttributeSet.Select(a_as => a_as.AttributeSetId));
         }
     }
 }

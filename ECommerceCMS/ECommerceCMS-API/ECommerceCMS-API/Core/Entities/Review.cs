@@ -9,10 +9,10 @@ namespace ECommerceCMS_API.Core.Entities
         public string Text { get; set; }
         public int Rating { get; set; }
 
-        public Product Product { get; set; }
+        public Product Product { get; set; } = new Product();
         public int ProductId { get; set; }
 
-        public User User { get; set; }
+        public User User { get; set; } = new User();
         public int UserId { get; set; }
     }
 }

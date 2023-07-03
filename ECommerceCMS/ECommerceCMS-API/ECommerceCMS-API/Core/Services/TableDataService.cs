@@ -1,7 +1,9 @@
 ﻿using ECommerceCMS_API.Core.DTOs;
+using ECommerceCMS_API.Core.DTOs.DbInteractionDTOs;
 using ECommerceCMS_API.Core.Entities;
 using ECommerceCMS_API.Core.Interfaces;
 using ECommerceCMS_API.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace ECommerceCMS_API.Core.Services
@@ -9,8 +11,11 @@ namespace ECommerceCMS_API.Core.Services
     public class TableDataService : ITableDataService
     {
         public ECommerceDbContext ECommerceDbContext { get; set; }
+
         private Dictionary<string, Func<int, int, string>> tableDataDictionary;
         private Dictionary<string, Func<int, int>> tablePagesNumberDictionary;
+        private Dictionary<string, Func<int, string>> tableSearchDictionary;
+        private Dictionary<string, Func<int, int, string>> tableSimpleDataDictionary;
 
         public TableDataService(ECommerceDbContext eCommerceDbContext) {
             this.ECommerceDbContext = eCommerceDbContext;
@@ -26,6 +31,8 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(a => a.MeasurementSet)
+                            .Include(a => a.Attribute_AttributeSet)
                             .ToList();
                         
                         List<AttributeDTO> attributeDTOs = new List<AttributeDTO>();
@@ -44,6 +51,8 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(a => a.Attribute_AttributeSet)
+                            .Include(a => a.Templates)
                             .ToList();
 
                         List<AttributeSetDTO> attributeDTOs = new List<AttributeSetDTO>();
@@ -62,6 +71,7 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(c => c.SubCategories)
                             .ToList();
 
                         List<CategoryDTO> categoryDTOs = new List<CategoryDTO>();
@@ -98,6 +108,7 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(m => m.MeasurementSets)
                             .ToList();
 
                         List<MeasurementDTO> measurementDTOs = new List<MeasurementDTO>();
@@ -116,6 +127,7 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(ms => ms.Measurements)
                             .ToList();
 
                         List<MeasurementSetDTO> dtos = new List<MeasurementSetDTO>();
@@ -134,6 +146,8 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(o => o.User)
+                            .Include(o => o.Products)
                             .ToList();
 
                         List<OrderDTO> dtos = new List<OrderDTO>();
@@ -152,6 +166,10 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(p => p.Orders)
+                            .Include(p => p.Reviews)
+                            .Include(p => p.ShoppingCarts)
+                            .Include(p => p.Values)
                             .ToList();
 
                         List<ProductDTO> dtos = new List<ProductDTO>();
@@ -170,6 +188,8 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(r => r.User)
+                            .Include(r => r.Product)
                             .ToList();
 
                         List<ReviewDTO> dtos = new List<ReviewDTO>();
@@ -188,6 +208,7 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(r => r.Users)
                             .ToList();
 
                         List<RoleDTO> dtos = new List<RoleDTO>();
@@ -206,6 +227,7 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(sc => sc.Products)
                             .ToList();
 
                         List<ShoppingCartDTO> dtos = new List<ShoppingCartDTO>();
@@ -242,6 +264,8 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(t => t.AttributeSets)
+                            .Include(t => t.Products)
                             .ToList();
 
                         List<TemplateDTO> dtos = new List<TemplateDTO>();
@@ -278,6 +302,8 @@ namespace ECommerceCMS_API.Core.Services
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(v => v.Product)
+                            .Include(v => v.Attribute_AttributeSet)
                             .ToList();
 
                         List<ValueDTO> dtos = new List<ValueDTO>();
@@ -428,6 +454,461 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
             };
+            this.tableSearchDictionary = new Dictionary<string, Func<int, string>>(comparer)
+            {
+                {
+                    "Attributes",
+                    (input) =>
+                    {
+                        List<Entities.Attribute> result = this.ECommerceDbContext
+                        .Attributes
+                        .Where(a => a.Id == input)
+                        .ToList();
+                        List<AttributeDTO> resultDTOs = new List<AttributeDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new AttributeDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "AttributeSets",
+                    (input) =>
+                    {
+                        List<AttributeSet> result = this.ECommerceDbContext
+                        .AttributeSets
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<AttributeSetDTO> resultDTOs = new List<AttributeSetDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new AttributeSetDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Categories",
+                    (input) =>
+                    {
+                        List<Category> result = this.ECommerceDbContext
+                        .Categories
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<CategoryDTO> resultDTOs = new List<CategoryDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new CategoryDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Discounts",
+                    (input) =>
+                    {
+                        List<Discount> result = this.ECommerceDbContext
+                        .Discounts
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<DiscountDTO> resultDTOs = new List<DiscountDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new DiscountDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Measurements",
+                    (input) =>
+                    {
+                        List<Measurement> result = this.ECommerceDbContext
+                        .Measurements
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<MeasurementDTO> resultDTOs = new List<MeasurementDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new MeasurementDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "MeasurementSets",
+                    (input) =>
+                    {
+                        List<MeasurementSet> result = this.ECommerceDbContext
+                        .MeasurementSets
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<MeasurementSetDTO> resultDTOs = new List<MeasurementSetDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new MeasurementSetDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Orders",
+                    (input) =>
+                    {
+                        List<Order> result = this.ECommerceDbContext
+                        .Orders
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<OrderDTO> resultDTOs = new List<OrderDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new OrderDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Products",
+                    (input) =>
+                    {
+                        List<Product> result = this.ECommerceDbContext
+                        .Products
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<ProductDTO> resultDTOs = new List<ProductDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new ProductDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Reviews",
+                    (input) =>
+                    {
+                        List<Review> result = this.ECommerceDbContext
+                        .Reviews
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<ReviewDTO> resultDTOs = new List<ReviewDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new ReviewDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Roles",
+                    (input) =>
+                    {
+                        List<Role> result = this.ECommerceDbContext
+                        .Roles
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<RoleDTO> resultDTOs = new List<RoleDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new RoleDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "ShoppingCarts",
+                    (input) =>
+                    {
+                        List<ShoppingCart> result = this.ECommerceDbContext
+                        .ShoppingCarts
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<ShoppingCartDTO> resultDTOs = new List<ShoppingCartDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new ShoppingCartDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "SubCategories",
+                    (input) =>
+                    {
+                        List<SubCategory> result = this.ECommerceDbContext
+                        .SubCategories
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<SubCategoryDTO> resultDTOs = new List<SubCategoryDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new SubCategoryDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Templates",
+                    (input) =>
+                    {
+                        List<Template> result = this.ECommerceDbContext
+                        .Templates
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<TemplateDTO> resultDTOs = new List<TemplateDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new TemplateDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Users",
+                    (input) =>
+                    {
+                        List<User> result = this.ECommerceDbContext
+                        .Users
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<UserDTO> resultDTOs = new List<UserDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new UserDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Values",
+                    (input) =>
+                    {
+                        List<Value> result = this.ECommerceDbContext
+                        .Values
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<ValueDTO> resultDTOs = new List<ValueDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new ValueDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                }
+            };
+            this.tableSimpleDataDictionary = new Dictionary<string, Func<int, int, string>>(comparer)
+            {
+                {
+                    "Attributes",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Attributes
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "AttributeSets",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .AttributeSets
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Categories",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Categories
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Discounts",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Discounts
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Measurements",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Measurements
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "MeasurementSets",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .MeasurementSets
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Orders",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Orders
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Photos",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Photos
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Products",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Products
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Reviews",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Reviews
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Roles",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Roles
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "ShoppingCarts",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .ShoppingCarts
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "SubCategories",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .SubCategories
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Templates",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Templates
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Users",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Users
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
+                    "Values",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Values
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                }
+            };
+            
         }
 
         public string GetTableData(string tableName, int pageNum, int pageSize)
@@ -438,6 +919,127 @@ namespace ECommerceCMS_API.Core.Services
         public string GetTablePagesNumber(string tableName, int pageSize)
         {
             return this.tablePagesNumberDictionary[tableName](pageSize).ToString();
+        }
+
+        public string GetSearchResult(string tableName, int input)
+        {
+            return this.tableSearchDictionary[tableName](input);
+        }
+
+        public string GetSimpleDto(string tableName, int pageNum, int pageSize)
+        {
+            return this.tableSimpleDataDictionary[tableName](pageNum, pageSize);
+        }
+
+        public List<SimpleDTO> GetMeasurementsFromSet(int measurementSetId)
+        {
+            MeasurementSet measurementSet = this.ECommerceDbContext
+                .MeasurementSets
+                .Where(ms => ms.Id == measurementSetId)
+                .Include(ms => ms.Measurements)
+                .First();
+
+            return (measurementSet.Measurements.Select(m => new SimpleDTO(m))).ToList();
+        }
+
+        public void InsertData(InputBlockDTO inputBlockDTO)
+        {
+            switch (inputBlockDTO.Title)
+            {
+                case "Attributes":
+                    Core.Entities.Attribute attribute = new Core.Entities.Attribute(inputBlockDTO);
+                    this.ECommerceDbContext.Attributes.Add(attribute);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "AttributeSets":
+                    AttributeSet attributeSet = new AttributeSet(this.ECommerceDbContext, inputBlockDTO);
+                    this.ECommerceDbContext.AttributeSets.Add(attributeSet);
+                    this.ECommerceDbContext.SaveChanges();
+                    
+                    return;
+
+                case "Categories":
+                    Category category = new Category(inputBlockDTO);
+                    this.ECommerceDbContext.Categories.Add(category);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Discounts":
+                    Discount discount = new Discount(inputBlockDTO);
+                    this.ECommerceDbContext.Discounts.Add(discount);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Measurements":
+                    Measurement measurement = new Measurement(inputBlockDTO);
+                    this.ECommerceDbContext.Measurements.Add(measurement);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "MeasurementSets":
+                    MeasurementSet measurementSet = new MeasurementSet(this.ECommerceDbContext, inputBlockDTO);
+                    this.ECommerceDbContext.MeasurementSets.Add(measurementSet);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Orders":
+                    return;
+
+                case "Photos":
+                    return;
+
+                case "Products":
+                    Product product = new Product(this.ECommerceDbContext, inputBlockDTO);
+                    this.ECommerceDbContext.Products.Add(product);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Reviews":
+                    return;
+
+                case "Roles":
+                    Role role = new Role(inputBlockDTO);
+                    this.ECommerceDbContext.Roles.Add(role);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "ShoppingCarts":
+                    return;
+
+                case "SubCategories":
+                    SubCategory subCategory = new SubCategory(ECommerceDbContext, inputBlockDTO);
+                    this.ECommerceDbContext.SubCategories.Add(subCategory);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Templates":
+                    Template template = new Template(ECommerceDbContext, inputBlockDTO);
+                    this.ECommerceDbContext.Templates.Add(template);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Users":
+                    User user = new User(inputBlockDTO);
+                    this.ECommerceDbContext.Users.Add(user);
+                    this.ECommerceDbContext.SaveChanges();
+
+                    return;
+
+                case "Values":
+                    return;
+
+                default: return;
+            }
         }
     }
 }

@@ -1,0 +1,83 @@
+.input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input-one-of-many {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: var(--input-font-size);
+    padding: 5px 10px 5px 10px;
+    box-sizing: border-box;
+    border: 1px solid var(--secondary-color);
+    outline: 0px solid var(--secondary-color);;
+    cursor: pointer;
+    transition: var(--smooth-transition);
+}
+.opened {
+    outline: 2px solid var(--secondary-color);
+}
+.input-one-of-many:hover {
+    background-color: var(--table-plus-color-hover);
+}
+.arrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 50px;
+    width: 50px;
+}
+.arrow-image {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    transition: var(--smooth-transition);
+}
+.up {
+    transform: rotate(180deg);
+}
+.opacity0 {
+    opacity: 0;
+}
+.opacity1 {
+    opacity: 1;
+}
+
+.results-wrapper {
+    position: relative;
+    width: 100%;
+}
+.results-container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    background-color: var(--primary-color);
+    box-sizing: border-box;
+    border: 1px solid var(--secondary-color);
+    outline: 2px solid var(--secondary-color);
+    overflow-y: scroll;
+}
+.result-item {
+    width: 100%;
+    display: block;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    color: white;
+    font-size: var(--input-item-font-size);
+    background-color: var(--primary-color);
+    transition: var(--smooth-transition);
+    cursor: pointer;
+}
+.result-item:hover {
+    background-color: var(--table-plus-color-hover);
+}

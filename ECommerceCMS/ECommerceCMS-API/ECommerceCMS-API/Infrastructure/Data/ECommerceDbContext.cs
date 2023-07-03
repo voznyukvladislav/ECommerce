@@ -6,6 +6,7 @@ namespace ECommerceCMS_API.Infrastructure.Data
     public class ECommerceDbContext : DbContext 
     {
         public DbSet<Core.Entities.Attribute> Attributes { get; set; }
+        public DbSet<Attribute_AttributeSet> Attribute_AttributeSets { get; set; }
         public DbSet<AttributeSet> AttributeSets { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
@@ -14,6 +15,7 @@ namespace ECommerceCMS_API.Infrastructure.Data
         public DbSet<MeasurementSet> MeasurementSets { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
@@ -21,7 +23,11 @@ namespace ECommerceCMS_API.Infrastructure.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Value> Values { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public ECommerceDbContext(DbContextOptions options) : base(options)
+        {
+            
+        }
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -30,6 +36,6 @@ namespace ECommerceCMS_API.Infrastructure.Data
 
             var connectionString = configuration.GetConnectionString("LocalConnection");
             optionsBuilder.UseSqlServer(connectionString);
-        }
+        }*/
     }
 }

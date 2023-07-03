@@ -15,7 +15,8 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = shoppingCart.Id;
             this.UserId = shoppingCart.UserId;
-            this.Products = String.Join(", ", shoppingCart.Products.Select(p => p.Id));
+            if(shoppingCart.Products.Count != 0)
+                this.Products = String.Join(", ", shoppingCart.Products.Select(p => p.Id));
         }
     }
 }

@@ -11,26 +11,43 @@ export class SidebarItemsService {
   getSidebarItems(): Array<SidebarItem> {
     let sidebarItems: Array<SidebarItem> = [
       { 
-        title: 'Kek', link: '', iconSrc: '..\\assets\\icons\\home.png',
+        title: 'Categories', link: '', iconSrc: '..\\assets\\icons\\category.png',
         subItems: [
-          { title: 'SubKek', link: 'kek' },
-          { title: 'SubKek', link: 'kekus' },
-          { title: 'SubKek', link: '' } 
+          { title: 'Categories', link: 'categories' },
+          { title: 'SubCategories', link: 'subcategories' }
         ] 
       },
       { 
-        title: 'Kek', link: '', iconSrc: '..\\assets\\icons\\home.png',
+        title: 'Attributes', link: '', iconSrc: '..\\assets\\icons\\attribute.png',
         subItems: [
-          { title: 'SubKek', link: '' },
-          { title: 'SubKek', link: '' },
-          { title: 'SubKek', link: '' } 
+          { title: 'Attributes', link: 'attributes' },
+          { title: 'Attribute Sets', link: 'attributeSets' }
         ] 
-      },{ 
-        title: 'Kek', link: '', iconSrc: '..\\assets\\icons\\home.png',
+      },
+      { 
+        title: 'Measurements', link: '', iconSrc: '..\\assets\\icons\\measurement.png',
         subItems: [
-          { title: 'SubKek', link: '' },
-          { title: 'SubKek', link: '' },
-          { title: 'SubKek', link: '' } 
+          { title: 'Measurements', link: 'measurements' },
+          { title: 'Measurement Sets', link: 'measurementSets' }
+        ] 
+      },
+      { 
+        title: 'Products', link: '', iconSrc: '..\\assets\\icons\\product.png',
+        subItems: [
+          { title: 'Products', link: 'products' },
+          { title: 'Templates', link: 'templates' },
+          { title: 'Values', link: 'values' },
+          { title: 'Discounts', link: 'discounts' }
+        ] 
+      },
+      { 
+        title: 'Users', link: '', iconSrc: '..\\assets\\icons\\user.png',
+        subItems: [
+          { title: 'Users', link: 'users' },
+          { title: 'Orders', link: 'orders' },
+          { title: 'Shopping Carts', link: 'shoppingCarts' },
+          { title: 'Reviews', link: 'reviews' },
+          { title: 'Roles', link: 'roles' }
         ] 
       }
     ];

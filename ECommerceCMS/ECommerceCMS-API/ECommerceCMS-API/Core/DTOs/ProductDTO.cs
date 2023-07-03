@@ -6,10 +6,10 @@ namespace ECommerceCMS_API.Core.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public decimal Price { get; set; }
-        public int TemplateId { get; set; }
-        public int DiscountId { get; set; }
-        public int SubCategoryId { get; set; }
+        public string Price { get; set; }
+        public string TemplateId { get; set; }
+        public string DiscountId { get; set; }
+        public string SubCategoryId { get; set; }
         public string Orders { get; set; }
         public string Reviews { get; set; }
         public string ShoppingCarts { get; set; }
@@ -21,14 +21,18 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = product.Id;
             this.Name = product.Name;
-            this.Price = product.Price;
-            this.TemplateId = product.TemplateId;
-            this.DiscountId = product.DiscountId;
-            this.SubCategoryId = product.SubCategoryId;
-            this.Orders = String.Join(", ", product.Orders.Select(o => o.Id));
-            this.Reviews = String.Join(", ", product.Reviews.Select(r => r.Id));
-            this.ShoppingCarts = String.Join(", ", product.ShoppingCarts.Select(sc => sc.Id));
-            this.Values = String.Join(", ", product.Values.Select(v => v.Id));
+            this.Price = product.Price.ToString();
+            this.TemplateId = product.TemplateId.ToString();
+            this.DiscountId = product.DiscountId.ToString();
+            this.SubCategoryId = product.SubCategoryId.ToString();
+            if(product.Orders is not null)
+                this.Orders = String.Join(", ", product.Orders.Select(o => o.Id));
+            if(product.Reviews is not null)
+                this.Reviews = String.Join(", ", product.Reviews.Select(r => r.Id));
+            if(product.ShoppingCarts is not null)
+                this.ShoppingCarts = String.Join(", ", product.ShoppingCarts.Select(sc => sc.Id));
+            if(product.Values.Count != 0)
+                this.Values = String.Join(", ", product.Values.Select(v => v.Id));
         }
     }
 }
