@@ -1,18 +1,27 @@
 <app-popup [click]="insertData"
  [inputBlockDTO]="inputBlock" 
- [ngClass]="{'beforePopup': !popupIsOpened, 'afterPopup': popupIsOpened }" 
- (onPopupInteraction)="popupInteraction()">
+ [ngClass]="{'beforePopup': !insertionPopupIsOpened, 'afterPopup': insertionPopupIsOpened }" 
+ (onPopupInteraction)="insertionPopupInteraction()">
     <app-inputs-handler [inputsBlock]="inputBlock"></app-inputs-handler>
 </app-popup>
-<div class="shading" *ngIf="popupIsOpened" (click)="popupInteraction()"></div>
+
+<app-popup [click]="updateData"
+ [inputBlockDTO]="inputBlock" 
+ [ngClass]="{'beforePopup': !updatePopupIsOpened, 'afterPopup': updatePopupIsOpened }" 
+ (onPopupInteraction)="updatePopupInteraction()">
+    <app-inputs-handler [inputsBlock]="inputBlock"></app-inputs-handler>
+</app-popup>
+
+<div class="shading" *ngIf="insertionPopupIsOpened" (click)="insertionPopupInteraction()"></div>
+<div class="shading" *ngIf="updatePopupIsOpened" (click)="updatePopupInteraction()"></div>
 
 <div class="table-page-wrapper">
     <div class="table-page">
         <div class="table-header-container">
             <a class="table-header-title">{{ tableName | firstToUpper }}</a>
-            <a class="table-header-add" (click)="popupInteraction()">Add+</a>
+            <a class="table-header-add" (click)="insertionPopupInteraction()">Add+</a>
         </div> 
-        <div class="table-wrapper">
+        <div class="table-wrapper" *ngIf="tableMetadata.length != 0 && tableData.length != 0">
              <div class='table'>
                 <div class="table-row border-left border-top border-right">
                     <div class="search-image-container flex5">
@@ -29,14 +38,30 @@
                     <div class="table-row-header-item flex1 border-right border-bottom border-top" *ngFor="let item of tableMetadata">
                         {{ item }}
                     </div>
+                    <div class="actions-container border-top border-right border-bottom">
+                        <div class="action opacity0">
+                            <img class="action-img" src="">
+                        </div>
+                        <div class="action opacity0">
+                            <img class="action-img" src="">
+                        </div>
+                    </div>
                 </div>
                 <div class="table-row" *ngFor="let data of tableData; let i = index">
                     <div class="table-row-item flex01 border-left border-right border-bottom">
                         {{ i + 1 }}
                     </div>
-                    <div class="table-row-item flex1 border-right border-bottom" *ngFor="let item of data">
-                        {{ item }}
-                    </div>
+                    <div class="table-row-item flex1 border-right border-bottom" *ngFor="let item of data; let j = index">
+                        {{ item }}                        
+                    </div>        
+                    <div class="actions-container border-right border-bottom">
+                        <div class="action" (click)="editItem(data)">
+                            <img class="action-img" src="../assets/icons/edit.png">
+                        </div>
+                        <div class="action" (click)="deleteItem(data)">
+                            <img class="action-img" src="../assets/icons/delete.png">
+                        </div>
+                    </div>            
                 </div>
                 <div class="image-wrapper border-left border-right border-bottom" (click)="load()">
                     <div class="image-container">

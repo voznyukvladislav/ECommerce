@@ -10,7 +10,11 @@ namespace ECommerceCMS_API.Core.Interfaces
         public string GetTablePagesNumber(string tableName, int pageSize);
         public string GetSearchResult(string tableName, int input);
         public string GetSimpleDto(string tableName, int pageNum, int pageSize);
-        public void InsertData(InputBlockDTO inputBlockDTO);
+        
         public List<SimpleDTO> GetMeasurementsFromSet(int measurementSetId);
+
+        public void InsertData(InputBlockDTO inputBlockDTO);
+        public void UpdateData(InputBlockDTO inputBlockDTO);
+        public void DeleteData(string tableName, int id);
     }
 }

@@ -35,6 +35,7 @@ export class SidebarItemsService {
         title: 'Products', link: '', iconSrc: '..\\assets\\icons\\product.png',
         subItems: [
           { title: 'Products', link: 'products' },
+          { title: 'Photos', link: 'photos' },
           { title: 'Templates', link: 'templates' },
           { title: 'Values', link: 'values' },
           { title: 'Discounts', link: 'discounts' }

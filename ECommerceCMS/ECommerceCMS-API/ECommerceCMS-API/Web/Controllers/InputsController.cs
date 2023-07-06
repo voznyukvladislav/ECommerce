@@ -39,5 +39,18 @@ namespace ECommerceCMS_API.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getInputUpdateBlock")]
+        public IActionResult GetUpdateInputBlock(string tableName, int id)
+        {
+            try
+            {
+                return Ok(this._inputService.GetUpdateInputBlock(tableName, id));
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

@@ -83,6 +83,34 @@ namespace ECommerceCMS_API.Web.Controllers
             }
         }
 
+        [HttpPut]
+        [Route("updateData")]
+        public IActionResult UpdateData(InputBlockDTO inputBlockDTO)
+        {
+            try
+            {
+                this.TableDataService.UpdateData(inputBlockDTO);
+                return Accepted();
+            } catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete]
+        [Route("deleteData")]
+        public IActionResult Delete(string tableName, string id)
+        {
+            try
+            {
+                this.TableDataService.DeleteData(tableName, Int32.Parse(id));
+                return Accepted();
+            } catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet]
         [Route("getMeasurementsFromSet")]
         public IActionResult GetMeasurementsFromSet(int measurementSetId)

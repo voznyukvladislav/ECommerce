@@ -1,4 +1,5 @@
 ﻿using ECommerceCMS_API.Core.DTOs.DbInteractionDTOs;
+using ECommerceCMS_API.Infrastructure.Data;
 using System.ComponentModel.DataAnnotations;
 
 namespace ECommerceCMS_API.Core.Entities
@@ -14,16 +15,16 @@ namespace ECommerceCMS_API.Core.Entities
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public Role? Role { get; set; }
+        public Role Role { get; set; }
         public int RoleId { get; set; }
 
         public List<ShoppingCart> ShoppingCarts { get; set; } = new List<ShoppingCart>();
 
-        public List<Order> Orders { get; set; } = new List<Order>();
-        public List<Review> Reviews { get; set; } = new List<Review>();
+        public List<Order>? Orders { get; set; }
+        public List<Review>? Reviews { get; set; }
 
         public User() { }
-        public User(InputBlockDTO inputBlockDTO)
+        public User(ECommerceDbContext db, InputBlockDTO inputBlockDTO)
         {
             Dictionary<string, string> nameValue = inputBlockDTO.GetNameValueDictionary();
             if (nameValue.ContainsKey("User.Id"))
@@ -34,7 +35,9 @@ namespace ECommerceCMS_API.Core.Entities
             this.Password = nameValue["User.Password"];
             this.Email = nameValue["User.Email"];
             this.Phone = nameValue["User.Phone"];
+            
             this.RoleId = Int32.Parse(nameValue["User.RoleId"]);
+            this.Role = db.Roles.Where(r => r.Id == this.RoleId).First();
         }
     }
 }

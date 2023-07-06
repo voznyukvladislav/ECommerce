@@ -6,5 +6,6 @@ namespace ECommerceCMS_API.Core.Interfaces
     {
         public IEnumerable<InputGroupDTO> GetInputGroups(int templateId);
         public InputBlockDTO GetInputBlock(string tableName);
+        public InputBlockDTO GetUpdateInputBlock(string tableName, int id);
     }
 }

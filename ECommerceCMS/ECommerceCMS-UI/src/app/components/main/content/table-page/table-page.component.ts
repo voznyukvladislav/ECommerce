@@ -26,7 +26,8 @@ export class TablePageComponent implements OnInit {
 
   inputSearch: InputDTO = new InputDTO();
 
-  popupIsOpened: boolean = false;
+  insertionPopupIsOpened: boolean = false;
+  updatePopupIsOpened: boolean = false;
 
   private querySub: Subscription;
   constructor(
@@ -147,9 +148,26 @@ export class TablePageComponent implements OnInit {
       });
     }
    }
-   popupInteraction(): void {
-    this.popupIsOpened = !this.popupIsOpened;
-    if(this.popupIsOpened) {
+   insertionPopupInteraction(): void {
+    this.insertionPopupIsOpened = !this.insertionPopupIsOpened;
+    if(this.insertionPopupIsOpened) {
+      this.inputsService.getInputBlock(this.tableName).subscribe({
+        next: (data: any) => {
+          //console.log(data);
+          this.inputBlock.title = data.title;
+          this.inputBlock.inputGroupDTOs = data.inputGroupDTOs;
+          this.inputBlock.inputDTOs = data.inputDTOs;
+          //console.log(this.inputBlock);
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
+    }    
+   }
+   updatePopupInteraction(): void {
+    this.updatePopupIsOpened = !this.updatePopupIsOpened;
+    if(this.updatePopupIsOpened) {
       this.inputsService.getInputBlock(this.tableName).subscribe({
         next: (data: any) => {
           //console.log(data);
@@ -175,6 +193,44 @@ export class TablePageComponent implements OnInit {
         console.log(error);
       }
     });
+   }
+   updateData(inputBlockDTO: InputBlockDTO, tableDataService: TableDataService): void {
+    tableDataService.updateData(inputBlockDTO).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        location.reload();
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    })
+   }
+
+   deleteItem(data: string[]) {
+    let firstLetter = this.tableName[0].toUpperCase();
+    let upperTableName = firstLetter + this.tableName.slice(1);
+    this.tableDataService.deleteItem(upperTableName, data[0]).subscribe({
+      next: (data: any) => {
+        location.reload();
+      }
+    });
+   }
+   editItem(data: string[]) {
+    this.updatePopupIsOpened = !this.updatePopupIsOpened;
+    if(this.updatePopupIsOpened) {
+      this.inputsService.getUpdateInputBlock(this.tableName, data[0]).subscribe({
+        next: (data: any) => {
+          //console.log(data);
+          this.inputBlock.title = data.title;
+          this.inputBlock.inputGroupDTOs = data.inputGroupDTOs;
+          this.inputBlock.inputDTOs = data.inputDTOs;
+          //console.log(this.inputBlock);
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
+    }    
    }
   ngOnInit(): void {
   }

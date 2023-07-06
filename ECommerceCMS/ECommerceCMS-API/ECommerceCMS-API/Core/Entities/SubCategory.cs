@@ -8,7 +8,7 @@ namespace ECommerceCMS_API.Core.Entities
     {
         [Key]
         public int Id { get; set; }       
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         public Category Category { get; set; } = new Category();
         public int CategoryId { get; set; }

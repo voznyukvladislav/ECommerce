@@ -15,7 +15,13 @@ export class Constants {
 
     static getInputBlock: string = "inputs/getInputBlock";
 
+    static getUpdateInputBlock: string = "inputs/getInputUpdateBlock";
+
     static insertData: string = "tableData/insertData";
+
+    static updateData: string = "tableData/updateData";
+
+    static deleteData: string = "tableData/deleteData";
 }
 
 export enum TableNames {

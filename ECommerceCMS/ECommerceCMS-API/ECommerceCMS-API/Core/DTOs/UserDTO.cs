@@ -29,9 +29,9 @@ namespace ECommerceCMS_API.Core.DTOs
             this.Email = user.Email;
             this.Phone = user.Phone;
             this.RoleId = user.RoleId;
-            if(user.Reviews.Count != 0)
+            if(user.Reviews is not null && user.Reviews?.Count != 0)
                 this.Reviews = String.Join(", ", user.Reviews.Select(r => r.Id));
-            if(user.Orders.Count != 0)
+            if(user.Orders is not null && user.Orders?.Count != 0)
                 this.Orders = String.Join(", ", user.Orders.Select(o => o.Id));
             if(user.ShoppingCarts.Count != 0)
                 this.ShoppingCarts = String.Join(", ", user.ShoppingCarts.Select(sc => sc.Id));

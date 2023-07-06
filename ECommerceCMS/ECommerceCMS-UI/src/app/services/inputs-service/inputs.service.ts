@@ -135,4 +135,8 @@ export class InputsService {
   getInputGroups(templateId: number) {
     return this.http.get(`${Constants.url}/${Constants.getInputGroups}?templateId=${templateId}`)
   }
-}
+
+  getUpdateInputBlock(tableName: string, id: string) {
+    return this.http.get(`${Constants.url}/${Constants.getUpdateInputBlock}?tableName=${tableName}&id=${id}`);
+  }
+ }

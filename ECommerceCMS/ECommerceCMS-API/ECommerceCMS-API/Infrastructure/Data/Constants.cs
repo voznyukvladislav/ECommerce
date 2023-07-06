@@ -16,7 +16,8 @@
             { "ManyOfMany", "manyOfMany" },
             { "SimpleWithSelector", "simpleWithSelector" },
             { "Extensional", "extensional" },
-            { "Search", "search" }
+            { "Search", "search" },
+            { "Static", "static" }
         };
         public static Dictionary<string, string> TableNames { get; } = new Dictionary<string, string>
         {

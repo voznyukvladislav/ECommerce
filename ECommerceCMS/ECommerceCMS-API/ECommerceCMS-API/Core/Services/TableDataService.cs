@@ -17,6 +17,9 @@ namespace ECommerceCMS_API.Core.Services
         private Dictionary<string, Func<int, string>> tableSearchDictionary;
         private Dictionary<string, Func<int, int, string>> tableSimpleDataDictionary;
 
+        private Dictionary<string, Action<InputBlockDTO>> tableInsertionDictionary;
+        private Dictionary<string, Action<InputBlockDTO>> tableUpdateDictionary;
+
         public TableDataService(ECommerceDbContext eCommerceDbContext) {
             this.ECommerceDbContext = eCommerceDbContext;
 
@@ -154,6 +157,26 @@ namespace ECommerceCMS_API.Core.Services
                         data.ForEach(i =>
                         {
                             dtos.Add(new OrderDTO(i));
+                        });
+                        return JsonSerializer.Serialize(dtos);
+                    }
+                },
+                {
+                    "Photos",
+                    (pageNum, pageSize) =>
+                    {
+                        List<Photo> data = this.ECommerceDbContext
+                            .Photos
+                            .OrderBy(a => a.Id)
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize)
+                            .Include(p => p.Product)
+                            .ToList();
+
+                        List<PhotoDTO> dtos = new List<PhotoDTO>();
+                        data.ForEach(i =>
+                        {
+                            dtos.Add(new PhotoDTO(i));
                         });
                         return JsonSerializer.Serialize(dtos);
                     }
@@ -382,6 +405,15 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "Photos",
+                    (pageSize) =>
+                    {
+                        int pagesNum = this.ECommerceDbContext.Photos.Count() / pageSize;
+                        if(pagesNum < 1) pagesNum = 1;
+                        return pagesNum;
+                    }
+                },
+                {
                     "Products",
                     (pageSize) =>
                     {
@@ -564,6 +596,22 @@ namespace ECommerceCMS_API.Core.Services
                         result.ForEach(i =>
                         {
                             resultDTOs.Add(new OrderDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Photos",
+                    (input) =>
+                    {
+                        List<Photo> result = this.ECommerceDbContext
+                        .Photos
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<PhotoDTO> resultDTOs = new List<PhotoDTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new PhotoDTO(i));
                         });
                         return JsonSerializer.Serialize(resultDTOs);
                     }
@@ -908,7 +956,364 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 }
             };
-            
+
+            this.tableInsertionDictionary = new Dictionary<string, Action<InputBlockDTO>>(comparer)
+            {
+                { 
+                    "Attributes",
+                    (inputBlockDTO) =>
+                    {
+                        Core.Entities.Attribute attribute = new Core.Entities.Attribute(inputBlockDTO);
+                        this.ECommerceDbContext.Attributes.Add(attribute);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "AttributeSets",
+                    (inputBlockDTO) =>
+                    {
+                        AttributeSet attributeSet = new AttributeSet(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.AttributeSets.Add(attributeSet);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Categories",
+                    (inputBlockDTO) =>
+                    {
+                        Category category = new Category(inputBlockDTO);
+                        this.ECommerceDbContext.Categories.Add(category);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Discounts",
+                    (inputBlockDTO) =>
+                    {
+                        Discount discount = new Discount(inputBlockDTO);
+                        this.ECommerceDbContext.Discounts.Add(discount);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Measurements",
+                    (inputBlockDTO) =>
+                    {
+                        Measurement measurement = new Measurement(inputBlockDTO);
+                        this.ECommerceDbContext.Measurements.Add(measurement);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "MeasurementSets",
+                    (inputBlockDTO) =>
+                    {
+                        MeasurementSet measurementSet = new MeasurementSet(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.MeasurementSets.Add(measurementSet);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Orders",
+                    (inputBlockDTO) =>
+                    {
+                        Order order = new Order(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Orders.Add(order);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Photos",
+                    (inputBlockDTO) =>
+                    {
+                        Photo photo = new Photo(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Photos.Add(photo);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Products",
+                    (inputBlockDTO) =>
+                    {
+                        Product product = new Product(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Products.Add(product);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Reviews",
+                    (inputBlockDTO) =>
+                    {
+                        Review review = new Review(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Reviews.Add(review);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Roles",
+                    (inputBlockDTO) =>
+                    {
+                        Role role = new Role(inputBlockDTO);
+                        this.ECommerceDbContext.Roles.Add(role);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "ShoppingCarts",
+                    (inputBlockDTO) =>
+                    {
+
+                    }
+                },
+                {
+                    "SubCategories",
+                    (inputBlockDTO) =>
+                    {
+                        SubCategory subCategory = new SubCategory(ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.SubCategories.Add(subCategory);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Templates",
+                    (inputBlockDTO) =>
+                    {
+                        Template template = new Template(ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Templates.Add(template);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Users",
+                    (inputBlockDTO) =>
+                    {
+                        User user = new User(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Users.Add(user);
+
+                        ShoppingCart shoppingCart = new ShoppingCart()
+                        {
+                            User = user,
+                            UserId = user.Id
+                        };
+                        this.ECommerceDbContext.ShoppingCarts.Add(shoppingCart);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Values",
+                    (inputBlockDTO) =>
+                    {
+                        Value value = new Value(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Values.Add(value);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                }
+            };
+            this.tableUpdateDictionary = new Dictionary<string, Action<InputBlockDTO>>(comparer)
+            {
+                {
+                    "Attributes",
+                    (inputBlockDTO) =>
+                    {
+                        Core.Entities.Attribute attribute = new Core.Entities.Attribute(inputBlockDTO);
+                        this.ECommerceDbContext.Attributes.Update(attribute);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "AttributeSets",
+                    (inputBlockDTO) =>
+                    {
+                        AttributeSet attributeSet = new AttributeSet(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.AttributeSets.Update(attributeSet);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Categories",
+                    (inputBlockDTO) =>
+                    {
+                        Category category = new Category(inputBlockDTO);
+                        this.ECommerceDbContext.Categories.Update(category);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Discounts",
+                    (inputBlockDTO) =>
+                    {
+                        Discount discount = new Discount(inputBlockDTO);
+                        this.ECommerceDbContext.Discounts.Update(discount);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Measurements",
+                    (inputBlockDTO) =>
+                    {
+                        Measurement measurement = new Measurement(inputBlockDTO);
+                        this.ECommerceDbContext.Measurements.Update(measurement);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "MeasurementSets",
+                    (inputBlockDTO) =>
+                    {
+                        MeasurementSet measurementSet = new MeasurementSet(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.MeasurementSets.Update(measurementSet);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Orders",
+                    (inputBlockDTO) =>
+                    {
+                        Order order = new Order(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Orders.Update(order);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Photos",
+                    (inputBlockDTO) =>
+                    {
+                        Photo photo = new Photo(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Photos.Update(photo);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Products",
+                    (inputBlockDTO) =>
+                    {
+                        Product product = new Product(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Products.Update(product);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Reviews",
+                    (inputBlockDTO) =>
+                    {
+                        Review review = new Review(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Reviews.Update(review);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Roles",
+                    (inputBlockDTO) =>
+                    {
+                        Role role = new Role(inputBlockDTO);
+                        this.ECommerceDbContext.Roles.Update(role);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "ShoppingCarts",
+                    (inputBlockDTO) =>
+                    {
+
+                    }
+                },
+                {
+                    "SubCategories",
+                    (inputBlockDTO) =>
+                    {
+                        SubCategory subCategory = new SubCategory(ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.SubCategories.Update(subCategory);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Templates",
+                    (inputBlockDTO) =>
+                    {
+                        Template template = new Template(ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Templates.Update(template);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Users",
+                    (inputBlockDTO) =>
+                    {
+                        User user = new User(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Users.Update(user);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Values",
+                    (inputBlockDTO) =>
+                    {
+                        Value value = new Value(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Values.Update(value);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                }
+            };
         }
 
         public string GetTableData(string tableName, int pageNum, int pageSize)
@@ -944,102 +1349,174 @@ namespace ECommerceCMS_API.Core.Services
 
         public void InsertData(InputBlockDTO inputBlockDTO)
         {
-            switch (inputBlockDTO.Title)
+            this.tableInsertionDictionary[inputBlockDTO.Title](inputBlockDTO);
+        }
+        public void DeleteData(string tableName, int id)
+        {
+            switch (tableName)
             {
                 case "Attributes":
-                    Core.Entities.Attribute attribute = new Core.Entities.Attribute(inputBlockDTO);
-                    this.ECommerceDbContext.Attributes.Add(attribute);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Attributes
+                        .Remove(ECommerceDbContext
+                            .Attributes
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "AttributeSets":
-                    AttributeSet attributeSet = new AttributeSet(this.ECommerceDbContext, inputBlockDTO);
-                    this.ECommerceDbContext.AttributeSets.Add(attributeSet);
-                    this.ECommerceDbContext.SaveChanges();
-                    
-                    return;
+                    ECommerceDbContext.AttributeSets
+                        .Remove(ECommerceDbContext
+                            .AttributeSets
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
+
+                    break;
 
                 case "Categories":
-                    Category category = new Category(inputBlockDTO);
-                    this.ECommerceDbContext.Categories.Add(category);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Categories
+                        .Remove(ECommerceDbContext
+                            .Categories
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "Discounts":
-                    Discount discount = new Discount(inputBlockDTO);
-                    this.ECommerceDbContext.Discounts.Add(discount);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Discounts
+                        .Remove(ECommerceDbContext
+                            .Discounts
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "Measurements":
-                    Measurement measurement = new Measurement(inputBlockDTO);
-                    this.ECommerceDbContext.Measurements.Add(measurement);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Measurements
+                        .Remove(ECommerceDbContext
+                            .Measurements
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "MeasurementSets":
-                    MeasurementSet measurementSet = new MeasurementSet(this.ECommerceDbContext, inputBlockDTO);
-                    this.ECommerceDbContext.MeasurementSets.Add(measurementSet);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.MeasurementSets
+                        .Remove(ECommerceDbContext
+                            .MeasurementSets
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "Orders":
-                    return;
+                    ECommerceDbContext.Orders
+                        .Remove(ECommerceDbContext
+                            .Orders
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
+
+                    break;
 
                 case "Photos":
-                    return;
+                    ECommerceDbContext.Photos
+                        .Remove(ECommerceDbContext
+                            .Photos
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
+
+                    break;
 
                 case "Products":
-                    Product product = new Product(this.ECommerceDbContext, inputBlockDTO);
-                    this.ECommerceDbContext.Products.Add(product);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Products
+                        .Remove(ECommerceDbContext
+                            .Products
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "Reviews":
-                    return;
+                    ECommerceDbContext.Reviews
+                        .Remove(ECommerceDbContext
+                            .Reviews
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
+
+                    break;
 
                 case "Roles":
-                    Role role = new Role(inputBlockDTO);
-                    this.ECommerceDbContext.Roles.Add(role);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Roles
+                        .Remove(ECommerceDbContext
+                            .Roles
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "ShoppingCarts":
-                    return;
+                    break;
 
                 case "SubCategories":
-                    SubCategory subCategory = new SubCategory(ECommerceDbContext, inputBlockDTO);
-                    this.ECommerceDbContext.SubCategories.Add(subCategory);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.SubCategories
+                        .Remove(ECommerceDbContext
+                            .SubCategories
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "Templates":
-                    Template template = new Template(ECommerceDbContext, inputBlockDTO);
-                    this.ECommerceDbContext.Templates.Add(template);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Templates
+                        .Remove(ECommerceDbContext
+                            .Templates
+                            .Where(a => a.Id == id)
+                            .First()
+                        );
 
-                    return;
+                    break;
 
                 case "Users":
-                    User user = new User(inputBlockDTO);
-                    this.ECommerceDbContext.Users.Add(user);
-                    this.ECommerceDbContext.SaveChanges();
+                    ECommerceDbContext.Users
+                         .Remove(ECommerceDbContext
+                             .Users
+                             .Where(a => a.Id == id)
+                             .First()
+                         );
 
-                    return;
+                    break;
 
                 case "Values":
-                    return;
+                    ECommerceDbContext.Values
+                         .Remove(ECommerceDbContext
+                             .Values
+                             .Where(a => a.Id == id)
+                             .First()
+                         );
+
+                    break;
 
                 default: return;
             }
+
+            this.ECommerceDbContext.SaveChanges();
+        }
+
+        public void UpdateData(InputBlockDTO inputBlockDTO)
+        {
+            this.tableUpdateDictionary[inputBlockDTO.Title](inputBlockDTO);
         }
     }
 }
