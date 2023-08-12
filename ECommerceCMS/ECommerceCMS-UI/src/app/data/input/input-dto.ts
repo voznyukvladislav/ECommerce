@@ -6,7 +6,8 @@ export enum InputTypes {
     manyOfMany = "manyOfMany",
     simpleWithSelector = "simpleWithSelector",
     extensional = "extensional",
-    search = "search"
+    search = "search",
+    boolean = "boolean"
 }
 
 export class InputDTO {

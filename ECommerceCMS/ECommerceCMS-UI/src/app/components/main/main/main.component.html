@@ -1,4 +1,6 @@
 <div class="main-wrapper">
     <app-sidebar (mouseover)="sidebarHover()" (mouseout)="sidebarHover()" [isMaximized]="sidebarIsHovered"></app-sidebar>
-    <app-content></app-content>
+    <app-content>
+        <ng-content></ng-content>
+    </app-content>
 </div>

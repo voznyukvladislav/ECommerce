@@ -19,7 +19,7 @@
     border: 1px solid var(--secondary-color);
     outline: 0px solid var(--secondary-color);;
     cursor: pointer;
-    transition: var(--smooth-transition);
+    transition: var(--smooth-transition), outline 0s linear;
 }
 .opened {
     outline: 2px solid var(--secondary-color);
@@ -65,7 +65,7 @@
     box-sizing: border-box;
     border: 1px solid var(--secondary-color);
     outline: 2px solid var(--secondary-color);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .result-item {
     width: 100%;

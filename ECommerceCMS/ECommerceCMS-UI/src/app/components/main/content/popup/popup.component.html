@@ -1,8 +1,11 @@
 <div class="popup-wrapper">    
-    <div class="popup-container" [ngClass]="{ 'scale1': !isOpened, 'scale0': isOpened }">
+    <div class="popup-container"
+        (keyup.enter)="popupServiceItem.clickFunction(popupServiceItem.inputBlockDTO, http, showMessage)"
+        (keyup.enter)="popupInteraction()"
+        (keyup.escape)="popupInteraction()">
         <div class="menu">
             <div class="title-container">
-                <a class="title">{{ inputBlockDTO.title | firstToUpper }}</a>
+                <a class="title">{{ popupServiceItem.inputBlockDTO.title | firstToUpper }}</a>
             </div>
             <a class="close" (click)="popupInteraction()">
                 <img class="close-img" src="../assets/icons/close.png">
@@ -14,7 +17,7 @@
             </div>
         </div>
         <div class="menu">
-            <a class="close flex1" (click)="click(inputBlockDTO, tableDataService)" (click)="popupInteraction()">
+            <a class="close flex1" (click)="popupServiceItem.clickFunction()" (click)="popupInteraction()">
                 <img class="close-img" src="../assets/icons/accept.png">
             </a>
             <a class="close flex1" (click)="popupInteraction()">

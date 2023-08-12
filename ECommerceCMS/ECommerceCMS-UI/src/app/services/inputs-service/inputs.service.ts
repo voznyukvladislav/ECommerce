@@ -139,4 +139,8 @@ export class InputsService {
   getUpdateInputBlock(tableName: string, id: string) {
     return this.http.get(`${Constants.url}/${Constants.getUpdateInputBlock}?tableName=${tableName}&id=${id}`);
   }
+
+  getInputLoginBlock() {
+    return this.http.get(`${Constants.url}/${Constants.getLoginInputBlock}`);
+  }
  }

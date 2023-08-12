@@ -17,7 +17,9 @@
             { "SimpleWithSelector", "simpleWithSelector" },
             { "Extensional", "extensional" },
             { "Search", "search" },
-            { "Static", "static" }
+            { "Static", "static" },
+            { "Boolean", "boolean" },
+            { "Password", "password" }
         };
         public static Dictionary<string, string> TableNames { get; } = new Dictionary<string, string>
         {

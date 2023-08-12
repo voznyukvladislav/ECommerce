@@ -1,3 +1,15 @@
-<app-header></app-header>
-<app-main></app-main>
-<app-footer></app-footer>
+<div class="app">
+    <div class="shading" [ngClass]="{'opacity05': popupIsOpened, 'opacity0 back': !popupIsOpened}"></div>
+    <app-popup 
+    [ngClass]="{'beforePopup': !popupIsOpened, 'afterPopup': popupIsOpened }"
+    [popupServiceItem]="popupServiceItem"
+    (onPopupInteraction)="open({inputBlockDTO: popupServiceItem.inputBlockDTO, popupIsOpened: false})">
+        <app-inputs-handler [inputsBlock]="popupServiceItem.inputBlockDTO"></app-inputs-handler>
+    </app-popup>
+
+    <app-message-box *ngFor="let message of messagesArr, let i = index" [message]="messagesArr[i]"></app-message-box>
+
+    <app-header></app-header>
+    <app-main></app-main>
+    <app-footer></app-footer>
+</div>

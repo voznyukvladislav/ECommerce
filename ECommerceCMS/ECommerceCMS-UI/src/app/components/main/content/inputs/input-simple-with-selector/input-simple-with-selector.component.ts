@@ -21,7 +21,7 @@ export class InputSimpleWithSelectorComponent extends InputComponent implements 
   search() {
     this.isOpened = !this.isOpened;
     if(this.items.length == 0) {
-      this.http.get(this.input.links[0]).subscribe({
+      this.http.get(this.input.links[0], { withCredentials: true }).subscribe({
         next: (data: any) => {
           data.forEach((element: any) => {
             this.items.push(element);

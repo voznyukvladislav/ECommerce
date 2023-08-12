@@ -10,6 +10,7 @@ namespace ECommerceCMS_API.Core.Entities
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsFilter { get; set; }
         public MeasurementSet? MeasurementSet { get; set; }
         public int? MeasurementSetId { get; set; }
 
@@ -27,7 +28,11 @@ namespace ECommerceCMS_API.Core.Entities
                 this.Id = Int32.Parse(nameValue["Attribute.Id"]);
 
             this.Name = nameValue["Attribute.Name"];
-            if(nameValue.ContainsKey("Attribute.MeasurementSetId"))
+
+            if (nameValue["Attribute.IsFilter"] == "true") this.IsFilter = true;
+            else this.IsFilter = false;
+
+            if (nameValue.ContainsKey("Attribute.MeasurementSetId"))
                 this.MeasurementSetId = Int32.Parse(nameValue["Attribute.MeasurementSetId"]);
         }
     }

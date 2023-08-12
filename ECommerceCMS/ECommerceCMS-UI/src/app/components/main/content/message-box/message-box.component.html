@@ -1,0 +1,17 @@
+<div class="message-box" #messageBox>
+    <div class="menu">
+        <div class="title-container">
+            <a class="title">{{message.title}}</a>
+        </div>        
+        <a class="close" (click)="closeMessage()">
+            <img src="../assets/icons/close.png" class="close-img">
+        </a>
+    </div>
+    <div class="progress" #progress></div>
+    <div class="status" [ngClass]="{'successful-color': message.status == statusSuccessful, 'failed-color': message.status == statusFailed }">
+        {{message.status}}
+    </div>
+    <div class="text">
+        {{message.text}}
+    </div>
+</div>

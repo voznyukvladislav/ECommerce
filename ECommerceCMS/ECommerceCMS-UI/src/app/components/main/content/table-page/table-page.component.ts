@@ -6,6 +6,12 @@ import { InputsService } from 'src/app/services/inputs-service/inputs.service';
 import { TableDataService } from 'src/app/services/table-data-service/table-data.service';
 import { TableMetadataService } from 'src/app/services/table-metadata-service/table-metadata.service';
 import { InputDTO } from 'src/app/data/input/input-dto';
+import { PopupServiceItem } from 'src/app/data/popup-service-item';
+import { PopupService } from 'src/app/services/popup-service/popup.service';
+import { LoginService } from 'src/app/services/login-service/login.service';
+import { AuthenticationHandler } from 'src/app/data/authentication-handler';
+import { MessageService } from 'src/app/services/message-service/message.service';
+import { Message } from 'src/app/data/message';
 
 @Component({
   selector: 'app-table-page',
@@ -13,7 +19,6 @@ import { InputDTO } from 'src/app/data/input/input-dto';
   styleUrls: ['./table-page.component.css']
 })
 export class TablePageComponent implements OnInit {
-
   tableName: string = '';
   tableMetadata: Array<string> = new Array<string>();
   tableData: Array<Array<string>> = new Array<Array<string>>();
@@ -22,20 +27,27 @@ export class TablePageComponent implements OnInit {
   pageNum: number = 1;
   pagesNum: number = 1;
 
-  inputBlock: InputBlockDTO = new InputBlockDTO();
+  popupServiceItem: PopupServiceItem = new PopupServiceItem();
 
   inputSearch: InputDTO = new InputDTO();
 
-  insertionPopupIsOpened: boolean = false;
-  updatePopupIsOpened: boolean = false;
-
   private querySub: Subscription;
+
   constructor(
     private route: ActivatedRoute,
     private tableMetadataService: TableMetadataService,
     private tableDataService: TableDataService,
-    private inputsService: InputsService)
+    private inputsService: InputsService,
+    private popupService: PopupService,
+    private loginService: LoginService,
+    private messageService: MessageService)
     {
+      popupService.getPopup().subscribe({
+        next: data => {
+          this.popupServiceItem = data;
+        }
+      });
+
       this.querySub = route.queryParams.subscribe(
         (queryParam: any) => {
           this.tableName = queryParam['tableName'];
@@ -44,12 +56,22 @@ export class TablePageComponent implements OnInit {
       
       route.queryParams.subscribe(
         queryParam => {
+          this.loginService.isAuthorized().subscribe({
+            error: error => {
+              AuthenticationHandler.LogOut(localStorage);
+              let message: Message = error.error;
+              console.log(message);
+              this.messageService.addMessage(message);
+            }
+          });
+
           let tableName = queryParam['tableName'];
           this.tableMetadataService.getTableMetadata(tableName).subscribe({
             next: data => {
               this.tableMetadata = Object.keys(data);
             }
           });
+
           this.tableDataService.getTableData(tableName, this.pageNum, this.pageSize).subscribe({
             next: (data: any) => {
               this.tableData = new Array<Array<string>>();
@@ -58,24 +80,24 @@ export class TablePageComponent implements OnInit {
                 this.tableData.push(new Array<string>());
                 Object.values(element).forEach((field: any) => {
                   this.tableData[i].push(field);
-                })
+                });
                 i++;
               });
-
-              console.log(this.tableData);
             }
           });
+
           this.tableDataService.getPagesNumber(tableName, this.pageSize).subscribe({
             next: (data: any) => {
               this.pagesNum = data;
             }
           });
+          
           this.inputSearch = InputDTO.CreateSearch('Name', 'Search something...', this.tableName);
         }
       );
-   }
+  }
 
-   getLeftPage(): void {
+  getLeftPage(): void {
     if(this.pageNum > 1) {
       this.pageNum--;      
 
@@ -87,56 +109,7 @@ export class TablePageComponent implements OnInit {
       this.tableDataService.getTableData(this.tableName, this.pageNum, this.pageSize).subscribe({
         next: (data: any) => {
           this.tableData = new Array<Array<string>>();
-              let i = 0;
-              data.forEach((element: any) => {
-                this.tableData.push(new Array<string>());
-                Object.values(element).forEach((field: any) => {
-                  this.tableData[i].push(field);
-                })
-                i++;
-              });
-        }
-      });
-    }
-   }
-   getRightPage(): void {
-    if(this.pageNum < this.pagesNum) {
-      this.pageNum++;
-
-      this.tableDataService.getPagesNumber(this.tableName, this.pageSize).subscribe({
-        next: (data: any) => {
-          this.pagesNum = data;
-        }
-      });      
-      this.tableDataService.getTableData(this.tableName, this.pageNum, this.pageSize).subscribe({
-        next: (data: any) => {
-          this.tableData = new Array<Array<string>>();
-              let i = 0;
-              data.forEach((element: any) => {
-                this.tableData.push(new Array<string>());
-                Object.values(element).forEach((field: any) => {
-                  this.tableData[i].push(field);
-                })
-                i++;
-              });
-          }
-      });
-    }
-   }
-   load(): void {
-    if(this.pageNum < this.pagesNum) {
-      this.pageNum++;
-
-      this.tableDataService.getPagesNumber(this.tableName, this.pageSize).subscribe({
-        next: (data: any) => {
-          this.pagesNum = data;
-        }
-      });
-  
-      this.tableDataService.getTableData(this.tableName, this.pageNum, this.pageSize).subscribe({
-        next: (data: any) => {
-          //this.tableData = new Array<Array<string>>();
-          let i = this.tableData.length;
+          let i = 0;
           data.forEach((element: any) => {
             this.tableData.push(new Array<string>());
             Object.values(element).forEach((field: any) => {
@@ -145,93 +118,154 @@ export class TablePageComponent implements OnInit {
             i++;
           });
         }
-      });
+      })
     }
-   }
-   insertionPopupInteraction(): void {
-    this.insertionPopupIsOpened = !this.insertionPopupIsOpened;
-    if(this.insertionPopupIsOpened) {
-      this.inputsService.getInputBlock(this.tableName).subscribe({
-        next: (data: any) => {
-          //console.log(data);
-          this.inputBlock.title = data.title;
-          this.inputBlock.inputGroupDTOs = data.inputGroupDTOs;
-          this.inputBlock.inputDTOs = data.inputDTOs;
-          //console.log(this.inputBlock);
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      });
-    }    
-   }
-   updatePopupInteraction(): void {
-    this.updatePopupIsOpened = !this.updatePopupIsOpened;
-    if(this.updatePopupIsOpened) {
-      this.inputsService.getInputBlock(this.tableName).subscribe({
-        next: (data: any) => {
-          //console.log(data);
-          this.inputBlock.title = data.title;
-          this.inputBlock.inputGroupDTOs = data.inputGroupDTOs;
-          this.inputBlock.inputDTOs = data.inputDTOs;
-          //console.log(this.inputBlock);
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      });
-    }    
-   }
+  }
 
-   insertData(inputBlockDTO: InputBlockDTO, tableDataService: TableDataService): void {
-    tableDataService.insertData(inputBlockDTO).subscribe({
-      next: (response: any) => {
-        console.log(response);
-        location.reload();
+  getRightPage(): void {
+  if(this.pageNum < this.pagesNum) {
+    this.pageNum++;
+
+    this.tableDataService.getPagesNumber(this.tableName, this.pageSize).subscribe({
+      next: (data: any) => {
+        this.pagesNum = data;
+      }
+    });      
+    this.tableDataService.getTableData(this.tableName, this.pageNum, this.pageSize).subscribe({
+      next: (data: any) => {
+        this.tableData = new Array<Array<string>>();
+            let i = 0;
+            data.forEach((element: any) => {
+              this.tableData.push(new Array<string>());
+              Object.values(element).forEach((field: any) => {
+                this.tableData[i].push(field);
+              })
+              i++;
+            });
+        }
+    });
+  }
+  }
+
+  load(): void {
+  if(this.pageNum < this.pagesNum) {
+    this.pageNum++;
+
+    this.tableDataService.getPagesNumber(this.tableName, this.pageSize).subscribe({
+      next: (data: any) => {
+        this.pagesNum = data;
+      }
+    });
+
+    this.tableDataService.getTableData(this.tableName, this.pageNum, this.pageSize).subscribe({
+      next: (data: any) => {
+        //this.tableData = new Array<Array<string>>();
+        let i = this.tableData.length;
+        data.forEach((element: any) => {
+          this.tableData.push(new Array<string>());
+          Object.values(element).forEach((field: any) => {
+            this.tableData[i].push(field);
+          })
+          i++;
+        });
+      }
+    });
+  }
+  }
+
+  openInsertion(): void {
+    this.inputsService.getInputBlock(this.tableName).subscribe({
+      next: (data: any) => {
+        this.popupServiceItem.inputBlockDTO.title = data.title;
+        this.popupServiceItem.inputBlockDTO.inputDTOs = data.inputDTOs;
+        this.popupServiceItem.inputBlockDTO.inputGroupDTOs = data.inputGroupDTOs;
+        this.popupServiceItem.clickFunction = this.insertData.bind(this);
+
+        this.popupService.open(this.popupServiceItem);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    }) 
+  }
+
+  openUpdate(id: string): void {
+    this.inputsService.getUpdateInputBlock(this.tableName, id).subscribe({
+      next: (data: any) => {
+        this.popupServiceItem.inputBlockDTO.title = data.title;
+        this.popupServiceItem.inputBlockDTO.inputDTOs = data.inputDTOs;
+        this.popupServiceItem.inputBlockDTO.inputGroupDTOs = data.inputGroupDTOs;
+        this.popupServiceItem.clickFunction = this.updateData.bind(this);
+
+        this.popupService.open(this.popupServiceItem);
       },
       error: (error: any) => {
         console.log(error);
       }
     });
-   }
-   updateData(inputBlockDTO: InputBlockDTO, tableDataService: TableDataService): void {
-    tableDataService.updateData(inputBlockDTO).subscribe({
-      next: (response: any) => {
-        console.log(response);
+  }
+
+  private insertData(): void {
+  this.tableDataService.insertData(this.popupServiceItem.inputBlockDTO).subscribe({
+    next: (data: any) => {
+      let message = data;
+      Message.registerMessage(message, sessionStorage);      
+
+      location.reload();
+    },
+    error: (error: any) => {
+      let message = error.error;
+      this.messageService.addMessage(message);
+
+      if(error.status == 401) {
+        AuthenticationHandler.LogOut(localStorage);
+        location.reload();
+      }
+    }
+  });
+  }
+
+  private updateData(): void {
+    this.tableDataService.updateData(this.popupServiceItem.inputBlockDTO).subscribe({
+      next: (data: any) => {
+        let message = data;
+        Message.registerMessage(message, sessionStorage);
+
         location.reload();
       },
       error: (error: any) => {
-        console.log(error);
+        let message = error.error;
+        this.messageService.addMessage(message);
+
+        if(error.status == 401) {
+          AuthenticationHandler.LogOut(localStorage);
+          location.reload();
+        }
       }
     })
-   }
+  }
 
-   deleteItem(data: string[]) {
+  deleteData(id: string) {
     let firstLetter = this.tableName[0].toUpperCase();
     let upperTableName = firstLetter + this.tableName.slice(1);
-    this.tableDataService.deleteItem(upperTableName, data[0]).subscribe({
+    this.tableDataService.deleteItem(upperTableName, id).subscribe({
       next: (data: any) => {
+        let message = data;
+        Message.registerMessage(message, sessionStorage);    
         location.reload();
+      },
+      error: error => {
+        let message = error.error;
+        this.messageService.addMessage(message);
+
+        if(error.status == 401) {
+          AuthenticationHandler.LogOut(localStorage);
+          location.reload();
+        }
       }
     });
-   }
-   editItem(data: string[]) {
-    this.updatePopupIsOpened = !this.updatePopupIsOpened;
-    if(this.updatePopupIsOpened) {
-      this.inputsService.getUpdateInputBlock(this.tableName, data[0]).subscribe({
-        next: (data: any) => {
-          //console.log(data);
-          this.inputBlock.title = data.title;
-          this.inputBlock.inputGroupDTOs = data.inputGroupDTOs;
-          this.inputBlock.inputDTOs = data.inputDTOs;
-          //console.log(this.inputBlock);
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      });
-    }    
-   }
+  }
+
   ngOnInit(): void {
   }
 }

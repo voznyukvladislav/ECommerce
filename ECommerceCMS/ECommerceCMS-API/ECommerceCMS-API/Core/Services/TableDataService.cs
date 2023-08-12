@@ -1,5 +1,6 @@
 ﻿using ECommerceCMS_API.Core.DTOs;
 using ECommerceCMS_API.Core.DTOs.DbInteractionDTOs;
+using ECommerceCMS_API.Core.DTOs.EntityDTOs;
 using ECommerceCMS_API.Core.Entities;
 using ECommerceCMS_API.Core.Interfaces;
 using ECommerceCMS_API.Infrastructure.Data;
@@ -303,10 +304,11 @@ namespace ECommerceCMS_API.Core.Services
                     "Users",
                     (pageNum, pageSize) => {
                         List<User> data = this.ECommerceDbContext
-                            .Users
+                            .Users                            
                             .OrderBy(a => a.Id)
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
+                            .Include(u => u.Role)
                             .ToList();
 
                         List<UserDTO> dtos = new List<UserDTO>();
@@ -1351,6 +1353,11 @@ namespace ECommerceCMS_API.Core.Services
         {
             this.tableInsertionDictionary[inputBlockDTO.Title](inputBlockDTO);
         }
+        public void InsertData(InputBlockDTO inputBlockDTO, out Message message)
+        {
+            this.tableInsertionDictionary[inputBlockDTO.Title](inputBlockDTO);
+            message = Message.CreateSuccessful("Inserted", $"Data in table {inputBlockDTO.Title} has been inserted successfully.");
+        }
         public void DeleteData(string tableName, int id)
         {
             switch (tableName)
@@ -1517,6 +1524,12 @@ namespace ECommerceCMS_API.Core.Services
         public void UpdateData(InputBlockDTO inputBlockDTO)
         {
             this.tableUpdateDictionary[inputBlockDTO.Title](inputBlockDTO);
+        }
+
+        public void UpdateData(InputBlockDTO inputBlockDTO, out Message message)
+        {            
+            this.tableUpdateDictionary[inputBlockDTO.Title](inputBlockDTO);
+            message = Message.CreateSuccessful("Updated", $"Data in table {inputBlockDTO.Title} has been updated successfully.");
         }
     }
 }

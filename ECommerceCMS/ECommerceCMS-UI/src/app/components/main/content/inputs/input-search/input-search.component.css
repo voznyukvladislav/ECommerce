@@ -35,7 +35,7 @@
     background-color: var(--primary-color);
     border: 1px solid var(--secondary-color);
     outline: 2px solid var(--secondary-color);
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .result-item {
     width: 100%;

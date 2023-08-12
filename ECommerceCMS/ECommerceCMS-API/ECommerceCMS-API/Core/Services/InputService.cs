@@ -24,6 +24,7 @@ namespace ECommerceCMS_API.Core.Services
                         InputBlockDTO inputBlockDTO = new InputBlockDTO();
                         inputBlockDTO.Title = "Attributes";
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Attribute.Name", "Enter attribute name"));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateBoolean("Attribute.IsFilter", "Is filter"));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Attribute.MeasurementSetId", "Select measurement set", "MeasurementSets"));
 
                         return inputBlockDTO;
@@ -218,6 +219,7 @@ namespace ECommerceCMS_API.Core.Services
                             .First();
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Attribute.Id", attribute.Id.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Attribute.Name", "Enter attribute name", attribute.Name));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateBoolean("Attribute.IsFilter", "Is filter", attribute.IsFilter.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Attribute.MeasurementSetId", "Select measurement set", "MeasurementSets", attribute.MeasurementSetId?.ToString()));
 
                         return inputBlockDTO;
@@ -546,6 +548,15 @@ namespace ECommerceCMS_API.Core.Services
             });
 
             return inputGroups;
+        }
+        public InputBlockDTO GetLoginInputBlock()
+        {
+            InputBlockDTO inputBlockDTO = new InputBlockDTO();
+            inputBlockDTO.Title = "Login";
+            inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("LoginForm.Login", "Enter login or email"));
+            inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimplePassword("LoginForm.Password", "Enter password"));
+
+            return inputBlockDTO;
         }
         public InputBlockDTO GetInputBlock(string tableName)
         {

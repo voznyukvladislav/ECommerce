@@ -45,6 +45,9 @@ namespace ECommerceCMS_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("IsFilter")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("MeasurementSetId")
                         .HasColumnType("int");
 
@@ -358,11 +361,11 @@ namespace ECommerceCMS_API.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Login")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -384,6 +387,12 @@ namespace ECommerceCMS_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Login")
+                        .IsUnique();
 
                     b.HasIndex("RoleId");
 

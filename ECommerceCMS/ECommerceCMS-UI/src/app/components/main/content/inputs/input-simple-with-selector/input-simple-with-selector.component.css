@@ -38,7 +38,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: var(--smooth-transition);
+    transition: var(--smooth-transition), outline 0s linear;
     cursor: pointer;
 }
 .input-selector:hover {

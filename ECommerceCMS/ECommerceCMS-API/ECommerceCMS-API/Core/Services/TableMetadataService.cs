@@ -1,4 +1,4 @@
-﻿using ECommerceCMS_API.Core.DTOs;
+﻿using ECommerceCMS_API.Core.DTOs.EntityDTOs;
 using ECommerceCMS_API.Core.Entities;
 using ECommerceCMS_API.Core.Interfaces;
 using ECommerceCMS_API.Infrastructure.Data;

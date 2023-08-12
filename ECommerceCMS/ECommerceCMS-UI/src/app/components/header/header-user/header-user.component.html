@@ -1,0 +1,14 @@
+<div class="login-container" (click)="open()" (mouseenter)="loginHover()" (mouseleave)="loginHover()">
+    <a class="title">{{storage.getItem("UserDTO.Login")! != null ? storage.getItem("UserDTO.Login")! : "Login"}}</a>
+    <img class="login-img" src="../assets/icons/login.png">
+</div>
+<div class="user-info" 
+*ngIf="storage.getItem('UserDTO.Login')! != null" 
+[ngClass]="{'opacity1 z-index2': isLoginHovered }" 
+(mouseenter)="loginHover()" (mouseleave)="loginHover()">
+    <a class="info-item">Name: {{ storage.getItem("UserDTO.Surname")! + " " + storage.getItem("UserDTO.Name")! }}</a>
+    <a class="info-item">Role: {{ storage.getItem("UserDTO.Role")! }}</a>
+    <a class="info-item">Email: {{ storage.getItem("UserDTO.Email")! }}</a>
+    <a class="info-item">Phone: {{ storage.getItem("UserDTO.Phone")! }}</a>
+    <a class="button" (click)="logoutRequest()" (click)="loginHover()">Logout</a>
+</div>

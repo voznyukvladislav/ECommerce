@@ -33,7 +33,7 @@ export class InputExtensionalComponent extends InputComponent implements OnInit 
     this.selectedItem = new SimpleDTO("", "");
     this.items = [];
     
-    this.http.get(this.input.links[0] + `&pageSize=${this.pageSize}&pageNumber=${this.pageNumber}`).subscribe({
+    this.http.get(this.input.links[0] + `&pageSize=${this.pageSize}&pageNumber=${this.pageNumber}`, { withCredentials: true }).subscribe({
       next: (data: any) => {
         data.forEach((el: any) => {
           this.items.push(new SimpleDTO(el.Id, el.Name));
@@ -48,7 +48,7 @@ export class InputExtensionalComponent extends InputComponent implements OnInit 
     this.selectedItem = item;
     this.input.values[0] = this.selectedItem.id.toString();
 
-    this.http.get(`${Constants.url}/${Constants.getInputGroups}?templateId=${this.input.values[0]}`).subscribe({
+    this.http.get(`${Constants.url}/${Constants.getInputGroups}?templateId=${this.input.values[0]}`, { withCredentials: true }).subscribe({
       next: (data: any) => {
         this.inputBlockDTO.inputGroupDTOs = data;
         console.log(this.inputBlockDTO);

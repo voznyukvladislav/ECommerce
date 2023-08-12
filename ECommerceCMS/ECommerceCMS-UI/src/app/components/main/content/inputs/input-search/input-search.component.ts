@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InputComponent } from '../input/input.component';
 import { TableDataService } from 'src/app/services/table-data-service/table-data.service';
 import { SimpleDTO } from 'src/app/data/simple-dto';
@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class InputSearchComponent extends InputComponent implements OnInit {
 
+  @Output() onResultClick = new EventEmitter<string>();
+
   items: Array<SimpleDTO> = new Array<SimpleDTO>();
   selectedItem: SimpleDTO = new SimpleDTO("", "");
 
@@ -22,7 +24,7 @@ export class InputSearchComponent extends InputComponent implements OnInit {
     this.selectedItem = new SimpleDTO("", "");
     this.items = [];
     if(this.input.values[0] && !isNaN(Number(this.input.values[0]))) {
-      this.http.get(this.input.links[0] + `&input=${this.input.values[0]}`).subscribe({
+      this.http.get(this.input.links[0] + `&input=${this.input.values[0]}`, { withCredentials: true }).subscribe({
         next: (data: any) => {
           data.forEach((el: any) => {
             this.items.push(new SimpleDTO(el.Id, el.Name));
@@ -35,5 +37,7 @@ export class InputSearchComponent extends InputComponent implements OnInit {
     this.items = [];
     this.selectedItem = item;
     this.input.values[0] = this.selectedItem.output();
+
+    this.onResultClick.emit(this.selectedItem.id);
   }
 }

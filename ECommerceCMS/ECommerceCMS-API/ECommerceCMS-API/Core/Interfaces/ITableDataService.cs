@@ -14,7 +14,9 @@ namespace ECommerceCMS_API.Core.Interfaces
         public List<SimpleDTO> GetMeasurementsFromSet(int measurementSetId);
 
         public void InsertData(InputBlockDTO inputBlockDTO);
+        public void InsertData(InputBlockDTO inputBlockDTO, out Message message);
         public void UpdateData(InputBlockDTO inputBlockDTO);
+        public void UpdateData(InputBlockDTO inputBlockDTO, out Message message);
         public void DeleteData(string tableName, int id);
     }
 }

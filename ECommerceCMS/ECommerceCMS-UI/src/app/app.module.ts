@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header/header.component';
@@ -24,6 +25,10 @@ import { InputOneOfManyComponent } from './components/main/content/inputs/input-
 import { InputManyOfManyComponent } from './components/main/content/inputs/input-many-of-many/input-many-of-many.component';
 import { InputSimpleWithSelectorComponent } from './components/main/content/inputs/input-simple-with-selector/input-simple-with-selector.component';
 import { InputExtensionalComponent } from './components/main/content/inputs/input-extensional/input-extensional.component';
+import { InputBooleanComponent } from './components/main/content/inputs/input-boolean/input-boolean.component';
+import { HeaderUserComponent } from './components/header/header-user/header-user.component';
+import { InputSimplePasswordComponent } from './components/main/content/inputs/input-simple-password/input-simple-password.component';
+import { MessageBoxComponent } from './components/main/content/message-box/message-box.component';
 
 @NgModule({
   declarations: [
@@ -46,13 +51,18 @@ import { InputExtensionalComponent } from './components/main/content/inputs/inpu
     InputOneOfManyComponent,
     InputManyOfManyComponent,
     InputSimpleWithSelectorComponent,
-    InputExtensionalComponent
+    InputExtensionalComponent,
+    InputBooleanComponent,
+    HeaderUserComponent,
+    InputSimplePasswordComponent,
+    MessageBoxComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

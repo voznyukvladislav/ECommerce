@@ -13,13 +13,13 @@ export class TableDataService {
   constructor(private http: HttpClient) { }
 
   getTableData(tableName: string, pageNum: number, pageSize: number) {
-    return this.http.get(`${Constants.url}/${Constants.tableData}?tableName=${tableName}&pageNum=${pageNum}&pageSize=${pageSize}`);
+    return this.http.get(`${Constants.url}/${Constants.tableData}?tableName=${tableName}&pageNum=${pageNum}&pageSize=${pageSize}`, { withCredentials: true });
   }
   getPagesNumber(tableName: string, pageSize: number) {
-    return this.http.get(`${Constants.url}/${Constants.pagesNumber}?tableName=${tableName}&pageSize=${pageSize}`);
+    return this.http.get(`${Constants.url}/${Constants.pagesNumber}?tableName=${tableName}&pageSize=${pageSize}`, { withCredentials: true });
   }
   getSearchResults(tableName: string, input: string) {
-    return this.http.get(`${Constants.url}/${Constants.tableSearchResult}?tableName=${tableName}&input=${input}`);
+    return this.http.get(`${Constants.url}/${Constants.tableSearchResult}?tableName=${tableName}&input=${input}`, { withCredentials: true });
   }
 
   insertData(inputBlock: InputBlockDTO) {
@@ -52,7 +52,7 @@ export class TableDataService {
       console.log("after", inputBlock);
     }
     headers.set('Accept', "application/json");
-    return this.http.post(`${Constants.url}/${Constants.insertData}`, inputBlock, {headers: { 'Content-Type': 'application/json' }});
+    return this.http.post(`${Constants.url}/${Constants.insertData}`, inputBlock, { withCredentials: true, headers: { 'Content-Type': 'application/json' }});
   }
   updateData(inputBlock: InputBlockDTO) {
     let headers = new HttpHeaders();
@@ -84,11 +84,11 @@ export class TableDataService {
       console.log("after", inputBlock);
     }
     headers.set('Accept', "application/json");
-    return this.http.put(`${Constants.url}/${Constants.updateData}`, inputBlock, {headers: { 'Content-Type': 'application/json' }});
+    return this.http.put(`${Constants.url}/${Constants.updateData}`, inputBlock, { withCredentials: true, headers: { 'Content-Type': 'application/json' }});
   }
 
   deleteItem(tableName: string, id: string) {
-    return this.http.delete(`${Constants.url}/${Constants.deleteData}?tableName=${tableName}&id=${id}`);
+    return this.http.delete(`${Constants.url}/${Constants.deleteData}?tableName=${tableName}&id=${id}`, { withCredentials: true });
   }
 
   private static addEmptyData(inputBlock: InputBlockDTO) {

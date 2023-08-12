@@ -52,5 +52,18 @@ namespace ECommerceCMS_API.Web.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("getLoginInputBlock")]
+        public IActionResult GetLoginInputBlock()
+        {
+            try
+            {
+                return Ok(this._inputService.GetLoginInputBlock());
+            } catch(Exception e)
+            {
+                return BadRequest(e);
+            }
+        }
     }
 }

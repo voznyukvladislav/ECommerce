@@ -1,25 +1,8 @@
-<app-popup [click]="insertData"
- [inputBlockDTO]="inputBlock" 
- [ngClass]="{'beforePopup': !insertionPopupIsOpened, 'afterPopup': insertionPopupIsOpened }" 
- (onPopupInteraction)="insertionPopupInteraction()">
-    <app-inputs-handler [inputsBlock]="inputBlock"></app-inputs-handler>
-</app-popup>
-
-<app-popup [click]="updateData"
- [inputBlockDTO]="inputBlock" 
- [ngClass]="{'beforePopup': !updatePopupIsOpened, 'afterPopup': updatePopupIsOpened }" 
- (onPopupInteraction)="updatePopupInteraction()">
-    <app-inputs-handler [inputsBlock]="inputBlock"></app-inputs-handler>
-</app-popup>
-
-<div class="shading" *ngIf="insertionPopupIsOpened" (click)="insertionPopupInteraction()"></div>
-<div class="shading" *ngIf="updatePopupIsOpened" (click)="updatePopupInteraction()"></div>
-
 <div class="table-page-wrapper">
     <div class="table-page">
         <div class="table-header-container">
             <a class="table-header-title">{{ tableName | firstToUpper }}</a>
-            <a class="table-header-add" (click)="insertionPopupInteraction()">Add+</a>
+            <a class="table-header-add" (click)="openInsertion()">Add+</a>
         </div> 
         <div class="table-wrapper" *ngIf="tableMetadata.length != 0 && tableData.length != 0">
              <div class='table'>
@@ -28,7 +11,7 @@
                         <img class="search-image" src="..\assets\icons\search.png">
                     </div>
                     <div class="search-input-container flex95">
-                        <app-input-search [input]="inputSearch"></app-input-search>
+                        <app-input-search [input]="inputSearch" (onResultClick)="openUpdate($event)"></app-input-search>
                     </div>
                 </div>
                 <div class="table-row">
@@ -55,10 +38,10 @@
                         {{ item }}                        
                     </div>        
                     <div class="actions-container border-right border-bottom">
-                        <div class="action" (click)="editItem(data)">
+                        <div class="action" (click)="openUpdate(data[0])">
                             <img class="action-img" src="../assets/icons/edit.png">
                         </div>
-                        <div class="action" (click)="deleteItem(data)">
+                        <div class="action" (click)="deleteData(data[0])">
                             <img class="action-img" src="../assets/icons/delete.png">
                         </div>
                     </div>            

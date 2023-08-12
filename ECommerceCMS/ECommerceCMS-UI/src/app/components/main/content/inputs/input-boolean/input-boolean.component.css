@@ -1,0 +1,35 @@
+.input-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    border: 1px solid var(--secondary-color);
+    font-size: var(--input-font-size);
+    box-sizing: border-box;
+    cursor: pointer;
+    color: white;
+}
+.input {
+    background-color: var(--primary-color);
+    color: white;
+    border: 0;
+    font-size: var(--input-font-size);
+    margin: 5px 10px 5px 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1px solid var(--secondary-color);
+    transition: var(--smooth-transition-fast);
+    outline: 0px solid var(--secondary-color);
+    cursor: pointer;
+}
+.input::placeholder {
+    font-style: italic;
+}
+.title {
+    width: 100%;
+    cursor: pointer;
+    transition: var(--smooth-transition-fast);
+}
+.title:hover {
+    color: rgb(195, 195, 195);
+}

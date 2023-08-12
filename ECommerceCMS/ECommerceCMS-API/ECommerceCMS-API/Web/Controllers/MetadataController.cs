@@ -5,6 +5,7 @@ using System.Text.Json;
 
 using ECommerceCMS_API.Core.Entities;
 using ECommerceCMS_API.Core.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ECommerceCMS_API.Web.Controllers
 {
@@ -19,6 +20,7 @@ namespace ECommerceCMS_API.Web.Controllers
 
         [HttpGet]
         [Route("getTableMetadata")]
+        [Authorize]
         public IActionResult GetTableMetadata(string tableName)
         {
             try

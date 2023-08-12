@@ -32,6 +32,26 @@ namespace ECommerceCMS_API.Core.DTOs.DbInteractionDTOs
 
             return inputDTO;
         }
+        public static InputDTO CreateSimplePassword(string name, string placeholder, string value = "")
+        {
+            InputDTO inputDTO = new InputDTO();
+            inputDTO.Type = Constants.InputTypes["Password"];
+            inputDTO.Names.Add(name);
+            inputDTO.Values.Add(value);
+            inputDTO.Placeholders.Add(placeholder);
+
+            return inputDTO;
+        }
+        public static InputDTO CreateBoolean(string name, string placeholder, string value = "false")
+        {
+            InputDTO inputDTO = new InputDTO();
+            inputDTO.Type = Constants.InputTypes["Boolean"];
+            inputDTO.Names.Add(name);
+            inputDTO.Values.Add(value);
+            inputDTO.Placeholders.Add(placeholder);
+
+            return inputDTO;
+        }
         public static InputDTO CreateSearch(string name, string placeholder, string tableName, string value = "")
         {
             InputDTO inputDTO = new InputDTO();
@@ -50,8 +70,8 @@ namespace ECommerceCMS_API.Core.DTOs.DbInteractionDTOs
             inputDTO.Names.Add(name);
             inputDTO.Values.Add(value);
             inputDTO.Placeholders.Add(placeholder);
-            inputDTO.Links.Add($"{Constants.Url}/{Constants.GetSimpleDTO}?tableName={tableName}&pageNum={1}&pageSize={Constants.PageSize}");
-
+            //inputDTO.Links.Add($"{Constants.Url}/{Constants.GetSimpleDTO}?tableName={tableName}&pageNum={1}&pageSize={Constants.PageSize}");
+            inputDTO.Links.Add($"{Constants.Url}/{Constants.GetSimpleDTO}?tableName={tableName}");
             return inputDTO;
         }
         public static InputDTO CreateManyOfMany(string name, string placeholder, string tableName, string value = "")
@@ -61,7 +81,9 @@ namespace ECommerceCMS_API.Core.DTOs.DbInteractionDTOs
             inputDTO.Names.Add(name);
             inputDTO.Values.Add(value);
             inputDTO.Placeholders.Add(placeholder);
-            inputDTO.Links.Add($"{Constants.Url}/{Constants.GetSimpleDTO}?tableName={tableName}&pageNum={1}&pageSize={Constants.PageSize}");
+            //inputDTO.Links.Add($"{Constants.Url}/{Constants.GetSimpleDTO}?tableName={tableName}&pageNum={1}&pageSize={Constants.PageSize}");
+            inputDTO.Links.Add($"{Constants.Url}/{Constants.GetSimpleDTO}?tableName={tableName}");
+
 
             return inputDTO;
         }
@@ -93,6 +115,6 @@ namespace ECommerceCMS_API.Core.DTOs.DbInteractionDTOs
             inputDTO.Links.Add($"{Constants.Url}/{Constants.GetInputGroups}");
 
             return inputDTO;
-        }
+        }        
     }
 }

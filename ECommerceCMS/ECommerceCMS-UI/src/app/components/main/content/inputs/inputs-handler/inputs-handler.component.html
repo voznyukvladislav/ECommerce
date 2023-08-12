@@ -1,6 +1,8 @@
 <div class="inputs-block" (click)="output()">
     <div class="input" *ngFor="let input of inputsBlock.inputDTOs; let i = index">
         <app-input-simple [input]="inputsBlock.inputDTOs[i]" *ngIf="input.type == 'simple'"></app-input-simple>
+        <app-input-boolean [input]="input" *ngIf="input.type == 'boolean'"></app-input-boolean>
+        <app-input-simple-password [input]="input" *ngIf="input.type == 'password'"></app-input-simple-password>
         <app-input-one-of-many [input]="input" *ngIf="input.type == 'oneOfMany'"></app-input-one-of-many>
         <app-input-many-of-many [input]="input" *ngIf="input.type == 'manyOfMany'"></app-input-many-of-many>
         <app-input-simple-with-selector [input]="input" *ngIf="input.type == 'simpleWithSelector'"></app-input-simple-with-selector>
@@ -11,6 +13,8 @@
         <a class="title">{{inputGroup.commonName}}</a>
         <div class="input" *ngFor="let input of inputGroup.inputDTOs">
             <app-input-simple [input]="input" *ngIf="input.type == 'simple'"></app-input-simple>
+            <app-input-boolean [input]="input" *ngIf="input.type == 'boolean'"></app-input-boolean>
+            <app-input-simple-password [input]="input" *ngIf="input.type == 'password'"></app-input-simple-password>
             <app-input-one-of-many [input]="input" *ngIf="input.type == 'oneOfMany'"></app-input-one-of-many>
             <app-input-many-of-many [input]="input" *ngIf="input.type == 'manyOfMany'"></app-input-many-of-many>
             <app-input-simple-with-selector [input]="input" *ngIf="input.type == 'simpleWithSelector'"></app-input-simple-with-selector>
