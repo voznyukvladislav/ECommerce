@@ -1,0 +1,6 @@
+<input type="text" class="input" placeholder="{{input.placeholder}}"
+        [(ngModel)]="input.value" #value="ngModel" required pattern="{{input.validation}}"/>
+
+<div class="error" *ngIf="value.invalid && (value.dirty || value.touched)">
+    Inputed invalid value
+</div>

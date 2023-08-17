@@ -1,0 +1,12 @@
+<div class="message-box-container opacity0 scale0" #messageBox>
+    <div class="menu">
+        <a class="title">{{message.title}}</a>
+        <div class="icon-container" (click)="close()">
+            <img src="..\assets\icons\white-cross.png" class="icon">
+        </div>
+    </div>
+    <div class="underline" #underline></div>
+    <div class="message-box-text">
+        {{message.text}}
+    </div>
+</div>

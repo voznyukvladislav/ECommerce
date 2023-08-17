@@ -1,0 +1,21 @@
+<div class="popup-wrapper" [ngClass]="{'opacity0 scale0 z-index-background': !popupData.isOpened, 'opacity1 scale1 z-index-5': popupData.isOpened}">
+    <div class="shading opacity07" (click)="close()"></div>
+    <div class="popup-container opacity0 scale0" #popup (click)="debug()">
+        <div class="menu">
+            <a class="title">{{popupData.title}}</a>
+            <a class="icon-container" (click)="close()">
+                <img src="..\assets\icons\white-cross.png" class="icon" draggable="false">
+            </a>
+        </div>
+        <app-inputs-handler [inputs]="popupData.inputs"></app-inputs-handler>
+        <app-buttons-handler [buttons]="popupData.buttons"></app-buttons-handler>
+        <div class="bottom-menu">
+            <a class="icon-container flex1" (click)="popupData.action()">
+                <img src="..\assets\icons\white-accept.png" class="icon" draggable="false">
+            </a>
+            <a class="icon-container flex1" (click)="close()">
+                <img src="..\assets\icons\white-cross.png" class="icon" draggable="false">
+            </a>
+        </div>
+    </div>
+</div>

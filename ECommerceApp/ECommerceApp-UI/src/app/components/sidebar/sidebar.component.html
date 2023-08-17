@@ -1,0 +1,28 @@
+<nav class="sidebar" [ngClass]="{'opened': isOpened}">
+    <nav class="sidebar-items" [ngClass]="{'opacity0 scale0': displayable == 'subCategories', 'opacity1 scale1': displayable == 'categories' }">
+        <div class="sidebar-item-wrapper" *ngFor="let category of categories" (click)="toSubCategories(category.id)">
+            <a class="sidebar-item">
+                {{category.name}}
+            </a>
+            <a class="arrow-container">
+                <img src="..\assets\icons\arrow.png" class="arrow" draggable="false">
+            </a>
+        </div>
+    </nav>
+
+    <nav class="sidebar-items" [ngClass]="{'opacity1 scale1': displayable == 'subCategories', 'opacity0 scale0': displayable == 'categories' }">
+        <div class="sidebar-item-wrapper" (click)="toCategories()">
+            <a class="arrow-container">
+                <img src="..\assets\icons\arrow.png" class="arrow rotated180" draggable="false">
+            </a>
+        </div>
+        <div class="sidebar-item-wrapper" *ngFor="let subCategory of subCategories">
+            <a class="sidebar-item">
+                {{subCategory.name}}
+            </a>
+            <a class="arrow-container">
+                <img src="..\assets\icons\arrow.png" class="arrow" draggable="false">
+            </a>
+        </div>
+    </nav>
+</nav>

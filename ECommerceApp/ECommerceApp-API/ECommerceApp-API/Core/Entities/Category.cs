@@ -1,5 +1,4 @@
-﻿using ECommerceCMS_API.Core.DTOs.DbInteractionDTOs;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ECommerceCMS_API.Core.Entities
 {

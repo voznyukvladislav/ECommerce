@@ -1,1 +1,86 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+    font-family: 'Montserrat', sans-serif;
+
+    /* Colors */
+    --main-color: #eaeaea;
+    --secondary-color: #333333;
+    
+    --main-color-hover: #dadada;
+    --secondary-color-hover: #444444;
+
+    --sidebar-item-color: #dedede;
+    --sidebar-item-color-hover: #eaeaea;
+
+    --user-info-menu-color: #dedede;
+    --user-info-menu-color-hover: #eaeaea;
+
+    --input-outline-color: rgb(31, 207, 213);
+
+    --button-color: rgb(31, 207, 213);
+    --button-color-hover: rgb(30, 183, 188);
+
+    --red-color: rgb(176, 0, 0);
+    --green-color: rgb(1, 198, 1);
+
+    /* Elements size */
+    --header-height: 7%;
+    --footer-height: 7%;
+    --content-height: 86%;
+    --sidebar-width: 30%;
+
+    /* Font sizes */
+    --header-title-font-size: 20px;
+    --sidebar-item-font-size: 18px;
+    --input-font-size: 16px;
+    --error-font-size: 12px;
+    --message-box-font-size: 14px;
+
+    /* Transitions */
+    --main-transition: all 0.5s ease;
+
+    /* Opacities */
+    --opacity-before: 0.8;
+    --opacity-after: 1;
+    
+}
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Service classes */
+.opacity0 {
+    opacity: 0;
+}
+.opacity05 {
+    opacity: 0.5;
+}
+.opacity07 {
+    opacity: 0.7;
+}
+.opacity1 {
+    opacity: 1;
+}
+.scale0 {
+    transform: scale(0);
+}
+.scale1 {
+    transform: scale(1);
+}
+.flex1 {
+    flex: 1;
+}
+.z-index-background {
+    z-index: -10;
+}
+.z-index-5 {
+    z-index: 5;
+}

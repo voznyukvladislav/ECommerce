@@ -22,8 +22,8 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
             Id = product.Id;
             Name = product.Name;
             Price = product.Price.ToString();
-            TemplateId = product.TemplateId.ToString();
-            DiscountId = product.DiscountId.ToString();
+            TemplateId = product.TemplateId.ToString()!;
+            DiscountId = product.DiscountId.ToString()!;
             SubCategoryId = product.SubCategoryId.ToString();
             if (product.Orders is not null)
                 Orders = string.Join(", ", product.Orders.Select(o => o.Id));

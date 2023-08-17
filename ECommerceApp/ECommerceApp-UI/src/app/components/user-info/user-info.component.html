@@ -1,0 +1,26 @@
+<div class="user-info-wrapper" (click)="callPopup()" (mouseenter)="contextMenuInteration()" (mouseleave)="contextMenuInteration()">
+    <div class="user-info">
+        {{title}}
+    </div>
+    <div class="image-container">
+        <img src="..\assets\icons\user.png" class="image" draggable="false">
+    </div>
+</div>
+<div class="user-info-panel-wrapper"
+    [ngClass]="{'opened opacity1': contextMenuIsOpened, 'closed opacity0': !contextMenuIsOpened}"
+    (mouseenter)="contextMenuInteration()" (mouseleave)="contextMenuInteration()">
+    <div class="user-info-panel">
+        <div class="user-info-panel-item-container">
+            <a class="info">Shopping cart</a>
+            <img src="..\assets\icons\shopping-cart.png" class="icon">
+        </div>
+        <div class="user-info-panel-item-container">
+            <a class="info">Orders</a>
+            <img src="..\assets\icons\list.png" class="icon">
+        </div>
+        <a class="user-info-panel-item">Name</a>
+        <a class="user-info-panel-item">Phone</a>
+        <a class="user-info-panel-item">Email</a>
+    </div>
+        
+</div>

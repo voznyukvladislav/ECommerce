@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<app-popup *ngIf="popupData.isOpened"></app-popup>
+<app-header></app-header>
+<app-content>
+  <app-sidebar></app-sidebar>
+    <app-message-box *ngFor="let message of messages" [message]="message"></app-message-box>
+  <router-outlet></router-outlet>
+</app-content>
+<app-footer></app-footer>

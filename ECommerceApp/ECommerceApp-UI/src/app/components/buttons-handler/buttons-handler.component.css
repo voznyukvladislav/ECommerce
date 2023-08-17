@@ -1,0 +1,21 @@
+.buttons {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.button {
+    transition: var(--main-transition);
+    display: block;
+    padding: 10px 10px;
+    margin: 5px;
+    background-color: var(--button-color);
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+.button:hover {
+    background-color: var(--button-color-hover);
+}

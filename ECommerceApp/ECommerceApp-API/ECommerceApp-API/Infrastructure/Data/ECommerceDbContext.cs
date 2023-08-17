@@ -5,7 +5,7 @@ namespace ECommerceApp_API.Infrastructure.Data
 {
     public class ECommerceDbContext : DbContext
     {
-        public DbSet<Core.Entities.Attribute> Attributes { get; set; }
+        public DbSet<ECommerceCMS_API.Core.Entities.Attribute> Attributes { get; set; }
         public DbSet<Attribute_AttributeSet> Attribute_AttributeSets { get; set; }
         public DbSet<AttributeSet> AttributeSets { get; set; }
         public DbSet<Category> Categories { get; set; }

@@ -1,0 +1,58 @@
+.message-box-container {
+    width: 150px;
+    min-height: 100px;
+    box-shadow: 0 0 5px black;
+    border: 1px solid black;
+    background-color: var(--secondary-color);
+    display: flex;
+    flex-direction: column;
+    transition: var(--main-transition);
+}
+.menu {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+.title {
+    padding: 0 5px;
+    box-sizing: border-box;
+    color: var(--main-color);
+    font-size: var(--message-box-font-size);
+    cursor: default;
+}
+.icon-container {
+    transition: var(--main-transition);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.icon-container:hover {
+    background-color: var(--secondary-color-hover);
+}
+.icon {
+    width: 20px;
+    height: 20px;
+}
+.underline {
+    width: 0;
+    height: 3px;
+    transition: width 5s linear;
+}
+.underlined {
+    width: 100%;
+}
+.successful-color {
+    background-color: var(--green-color);
+}
+.failed-color {
+    background-color: var(--red-color);
+}
+.message-box-text {
+    padding: 5px 10px;
+    color: var(--main-color);
+}

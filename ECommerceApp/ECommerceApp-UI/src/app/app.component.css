@@ -1,0 +1,17 @@
+app-content {
+    position: relative;
+}
+app-popup {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+app-message-box {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0 15px 15px 0;
+    z-index: 3;
+}

@@ -1,0 +1,13 @@
+<div class="inputs">
+    <div class="input-container" *ngFor="let inputItem of inputs">
+        <app-input-simple [input]="inputItem" *ngIf="inputItem.type == 'Simple' && !inputItem.validatable"></app-input-simple>
+        <app-input-simple-validatable [input]="inputItem" *ngIf="inputItem.type == 'Simple' && inputItem.validatable"></app-input-simple-validatable>
+        
+        <app-input-password [input]="inputItem" *ngIf="inputItem.type == 'Password' && !inputItem.validatable"></app-input-password>
+        <app-input-password-validatable [input]="inputItem" *ngIf="inputItem.type == 'Password' && inputItem.validatable"></app-input-password-validatable>
+        
+        <app-input-double-password [input]="inputItem" *ngIf="inputItem.type == 'DoublePassword' && !inputItem.validatable"></app-input-double-password>
+        <app-input-double-password-validatable [input]="inputItem" *ngIf="inputItem.type == 'DoublePassword' && inputItem.validatable"></app-input-double-password-validatable>
+
+    </div>
+</div>
