@@ -26,7 +26,9 @@ html {
     --button-color-hover: rgb(30, 183, 188);
 
     --red-color: rgb(176, 0, 0);
-    --green-color: rgb(1, 198, 1);
+    --green-color: rgb(0, 158, 0);
+
+    --message-box-menu-color: #222222;
 
     /* Elements size */
     --header-height: 7%;

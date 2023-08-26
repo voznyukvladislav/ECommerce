@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { AuthenticationHandler } from 'src/app/data/authenticationHandler';
 import { Constants } from 'src/app/data/constants';
 import { PopupData } from 'src/app/data/popupData';
+import { MessageService } from '../message-service/message.service';
+import { AuthenticationHandlerService } from '../authentication-handler-service/authentication-handler.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +29,16 @@ export class PopupService {
     return this.http.get(`${Constants.api}/${Constants.login}/${Constants.getRegistrationPopup}`);
   }
 
-  static login(http: HttpClient, popupData: PopupData) {
-    http.post(`${Constants.api}/${Constants.login}/${Constants.login}`, popupData, { withCredentials: true }).subscribe();
+  static login(http: HttpClient, popupData: PopupData, messageService: MessageService, authenticationHandlerService: AuthenticationHandlerService) {
+    http.post(`${Constants.api}/${Constants.login}/${Constants.login}`, popupData, { withCredentials: true }).subscribe({
+      next: (data: any) => {
+        AuthenticationHandler.Authenticate(data.content, localStorage);
+        
+        let message = data.message;
+        messageService.addMessage(message);
+        authenticationHandlerService.Authenticate(data.content, localStorage);
+      }
+    });
   }
 
   static register(http: HttpClient, popupData: PopupData) {

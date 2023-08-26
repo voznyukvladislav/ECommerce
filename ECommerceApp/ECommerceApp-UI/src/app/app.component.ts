@@ -3,6 +3,7 @@ import { PopupService } from './services/popup-service/popup.service';
 import { PopupData } from './data/popupData';
 import { Message } from './data/message';
 import { MessageService } from './services/message-service/message.service';
+import { AuthenticationHandler } from './data/authenticationHandler';
 
 @Component({
   selector: 'app-root',
@@ -30,8 +31,5 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
   }
-
-
 }

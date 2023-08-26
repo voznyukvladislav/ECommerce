@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Subject, from } from 'rxjs';
+import { Constants } from 'src/app/data/constants';
 import { PopupData } from 'src/app/data/popupData';
+import { UserInfo } from 'src/app/data/userInfo';
+import { AuthenticationHandlerService } from 'src/app/services/authentication-handler-service/authentication-handler.service';
+import { MessageService } from 'src/app/services/message-service/message.service';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
 
 @Component({
@@ -16,9 +21,32 @@ export class UserInfoComponent implements OnInit {
 
   contextMenuIsOpened: boolean = false;
 
-  constructor(private popupService: PopupService, private http: HttpClient) { }
+  isAuthenticated = false;
+  userInfo: UserInfo = new UserInfo();
+
+  constructor(
+    private popupService: PopupService,
+    private http: HttpClient,
+    private messageService: MessageService,
+    private authenticationHandlerService: AuthenticationHandlerService) {
+      this.userInfo = AuthenticationHandlerService.getUserInfo(localStorage);
+      this.isAuthenticated = AuthenticationHandlerService.getAuthenticationStatus(localStorage);
+
+      this.authenticationHandlerService.getUserInfo().subscribe({
+        next: data => {
+          this.userInfo = data;
+        }
+      });
+
+      this.authenticationHandlerService.getAuthenticationStatus().subscribe({
+        next: data => {
+          this.isAuthenticated = data;
+        }
+      });
+    }
 
   ngOnInit(): void {
+
   }
 
   contextMenuInteration() {
@@ -32,7 +60,7 @@ export class UserInfoComponent implements OnInit {
         popupData.title = data.title;
         popupData.inputs = data.inputs;
         popupData.buttons = data.buttons;
-        popupData.action = PopupService.login.bind(this, this.http, popupData);
+        popupData.action = PopupService.login.bind(this, this.http, popupData, this.messageService, this.authenticationHandlerService);
 
         popupData.isOpened = true;
         this.popupService.callPopup(popupData);
@@ -43,5 +71,14 @@ export class UserInfoComponent implements OnInit {
     });
   }
 
-  
+  logOut() {
+    this.http.get(`${Constants.api}/${Constants.login}/${Constants.logOut}`, { withCredentials: true }).subscribe({
+      next: (data: any) => {
+        this.authenticationHandlerService.logOut(localStorage);
+        
+        let message = data;
+        this.messageService.addMessage(message);
+      }
+    })
+  }
 }

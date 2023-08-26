@@ -14,5 +14,6 @@ export class Constants {
     public static getLoginPopup: string = "getLoginPopup";
     public static getRegistrationPopup: string = "getRegistrationPopup";
     public static register: string = "register";
+    public static logOut: string = "logOut";
     // Controllers and methods end
 }

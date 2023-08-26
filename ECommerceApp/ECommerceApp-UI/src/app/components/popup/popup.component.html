@@ -1,4 +1,7 @@
-<div class="popup-wrapper" [ngClass]="{'opacity0 scale0 z-index-background': !popupData.isOpened, 'opacity1 scale1 z-index-5': popupData.isOpened}">
+<div class="popup-wrapper" [ngClass]="{'opacity0 scale0 z-index-background': !popupData.isOpened, 'opacity1 scale1 z-index-5': popupData.isOpened}"
+ (keydown.enter)="popupData.action()" 
+ (keydown.enter)="close()"
+ (keydown.escape)="close()">
     <div class="shading opacity07" (click)="close()"></div>
     <div class="popup-container opacity0 scale0" #popup (click)="debug()">
         <div class="menu">

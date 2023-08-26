@@ -1,6 +1,6 @@
 <div class="user-info-wrapper" (click)="callPopup()" (mouseenter)="contextMenuInteration()" (mouseleave)="contextMenuInteration()">
     <div class="user-info">
-        {{title}}
+        {{isAuthenticated == false ? title : userInfo.login}}
     </div>
     <div class="image-container">
         <img src="..\assets\icons\user.png" class="image" draggable="false">
@@ -9,7 +9,7 @@
 <div class="user-info-panel-wrapper"
     [ngClass]="{'opened opacity1': contextMenuIsOpened, 'closed opacity0': !contextMenuIsOpened}"
     (mouseenter)="contextMenuInteration()" (mouseleave)="contextMenuInteration()">
-    <div class="user-info-panel">
+    <div class="user-info-panel" *ngIf="isAuthenticated">
         <div class="user-info-panel-item-container">
             <a class="info">Shopping cart</a>
             <img src="..\assets\icons\shopping-cart.png" class="icon">
@@ -18,9 +18,10 @@
             <a class="info">Orders</a>
             <img src="..\assets\icons\list.png" class="icon">
         </div>
-        <a class="user-info-panel-item">Name</a>
-        <a class="user-info-panel-item">Phone</a>
-        <a class="user-info-panel-item">Email</a>
+        <a class="user-info-panel-item">Name: {{userInfo.name + userInfo.surname}}</a>
+        <a class="user-info-panel-item">Phone: {{userInfo.phone}}</a>
+        <a class="user-info-panel-item">Email: {{userInfo.email}}</a>
+        <a class="user-info-panel-item" (click)="logOut()" (click)="contextMenuInteration()">Log Out</a>
     </div>
         
 </div>
