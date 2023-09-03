@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PopupData } from 'src/app/data/popupData';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
+import { InputsHandlerComponent } from '../inputs/inputs-handler/inputs-handler.component';
 
 @Component({
   selector: 'app-popup',
@@ -72,12 +73,43 @@ export class PopupComponent implements OnInit, AfterViewInit {
     }, 500);
   }
 
+  actionWrapper() {
+    let isFormValid = this.isFormValid();
+
+    if(isFormValid) {
+      this.popupData.action();
+      this.close();
+    }
+  }
+
+  private isFormValid(): boolean {
+    let form = document.getElementById("form");
+    let inputs = [];
+    for(let i = 0; i < form?.children.length!; i++) {
+      inputs.push(form?.children[i].children[0].children[0]);
+
+      if(form?.children[i].children[0].children[1]) {
+        inputs.push(form?.children[i].children[0].children[1]);
+      }      
+    }
+    console.log(inputs);
+
+    let formIsValid = true;
+    for(let i = 0; i < inputs.length; i++) {
+      if (!inputs[i]?.classList.contains("ng-valid")) {
+        formIsValid = false;
+        break;
+      }
+    }
+
+    return formIsValid;
+  }
+
   debug() {
     console.log(this.popupData);
   }
 
   ngOnInit(): void {
-
   }
 
   ngAfterViewInit(): void {

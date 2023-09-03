@@ -53,4 +53,8 @@ export class SidebarComponent implements OnInit {
     this.displayable = "categories";
     this.subCategories = [];
   }
+
+  close() {
+    this.sidebarService.openSidebar();
+  }
 }

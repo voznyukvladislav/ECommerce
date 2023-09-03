@@ -1,0 +1,53 @@
+.attribute-filter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
+    transition: var(--main-transition);
+}
+.attribute-filter-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: var(--attribute-filter-height);
+    background-color: var(--main-color);
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+.attribute-filter-header-container:hover {
+    background-color: var(--main-color-hover);
+}
+.attribute-filter-header {
+    font-size: var(--filter-header-font-size);
+    padding: 2px 6px;
+    box-sizing: border-box;
+}
+.attribute-filter-values {
+    overflow-y: hidden;
+    width: 100%;
+    height: 0;
+    transition: var(--main-transition);
+}
+.icon-container {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    transition: var(--main-transition);
+}
+.rotated90 {
+    transform: rotate(90deg);
+}
+.rotated270 {
+    transform: rotate(270deg);
+}

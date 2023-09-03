@@ -47,6 +47,7 @@
     box-sizing: border-box;
     padding: 2px 5px;
     width: 100%;
+    cursor: default;
 }
 .button {
     width: 100%;

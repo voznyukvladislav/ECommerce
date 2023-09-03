@@ -1,0 +1,18 @@
+.input-filter-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--input-filter-height);
+    cursor: pointer;
+    background-color: var(--main-color);
+    transition: var(--main-transition);
+}
+.input-filter-container:hover {
+    background-color: var(--main-color-hover);
+}
+.input-filter {
+    cursor: pointer;
+}
+.value {
+    width: 100%;
+}

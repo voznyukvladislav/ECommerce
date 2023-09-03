@@ -1,0 +1,8 @@
+<div class="attribute-set-filter-wrapper">
+    <div class="attribute-set-filter" (click)="interact()">
+        {{attributeSetFilter.attributeSetName}}
+    </div>
+    <div class="attribute-filters" #attributeFilters>
+        <app-attribute-filter *ngFor="let attributeFilter of attributeSetFilter.attributeFilters" [attributeFilter]="attributeFilter"></app-attribute-filter>
+    </div>
+</div>

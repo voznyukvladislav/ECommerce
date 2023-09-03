@@ -31,12 +31,14 @@ export class PopupService {
 
   static login(http: HttpClient, popupData: PopupData, messageService: MessageService, authenticationHandlerService: AuthenticationHandlerService) {
     http.post(`${Constants.api}/${Constants.login}/${Constants.login}`, popupData, { withCredentials: true }).subscribe({
-      next: (data: any) => {
-        AuthenticationHandler.Authenticate(data.content, localStorage);
-        
+      next: (data: any) => {        
         let message = data.message;
         messageService.addMessage(message);
         authenticationHandlerService.Authenticate(data.content, localStorage);
+      },
+      error: (error: any) => {
+        let message = error.error;
+        messageService.addMessage(message);
       }
     });
   }

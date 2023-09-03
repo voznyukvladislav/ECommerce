@@ -50,8 +50,15 @@ namespace ECommerceApp_API.Web.Controllers
         [Route("login")]
         public async Task<IActionResult> LoginAsync(PopupDTO popupDTO)
         {
+            string messageTitle = "Authentication";
             try
             {
+                if (this.HttpContext.User.Identity!.IsAuthenticated)
+                {
+                    MessageDTO message = MessageDTO.CreateFailed(messageTitle, "User is already authenticated.");
+                    return BadRequest(message);
+                }
+
                 Dictionary<string, string> inputValue = PopupDTO.GetDictionaryFromPopup(popupDTO);
                 User? user = this._db.Users
                     .Where(u => 
@@ -76,7 +83,7 @@ namespace ECommerceApp_API.Web.Controllers
 
                     await this.HttpContext.SignInAsync(claimsPrincipal);
 
-                    MessageDTO message = MessageDTO.CreateSuccessful("Authentication", "You have authenticated successfully.");
+                    MessageDTO message = MessageDTO.CreateSuccessful(messageTitle, "You have authenticated successfully.");
                     UserInfoDTO userInfoDTO = new UserInfoDTO(user);
 
                     ContentMessageDTO<UserInfoDTO> contentMessage = new ContentMessageDTO<UserInfoDTO>(message, userInfoDTO);
@@ -85,13 +92,13 @@ namespace ECommerceApp_API.Web.Controllers
                 }
                 else
                 {
-                    MessageDTO message = MessageDTO.CreateFailed("Authentication", "User not found.");
+                    MessageDTO message = MessageDTO.CreateFailed(messageTitle, "User not found.");
                     return BadRequest(message);
                 }
             }
             catch (Exception)
             {
-                MessageDTO message = MessageDTO.CreateFailed("Authentication", "Error occurred during authentication process.");
+                MessageDTO message = MessageDTO.CreateFailed(messageTitle, "Error occurred during authentication process.");
                 return BadRequest(message);
             }            
         }

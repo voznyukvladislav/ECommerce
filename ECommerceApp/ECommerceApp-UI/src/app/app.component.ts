@@ -4,6 +4,9 @@ import { PopupData } from './data/popupData';
 import { Message } from './data/message';
 import { MessageService } from './services/message-service/message.service';
 import { AuthenticationHandler } from './data/authenticationHandler';
+import { HttpClient } from '@angular/common/http';
+import { Constants } from './data/constants';
+import { AuthenticationHandlerService } from './services/authentication-handler-service/authentication-handler.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +19,12 @@ export class AppComponent implements OnInit {
 
   messages: Message[] = [];
   
-  constructor(private popupService: PopupService, private messageService: MessageService) {
+  constructor(
+    private popupService: PopupService,
+    private messageService: MessageService,
+    private http: HttpClient,
+    private authenticationHandlerService: AuthenticationHandlerService
+    ) {
     this.popupService.getPopupData().subscribe({
       next: data => {
         this.popupData = data;
@@ -31,5 +39,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.http.get(`${Constants.api}/${Constants.login}/${Constants.isAuthorized}`, { withCredentials: true }).subscribe({
+      next: data => {
+        
+      },
+      error: error => {
+        this.authenticationHandlerService.logOut(localStorage);
+      }
+    });
   }
 }

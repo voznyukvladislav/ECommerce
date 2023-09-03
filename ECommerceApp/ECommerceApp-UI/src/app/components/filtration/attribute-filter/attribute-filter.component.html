@@ -1,0 +1,15 @@
+<div class="attribute-filter-wrapper">
+    <div class="attribute-filter-header-container" (click)="interact()">
+        <div class="attribute-filter-header">
+            {{attributeFilter.attributeName}}
+        </div>
+        <div class="icon-container" draggable="false">
+            <img src="..\assets\icons\arrow.png" class="icon rotated90" draggable="false" [ngClass]="{'opacity05': !isOpened, 'opacity0': isOpened}">
+            <img src="..\assets\icons\arrow.png" class="icon rotated270 opacity05" draggable="false" [ngClass]="{'opacity05': isOpened, 'opacity0': !isOpened}">
+        </div>
+    </div>
+    
+    <div class="attribute-filter-values" #values>
+        <app-input-filter *ngFor="let value of attributeFilter.values" [filterValue]="value"></app-input-filter>
+    </div>
+</div>

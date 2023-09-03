@@ -1,4 +1,4 @@
-<div class="inputs">
+<form class="inputs" id="form">
     <div class="input-container" *ngFor="let inputItem of inputs">
         <app-input-simple [input]="inputItem" *ngIf="inputItem.type == 'Simple' && !inputItem.validatable"></app-input-simple>
         <app-input-simple-validatable [input]="inputItem" *ngIf="inputItem.type == 'Simple' && inputItem.validatable"></app-input-simple-validatable>
@@ -10,4 +10,4 @@
         <app-input-double-password-validatable [input]="inputItem" *ngIf="inputItem.type == 'DoublePassword' && inputItem.validatable"></app-input-double-password-validatable>
 
     </div>
-</div>
+</form>

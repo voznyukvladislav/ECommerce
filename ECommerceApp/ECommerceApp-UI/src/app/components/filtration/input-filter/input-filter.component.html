@@ -1,0 +1,4 @@
+<div class="input-filter-container" (click)="check()">
+    <input type="checkbox" class="input-filter" [ngModel]="filterValue.isChecked">
+    <a class="value">{{filterValue.value}} (+{{filterValue.count}})</a>
+</div>

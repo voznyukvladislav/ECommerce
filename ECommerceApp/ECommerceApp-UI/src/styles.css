@@ -36,12 +36,19 @@ html {
     --content-height: 86%;
     --sidebar-width: 30%;
 
+    --input-filter-height: 30px;
+    --attribute-filter-height: 40px;
+
     /* Font sizes */
     --header-title-font-size: 20px;
     --sidebar-item-font-size: 18px;
     --input-font-size: 16px;
     --error-font-size: 12px;
     --message-box-font-size: 14px;
+    --pathway-font-size: 22px;
+    --sorting-option-font-size: 18px;
+    --price-font-size: 18px;
+    --filter-header-font-size: 20px;
 
     /* Transitions */
     --main-transition: all 0.5s ease;
@@ -85,4 +92,10 @@ body {
 }
 .z-index-5 {
     z-index: 5;
+}
+.z-index-10 {
+    z-index: 10;
+}
+.width100 {
+    width: 100%;
 }

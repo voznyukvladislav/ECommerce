@@ -11,5 +11,7 @@ namespace ECommerceCMS_API.Core.Entities
 
         public AttributeSet AttributeSet { get; set; } = new AttributeSet();
         public int AttributeSetId { get; set; }
+
+        public List<Value> Values { get; set; } = new();
     }
 }

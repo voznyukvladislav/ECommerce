@@ -78,6 +78,12 @@ export class UserInfoComponent implements OnInit {
         
         let message = data;
         this.messageService.addMessage(message);
+      },
+      error: (error: any) => {
+        this.authenticationHandlerService.logOut(localStorage);
+        
+        let message = error.error;
+        this.messageService.addMessage(message);
       }
     })
   }

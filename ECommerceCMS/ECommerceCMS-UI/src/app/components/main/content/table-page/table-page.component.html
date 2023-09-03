@@ -2,16 +2,19 @@
     <div class="table-page">
         <div class="table-header-container">
             <a class="table-header-title">{{ tableName | firstToUpper }}</a>
-            <a class="table-header-add" (click)="openInsertion()">Add+</a>
+            <!-- <a class="table-header-add" (click)="openInsertion()">Add+</a> -->
         </div> 
         <div class="table-wrapper" *ngIf="tableMetadata.length != 0 && tableData.length != 0">
              <div class='table'>
                 <div class="table-row border-left border-top border-right">
-                    <div class="search-image-container flex5">
+                    <div class="search-image-container ">
                         <img class="search-image" src="..\assets\icons\search.png">
                     </div>
-                    <div class="search-input-container flex95">
+                    <div class="search-input-container ">
                         <app-input-search [input]="inputSearch" (onResultClick)="openUpdate($event)"></app-input-search>
+                    </div>
+                    <div class="add-container" (click)="openInsertion()">
+                        <a class="add">Add+</a>
                     </div>
                 </div>
                 <div class="table-row">

@@ -3,10 +3,21 @@ using ECommerceApp_API.Core.Interfaces;
 using ECommerceApp_API.Core.Services;
 using ECommerceApp_API.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
+
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
 
 // Configuration
 var configuration = new ConfigurationBuilder()
@@ -74,6 +85,7 @@ builder.Services.AddCors();
 // Custom services
 builder.Services.AddTransient<ISidebarService, SidebarService>();
 builder.Services.AddTransient<IPopupService, PopupService>();
+builder.Services.AddTransient<IFilterService, FilterService>();
 
 // Add middleware
 var app = builder.Build();

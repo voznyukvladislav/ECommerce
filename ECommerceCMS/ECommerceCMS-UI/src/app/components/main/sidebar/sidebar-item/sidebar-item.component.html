@@ -13,7 +13,7 @@
             </div>
         </div>
     </div>
-    <div class="sidebar-sub-items-container" [style.height]=" isCollapsed && isMaximized ? subItemsContainerHeigth : '0' ">
+    <div class="sidebar-sub-items-container" [style.height]="isCollapsed && isMaximized ? subItemsContainerHeigth : '0'">
         <app-sidebar-sub-item *ngFor="let subItem of sidebarItem.subItems" [sidebarSubItem]="subItem" [routerLink]="'/table'" [queryParams]="{'tableName': subItem.link}"></app-sidebar-sub-item>
     </div>
 </div>

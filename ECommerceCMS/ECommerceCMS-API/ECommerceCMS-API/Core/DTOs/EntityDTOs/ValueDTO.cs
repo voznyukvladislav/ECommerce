@@ -10,6 +10,7 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
         public int Attribute_AttributeSetId { get; set; }
         public int AttrubuteId { get; set; }
         public int AttributeSetId { get; set; }
+        public int? MeasurementId { get; set; }
         public ValueDTO()
         {
 
@@ -22,6 +23,7 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
             Attribute_AttributeSetId = value.Attribute_AttributeSetId;
             AttrubuteId = value.Attribute_AttributeSet.AttributeId;
             AttributeSetId = value.Attribute_AttributeSet.AttributeSetId;
+            MeasurementId = value.MeasurementId;
         }
     }
 }

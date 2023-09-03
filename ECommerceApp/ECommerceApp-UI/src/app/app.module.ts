@@ -21,6 +21,10 @@ import { InputSimpleValidatableComponent } from './components/inputs/input-simpl
 import { InputPasswordValidatableComponent } from './components/inputs/input-password-validatable/input-password-validatable.component';
 import { InputDoublePasswordValidatableComponent } from './components/inputs/input-double-password-validatable/input-double-password-validatable.component';
 import { MessageBoxComponent } from './components/message-box/message-box.component';
+import { ProductPageComponent } from './components/product-page/product-page.component';
+import { InputFilterComponent } from './components/filtration/input-filter/input-filter.component';
+import { AttributeFilterComponent } from './components/filtration/attribute-filter/attribute-filter.component';
+import { AttributeSetFilterComponent } from './components/filtration/attribute-set-filter/attribute-set-filter.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import { MessageBoxComponent } from './components/message-box/message-box.compon
     InputSimpleValidatableComponent,
     InputPasswordValidatableComponent,
     InputDoublePasswordValidatableComponent,
-    MessageBoxComponent
+    MessageBoxComponent,
+    ProductPageComponent,
+    InputFilterComponent,
+    AttributeFilterComponent,
+    AttributeSetFilterComponent
   ],
   imports: [
     BrowserModule,
