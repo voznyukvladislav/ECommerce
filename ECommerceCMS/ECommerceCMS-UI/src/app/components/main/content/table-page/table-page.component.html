@@ -4,7 +4,7 @@
             <a class="table-header-title">{{ tableName | firstToUpper }}</a>
             <!-- <a class="table-header-add" (click)="openInsertion()">Add+</a> -->
         </div> 
-        <div class="table-wrapper" *ngIf="tableMetadata.length != 0 && tableData.length != 0">
+        <div class="table-wrapper">
              <div class='table'>
                 <div class="table-row border-left border-top border-right">
                     <div class="search-image-container ">
@@ -49,12 +49,12 @@
                         </div>
                     </div>            
                 </div>
-                <div class="image-wrapper border-left border-right border-bottom" (click)="load()">
+                <div class="image-wrapper border-left border-right border-bottom" *ngIf="tableMetadata.length != 0 && tableData.length != 0" (click)="load()">
                     <div class="image-container">
                         <img class="plus" src="..\assets\icons\plus.png">
                     </div>
                 </div>
-                <div class="pagination-wrapper border-left border-right border-bottom">
+                <div class="pagination-wrapper border-left border-right border-bottom" *ngIf="tableMetadata.length != 0 && tableData.length != 0">
                     <div class="pagination">
                         <a class="arrow" (click)="getLeftPage()"><</a>
                         <a class="current-page">{{pageNum}}</a>

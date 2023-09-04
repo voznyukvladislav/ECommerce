@@ -99,13 +99,14 @@ namespace ECommerceApp_API.Core.Services
             sendingFilterDTO.PriceFilter = new PriceFilter()
             {
                 From = 0,
-                To = 0
+                To = db.Products.Max(p => p.Price)
             };
 
             sendingFilterDTO.SortingType = SortingDTONames.Alphabetical;
 
             return sendingFilterDTO;
         }
+
         public FinalFilterSet GetFinalFilterSet(FilterSetDTO filterSetDTO)
         {
             FinalFilterSet finalFilterSet = new();
@@ -139,15 +140,14 @@ namespace ECommerceApp_API.Core.Services
             List<Product> productsList = new();
             var products = db.Products
                 .Where(p => p.SubCategoryId == subCategoryId)
+                .Where(
+                    p => (p.Price - (p.Price * p.Discount.Value)) >= finalFilterSet.PriceFilter.From
+                    && (p.Price - (p.Price * p.Discount.Value)) <= finalFilterSet.PriceFilter.To)
+                .Include(p => p.Photos)
+                .Include(p => p.Discount)
                 .Include(p => p.Values)
                 .ThenInclude(v => v.Attribute_AttributeSet);
 
-            if (finalFilterSet.PriceFilter.From != 0 || finalFilterSet.PriceFilter.To != 0)
-            {
-                products.Where(p => p.Price >= finalFilterSet.PriceFilter.From && p.Price <= finalFilterSet.PriceFilter.To);
-            }
-
-            //int checkedCount = this.GetCheckedCount(filterSetDTO);
             if (finalFilterSet.FinalFilters.Count() != 0)
             {
                 finalFilterSet.FinalFilters = finalFilterSet.FinalFilters
@@ -190,96 +190,56 @@ namespace ECommerceApp_API.Core.Services
                     or = new();
                     if (and.All(boolean => boolean == true) && and.Count() != 0) productsList.Add(product);
                 }
-
-                int kek = 0;
-                /*foreach (var filter in finalFilterSet.FinalFilters)
-                {
-                    foreach (var product in products)
-                    {
-                        foreach (var value in product.Values)
-                        {
-                            if (value.Val == filter.Value
-                                && value.Attribute_AttributeSet.AttributeSetId == filter.AttributeSetId
-                                && value.Attribute_AttributeSet.AttributeId == filter.AttributeId)
-                            {
-                                productsList.Add(product);
-                            }
-                        }
-                    }
-                }*/
-                /*foreach (var product in products)
-                {
-                    bool isFiltered = false;
-                    foreach (var filter in finalFilterSet.FinalFilters)
-                    {
-                        foreach (var value in product.Values)
-                        {
-                            if (value.Attribute_AttributeSet.AttributeSetId == filter.AttributeSetId
-                                && value.Attribute_AttributeSet.AttributeId == filter.AttributeId)
-                            {
-                                if (value.Val == filter.Value)
-                                {
-                                    isFiltered = true;                                    
-                                }
-                                else
-                                {
-                                    isFiltered = false;
-                                }
-                                break;
-                            }
-                        }
-
-                        if (!isFiltered) break;
-                    }
-
-                    if (isFiltered)
-                    {
-                        productsList.Add(product);
-                    }
-                }*/
             }
             else
             {
                 productsList = products.ToList();
             }
 
+            return productsList;
+        }
+
+        public List<Product> GetProducts(ECommerceDbContext db, FinalFilterSet finalFilterSet, int subCategoryId, int pageNum, int pageSize)
+        {
+            List<Product> products = this
+                .GetProducts(db, finalFilterSet, subCategoryId)
+                .ToList();
+
+            products = this.SortProducts(finalFilterSet, products);
+
+            return products
+                .Skip(pageSize * pageNum - pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        public List<Product> SortProducts(FinalFilterSet finalFilterSet, List<Product> products)
+        {
             if (finalFilterSet.SortingType == SortingDTONames.Alphabetical || finalFilterSet.SortingType == "")
             {
-                productsList = productsList
+                products = products
                     .OrderBy(p => p.Name)
                     .ToList();
             }
             else if (finalFilterSet.SortingType == SortingDTONames.Ascending)
             {
-                productsList = productsList
+                products = products
                     .OrderBy(p => p.Price)
                     .ToList();
             }
             else if (finalFilterSet.SortingType == SortingDTONames.Descending)
             {
-                productsList = productsList
+                products = products
                     .OrderByDescending(p => p.Price)
                     .ToList();
             }
 
-            return productsList;
+            return products;
         }
 
-        public int GetCheckedCount(FilterSetDTO filterSetDTO)
+        public int GetProductsCount(ECommerceDbContext db, FinalFilterSet finalFilterSet, int subCategoryId)
         {
-            int checkedCount = 0;
-            foreach (var attributeSetFilter in filterSetDTO.AttributeSetFilters)
-            {
-                foreach (var attributeFilter in attributeSetFilter.AttributeFilters)
-                {
-                    foreach (var value in attributeFilter.Values)
-                    {
-                        if (value.IsChecked) checkedCount++;
-                    }
-                }
-            }
-
-            return checkedCount;
+            return this.GetProducts(db, finalFilterSet, subCategoryId).Count();
         }
     }
 }

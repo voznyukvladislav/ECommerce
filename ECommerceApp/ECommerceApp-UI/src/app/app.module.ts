@@ -25,6 +25,7 @@ import { ProductPageComponent } from './components/product-page/product-page.com
 import { InputFilterComponent } from './components/filtration/input-filter/input-filter.component';
 import { AttributeFilterComponent } from './components/filtration/attribute-filter/attribute-filter.component';
 import { AttributeSetFilterComponent } from './components/filtration/attribute-set-filter/attribute-set-filter.component';
+import { ProductSimpleComponent } from './components/product-simple/product-simple.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AttributeSetFilterComponent } from './components/filtration/attribute-s
     ProductPageComponent,
     InputFilterComponent,
     AttributeFilterComponent,
-    AttributeSetFilterComponent
+    AttributeSetFilterComponent,
+    ProductSimpleComponent
   ],
   imports: [
     BrowserModule,

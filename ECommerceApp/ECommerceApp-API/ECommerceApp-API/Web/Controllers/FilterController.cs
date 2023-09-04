@@ -51,7 +51,7 @@ namespace ECommerceApp_API.Web.Controllers
             }
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [Route("getProducts")]
         public IActionResult GetProducts(FilterSetDTO filterSetDTO, int subCategoryId)
         {
@@ -59,7 +59,26 @@ namespace ECommerceApp_API.Web.Controllers
             {
                 FinalFilterSet finalFilterSet = this._filterService.GetFinalFilterSet(filterSetDTO);
                 List<Product> products = this._filterService.GetProducts(this._db, finalFilterSet, subCategoryId);
+                products = this._filterService.SortProducts(finalFilterSet, products);
                 List<ProductSimpleDTO> productSimpleDTOs = products.Select(p => new ProductSimpleDTO(p)).ToList();
+                return Ok(productSimpleDTOs);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }*/
+
+        [HttpPost]
+        [Route("getProducts")]
+        public IActionResult GetProducts(FilterSetDTO filterSetDTO, int subCategoryId, int pageNum, int pageSize)
+        {
+            try
+            {
+                FinalFilterSet finalFilterSet = this._filterService.GetFinalFilterSet(filterSetDTO);
+                List<Product> products = this._filterService.GetProducts(this._db, finalFilterSet, subCategoryId, pageNum, pageSize);
+                List<ProductSimpleDTO> productSimpleDTOs = products.Select(p => new ProductSimpleDTO(p)).ToList();
+
                 return Ok(productSimpleDTOs);
             }
             catch (Exception)

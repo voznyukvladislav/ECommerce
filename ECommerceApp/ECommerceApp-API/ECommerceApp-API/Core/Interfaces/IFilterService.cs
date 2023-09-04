@@ -9,6 +9,9 @@ namespace ECommerceApp_API.Core.Interfaces
         public FilterSetDTO GetSendingFilter(ECommerceDbContext db, int subCategoryId);
         public FinalFilterSet GetFinalFilterSet(FilterSetDTO filterSetDTO);
         public List<Product> GetProducts(ECommerceDbContext db, FinalFilterSet finalFilterSet, int subCategoryId);
-        public int GetCheckedCount(FilterSetDTO filterSetDTO);
+        public List<Product> GetProducts(ECommerceDbContext db, FinalFilterSet finalFilterSet, int subCategoryId, int pageNum, int pageSize);
+        public int GetProductsCount(ECommerceDbContext db, FinalFilterSet finalFilterSet, int subCategoryId);
+
+        public List<Product> SortProducts(FinalFilterSet finalFilterSet, List<Product> products);
     }
 }

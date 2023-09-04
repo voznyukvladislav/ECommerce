@@ -18,7 +18,7 @@ export class FilterService {
     return this.http.get(`${Constants.api}/${Constants.filter}/${Constants.getFilters}?subCategoryId=${subCategoryId}`);
   }
 
-  getProducts(filterSet: FilterSet, subCategoryId: number) {
-    return this.http.post(`${Constants.api}/${Constants.filter}/${Constants.getProducts}?subCategoryId=${subCategoryId}`, filterSet);
+  getProducts(filterSet: FilterSet, subCategoryId: number, pageNum: number, pageSize: number) {
+    return this.http.post(`${Constants.api}/${Constants.filter}/${Constants.getProducts}?subCategoryId=${subCategoryId}&pageNum=${pageNum}&pageSize=${pageSize}`, filterSet);
   }
 }

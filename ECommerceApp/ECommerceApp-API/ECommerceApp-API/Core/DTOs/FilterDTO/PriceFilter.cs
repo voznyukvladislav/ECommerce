@@ -2,7 +2,7 @@
 {
     public class PriceFilter
     {
-        public decimal From { get; set; }
-        public decimal To { get; set; }
+        public decimal From { get; set; } = 0;
+        public decimal To { get; set; } = 0;
     }
 }

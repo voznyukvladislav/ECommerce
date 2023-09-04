@@ -4,9 +4,12 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
 {
     public class ProductSimpleDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public string BasePrice { get; set; }
+        public string Price { get; set; }
         public string Photo { get; set; } = string.Empty;
+        public bool IsDiscounted { get; set; } = false;
 
         public ProductSimpleDTO()
         {
@@ -15,9 +18,12 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
 
         public ProductSimpleDTO(Product product)
         {
+            this.Id = product.Id;
             this.Name = product.Name;
-            this.Price = product.Price;
+            this.BasePrice = Decimal.Floor(product.Price).ToString();
+            this.Price = Decimal.Floor(product.Price - product.Price * (product.Discount is null ? 0 : product.Discount.Value)).ToString();
             this.Photo = product.Photos?[0].Source is null ? "" : product.Photos?[0].Source;
+            this.IsDiscounted = (product.Price * product.Discount?.Value) < product.Price;
         }
     }
 }

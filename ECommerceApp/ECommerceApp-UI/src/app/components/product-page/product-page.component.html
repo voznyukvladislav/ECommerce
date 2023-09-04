@@ -1,4 +1,4 @@
-<div class="product-page-wrapper">
+<div class="product-page-wrapper" (click)="debug()">
     <div class="pathway-wrapper">
         <a class="pathway">{{pathway}}</a>
     </div>
@@ -11,8 +11,8 @@
     <div class="product-wrapper">
         <div class="filter-wrapper">
             <div class="price-filter">
-                <input type="number" class="price border-left" placeholder="From" [ngModel]="filterSet.priceFilter.from">
-                <input type="number" class="price border-left border-right" placeholder="To" [ngModel]="filterSet.priceFilter.to">
+                <input type="number" class="price border-left" placeholder="From" [(ngModel)]="filterSet.priceFilter.from">
+                <input type="number" class="price border-left border-right" placeholder="To" [(ngModel)]="filterSet.priceFilter.to">
             </div>
             <div class="attribute-filter-container width100" *ngFor="let attributeSetFilter of filterSet.attributeSetFilters">
                 <app-attribute-filter class="width100" *ngFor="let attributeFilter of attributeSetFilter.attributeFilters" [attributeFilter]="attributeFilter"></app-attribute-filter>
@@ -22,7 +22,12 @@
             </a>
         </div>
         <div class="products-wrapper">
-
+            <div class="products-container">
+                <app-product-simple *ngFor="let productSimple of productsSimple" [productSimple]="productSimple"></app-product-simple>
+            </div>
+            <div class="icon-container" (click)="load()">
+                <img src="..\assets\icons\plus.png" class="icon">
+            </div>
         </div>
     </div>
 </div>

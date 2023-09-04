@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilterSet } from 'src/app/data/filter/filterSet';
+import { ProductSimple } from 'src/app/data/productSimple';
 import { Sorting } from 'src/app/data/sorting';
 import { DbDataService } from 'src/app/services/db-data-service/db-data.service';
 import { FilterService } from 'src/app/services/filter-service/filter.service';
@@ -11,6 +12,12 @@ import { FilterService } from 'src/app/services/filter-service/filter.service';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
+
+  productsSimple: ProductSimple[] = [];
+
+  pageSize: number = 10;
+
+  pageNum: number = 1;
 
   sortings: Sorting[] = [];
 
@@ -47,9 +54,10 @@ export class ProductPageComponent implements OnInit {
           next: (data: any) => {
             this.filterSet = data;
             console.log(this.filterSet);
-            this.filterService.getProducts(this.filterSet, subCategoryId).subscribe({
+            this.filterService.getProducts(this.filterSet, subCategoryId, this.pageNum, this.pageSize).subscribe({
               next: (data: any) => {
-                console.log(data);
+                this.productsSimple = data;
+                console.log(this.productsSimple);
               }
             });
           }
@@ -72,14 +80,34 @@ export class ProductPageComponent implements OnInit {
 
     this.filterSet.sortingType = this.sortings[index].name;
     this.sortings[index].isSelected = true;
+
+    this.pageNum = 1;
+
+    this.getProducts();
   }
 
   getProducts() {
-    this.filterService.getProducts(this.filterSet, this.subCategoryId).subscribe({
+    this.pageNum = 1;
+    this.filterService.getProducts(this.filterSet, this.subCategoryId, this.pageNum, this.pageSize).subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.productsSimple = data;
+        console.log(this.productsSimple);
       }
-    })
+    });
+  }
+
+  load() {
+    this.pageNum++;
+    this.filterService.getProducts(this.filterSet, this.subCategoryId, this.pageNum, this.pageSize).subscribe({
+      next: (data: any) => {
+        this.productsSimple = this.productsSimple.concat(data);
+        console.log(this.productsSimple);
+      }
+    });
+  }
+
+  debug() {
+    console.log(this.filterSet);
   }
 
   ngOnInit(): void {
