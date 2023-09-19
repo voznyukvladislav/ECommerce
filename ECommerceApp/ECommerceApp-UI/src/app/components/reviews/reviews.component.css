@@ -1,0 +1,127 @@
+.review-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+.reviews-container {
+    padding: 5px 15px 5px 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    width: 70%;
+    border-right: 2px solid black;
+}
+.review-container {
+    width: 100%;
+    gap: 5px;
+    border: 1px solid black;
+    transition: var(--main-transition);
+}
+.review-container:hover {
+    background-color: var(--main-color-hover);
+}
+.review-title-container {
+    display: flex;
+    padding: 5px;
+}
+.icon {
+    width: 50px;
+    height: 50px;
+}
+.review-title {
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.name {
+    font-size: 22px;
+    font-weight: 600;
+}
+.date {
+    font-size: 20px;
+}
+.review-rating {
+    padding: 5px;
+}
+.star {
+    width: 30px;
+    height: 30px;
+}
+.star-bigger {
+    display: block;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+.star-bigger:hover {
+    fill: gold;
+}
+.filled {
+    fill: gold;
+}
+.unfilled {
+    fill: silver;
+}
+.review-text {
+    font-size: 16px;
+    padding: 5px;
+}
+.review-input-wrapper {
+    width: 30%;
+    position: relative;
+    padding: 5px 10px 5px 5px;
+    box-sizing: border-box;
+}
+.review-input-container {
+    display: flex;
+    position: sticky;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 10px;
+    border: 1px solid black;
+}
+.review-input-rating-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+.review-text-input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+    height: 300px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+}
+.review-text::placeholder {
+    font-family: 'Montserrat', sans-serif;
+}
+.send {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 5px;
+    width: 100%;
+    background-color: var(--button-color);
+    cursor: pointer;
+    transition: var(--main-transition);
+    box-shadow: 0 0 5px black;
+    font-size: 20px;
+    font-weight: 400;
+    box-sizing: border-box;
+}
+.send:hover {
+    background-color: var(--button-color-hover);
+    font-weight: 600;
+}

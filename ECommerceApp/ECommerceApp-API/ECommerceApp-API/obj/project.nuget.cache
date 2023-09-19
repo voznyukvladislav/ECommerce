@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "+JCZr8x5pWTdpGSq76gxihh85MQYU9GR/wakd+97ZMugw6netUkTiKE8je4liA7sJMsV8Xo/Vu3XbdDX6AHz/w==",
+  "dgSpecHash": "6H2byi9okCzbue5gfLo/ksRFDwxWW+DHCB5ySPRCrt7x00le5KO6Ksu0kXvEq96+wP+hxYW50hISJBD+WDRUbA==",
   "success": true,
   "projectFilePath": "D:\\AngularProjects\\ECommerce\\ECommerceApp\\ECommerceApp-API\\ECommerceApp-API\\ECommerceApp-API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.0\\microsoft.aspnetcore.openapi.7.0.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

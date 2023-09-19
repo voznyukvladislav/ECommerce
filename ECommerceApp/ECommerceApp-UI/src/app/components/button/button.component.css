@@ -1,0 +1,37 @@
+.button-container {
+    margin-top: 30px;
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    background-color: var(--button-color);
+    transition: var(--main-transition);
+    border-radius: 50px;
+    box-shadow: 0 0 5px black;
+}
+.button-container:hover {
+    background-color: var(--button-color-hover);
+}
+.button-container:hover .button-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+.button-container:hover .button-name {
+    opacity: 1;
+    transform: scale(1);
+}
+.button-icon {
+    width: 30px;
+    height: 30px;
+    transition: var(--main-transition);
+    opacity: 0.7;
+    transform: scale(0.9);
+}
+.button-name {
+    font-weight: 600;
+    transition: var(--main-transition);
+    opacity: 0.7;
+    transform: scale(0.9);
+}

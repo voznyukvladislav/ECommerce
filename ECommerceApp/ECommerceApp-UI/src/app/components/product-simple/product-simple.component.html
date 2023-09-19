@@ -1,10 +1,10 @@
 <div class="product-simple-wrapper-relative">
-    <a class="product-simple-wrapper" routerLink="/">
+    <div class="product-simple-wrapper" [routerLink]="['/products', productSimple.id]">
         <div class="img-container">
             <img src="{{productSimple.photo}}" class="product-image">
         </div>
         <div class="name">{{productSimple.name}}</div>
         <div class="old-price" *ngIf="productSimple.basePrice != productSimple.price"><s>{{productSimple.basePrice}}</s> ₴</div>
         <div class="price" [ngClass]="{'red-price': productSimple.basePrice != productSimple.price}">{{productSimple.price}} ₴</div>
-    </a>
+    </div>
 </div>

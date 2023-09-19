@@ -1,0 +1,21 @@
+<div class="slider-wrapper">
+    <div class="slider">
+        <div class="image-container" *ngFor="let source of sources; let i = index">
+            <img src="{{source}}" class="image" [ngClass]="{'selected': selectedItemIndex == i, 'unselected': selectedItemIndex != i}">
+        </div>
+    </div>
+    <div class="scrollbar">
+        <div class="button-container">
+            <img src="..\assets\icons\arrow-small.png" class="button-img rotated" (click)="left()">
+        </div>
+        <div class="button-container"
+         *ngFor="let source of sources; let i = index" 
+         [ngClass]="{'selected-button': selectedItemIndex == i, 'unselected-button': selectedItemIndex != i }"
+         (click)="select(i)">
+            <a class="button"></a>
+        </div>
+        <div class="button-container" (click)="right()">
+            <img src="..\assets\icons\arrow-small.png" class="button-img" draggable="false">
+        </div>
+    </div>
+</div>

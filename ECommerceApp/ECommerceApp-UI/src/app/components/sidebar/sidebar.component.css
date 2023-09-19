@@ -23,6 +23,8 @@
     transition: var(--main-transition);
 }
 .sidebar-item-wrapper {
+    text-decoration: none;
+    color: var(--secondary-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,6 +32,8 @@
     width: 100%;
     padding: 10px 10px;
     cursor: pointer;
+    overflow-y: hidden;
+    overflow-x: hidden;
     font-size: var(--sidebar-item-font-size);
     font-weight: 600;
     background-color: var(--sidebar-item-color);

@@ -28,6 +28,8 @@ var configuration = new ConfigurationBuilder()
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services.AddMemoryCache();
+
 builder.Services
     .AddAuthentication(options =>
     {
@@ -86,6 +88,7 @@ builder.Services.AddCors();
 builder.Services.AddTransient<ISidebarService, SidebarService>();
 builder.Services.AddTransient<IPopupService, PopupService>();
 builder.Services.AddTransient<IFilterService, FilterService>();
+builder.Services.AddTransient<ICachedQueriesService, CachedQueriesService>();
 
 // Add middleware
 var app = builder.Build();

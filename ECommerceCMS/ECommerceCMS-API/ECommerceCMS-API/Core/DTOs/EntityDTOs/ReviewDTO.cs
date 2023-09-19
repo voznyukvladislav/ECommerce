@@ -7,6 +7,7 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
         public int Id { get; set; }
         public string Text { get; set; }
         public int Rating { get; set; }
+        public string ReviewDate { get; set; }
         public int ProductId { get; set; }
         public int UserId { get; set; }
         public ReviewDTO()
@@ -16,6 +17,7 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
             Id = review.Id;
             Text = review.Text;
             Rating = review.Rating;
+            ReviewDate = review.ReviewDate.ToString();
             ProductId = review.ProductId;
             UserId = review.UserId;
         }

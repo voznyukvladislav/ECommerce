@@ -16,13 +16,13 @@
                 <img src="..\assets\icons\arrow.png" class="arrow rotated180" draggable="false">
             </a>
         </div>
-        <div class="sidebar-item-wrapper" *ngFor="let subCategory of subCategories" routerLink="/products" [queryParams]="{'subCategoryId': subCategory.id}" (click)="close()">
+        <a class="sidebar-item-wrapper" *ngFor="let subCategory of subCategories" routerLink="/products" [queryParams]="{'subCategoryId': subCategory.id}" (click)="close()">
             <a class="sidebar-item">
                 {{subCategory.name}}
             </a>
             <a class="arrow-container">
                 <img src="..\assets\icons\arrow.png" class="arrow" draggable="false">
             </a>
-        </div>
+        </a>
     </nav>
 </nav>

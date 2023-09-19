@@ -1,3 +1,5 @@
 .content {
     height: var(--content-height);
+    z-index: 1;
+    position: relative;
 }

@@ -28,6 +28,9 @@ html {
     --red-color: rgb(176, 0, 0);
     --green-color: rgb(0, 158, 0);
 
+    --slider-button-color: rgb(170, 170, 170);
+    --slider-button-color-hover: rgb(150, 150, 150);
+
     --message-box-menu-color: #222222;
 
     /* Elements size */
@@ -51,9 +54,15 @@ html {
     --filter-header-font-size: 20px;
     --product-name-font-size: 16px;
     --product-price-font-size: 18px;
+    --active-block-option-font-size: 18px;
+
+    --product-detail-page-product-name-font-size: 22px;
+    --product-detail-page-product-base-price-font-size: 18px;
+    --product-detail-page-product-price-font-size: 20px;
 
     /* Transitions */
     --main-transition: all 0.5s ease;
+    --fast-transition: all 0.2s ease;
 
     /* Opacities */
     --opacity-before: 0.8;

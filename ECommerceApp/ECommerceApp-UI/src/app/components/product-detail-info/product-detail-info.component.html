@@ -1,0 +1,8 @@
+<div class="info">
+    <a class="name">{{productFull.name}}</a>
+    <div class="price-container">
+        <a class="base-price" *ngIf="productFull.price != productFull.basePrice"><s>{{productFull.basePrice}}₴</s></a>
+        <a class="price" [ngClass]="{'discount': productFull.price != productFull.basePrice}">{{productFull.price}}₴</a>
+    </div>
+    <app-button [iconSrc]="'..\\assets\\icons\\purchase.png'"></app-button>
+</div>

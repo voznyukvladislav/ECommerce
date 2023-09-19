@@ -1,0 +1,39 @@
+<div class="product-page-wrapper">
+    <nav class="menu">
+        <div class="menu-item-wrapper" (click)="selectItem(0)">
+            <a class="menu-item" [ngClass]="{'selected-item': itemIsActive[0]}">
+                About
+            </a>
+            <a class="underline" [ngClass]="{'underlined': itemIsActive[0]}"></a>
+        </div>
+        <div class="menu-item-wrapper" (click)="selectItem(1)">
+            <a class="menu-item" [ngClass]="{'selected-item': itemIsActive[1]}">
+                Properties
+            </a>
+            <a class="underline" [ngClass]="{'underlined': itemIsActive[1]}"></a>
+        </div>
+        <div class="menu-item-wrapper" (click)="selectItem(2)">
+            <a class="menu-item" [ngClass]="{'selected-item': itemIsActive[2]}">
+                Reviews
+            </a>
+            <a class="underline" [ngClass]="{'underlined': itemIsActive[2]}"></a>
+        </div>
+    </nav>
+
+    <div class="active-container">
+        <div class="loading-container" *ngIf="!productFull">
+            <img src="..\assets\icons\loading.png" class="loading-img">
+        </div>
+
+        <div id="about" class="content" *ngIf="productFull" [ngClass]="{'active': itemIsActive[0], 'not-active': !itemIsActive[0]}">
+            <app-slider [sources]="productFull.photos" class="slider"></app-slider>
+            <app-product-detail-info [productFull]="productFull"></app-product-detail-info>
+        </div>
+        <div id="properties" class="content" *ngIf="productFull" [ngClass]="{'active': itemIsActive[1], 'not-active': !itemIsActive[1]}">
+            <app-properties [attributeSets]="productFull.attributeSets"></app-properties>
+        </div>
+        <div id="reviews" class="content" *ngIf="productFull" [ngClass]="{'active': itemIsActive[2], 'not-active': !itemIsActive[2]}">
+            <app-reviews [reviews]="productFull.reviews" [productId]="productId"></app-reviews>
+        </div>
+    </div>
+</div>

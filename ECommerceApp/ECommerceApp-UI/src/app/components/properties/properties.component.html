@@ -1,0 +1,10 @@
+<div class="properties">
+    <div class="attribute-set" *ngFor="let attributeSet of attributeSets">
+        <a class="attribute-set-title">Properties set name: {{attributeSet.attributeSetName}}</a>
+        <div class="attribute" *ngFor="let attribute of attributeSet.productAttributes">
+            <a class="title">{{attribute.attributeName}}</a>
+            <a class="dotter"><span>&#8203;</span></a>
+            <a class="value">{{attribute.value}}</a>
+        </div>
+    </div>
+</div>

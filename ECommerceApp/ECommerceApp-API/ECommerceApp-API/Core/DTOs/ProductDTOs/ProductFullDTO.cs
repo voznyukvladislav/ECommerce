@@ -4,20 +4,24 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
 {
     public class ProductFullDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public double Rating { get; set; }
+        public string BasePrice { get; set; } = string.Empty;
+        public string Price { get; set; } = string.Empty;
         public List<string> Photos { get; set; } = new();
         public List<ProductAttributeSetDTO> AttributeSets { get; set; } = new();
+        public List<ReviewDTO> Reviews { get; set; } = new();
 
-        public ProductFullDTO()
-        {
-               
-        }
+        public ProductFullDTO() { }
 
         public ProductFullDTO(Product product)
         {
+            this.Id = product.Id;
             this.Name = product.Name;
-            this.Price = product.Price;
+            this.Rating = product.Reviews is null ? 0.00 : product.Reviews.Average(r => r.Rating);
+            this.BasePrice = Decimal.Floor(product.Price).ToString();
+            this.Price = Decimal.Floor(product.Price - product.Price * (product.Discount is null ? 0 : product.Discount.Value)).ToString();
             this.Photos = product.Photos!
                 .Select(p => p.Source)
                 .ToList();
@@ -29,6 +33,7 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
                 {
                     productAttributes.Add(new ProductAttributeDTO()
                     {
+                        AttributeId = aas.AttributeId,
                         AttributeName = aas.Attribute.Name,
                         Value = aas.Values[0].Val
                     });
@@ -36,9 +41,15 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
                 
                 this.AttributeSets.Add(new ProductAttributeSetDTO()
                 {
+                    AttributeSetId = a.Id,
                     AttributeSetName = a.Name,
                     ProductAttributes = productAttributes
                 });
+            });
+
+            product?.Reviews?.ForEach(r =>
+            {
+                this.Reviews.Add(new ReviewDTO(r));
             });
         }
     }

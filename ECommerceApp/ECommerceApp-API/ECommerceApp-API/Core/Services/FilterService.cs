@@ -146,7 +146,8 @@ namespace ECommerceApp_API.Core.Services
                 .Include(p => p.Photos)
                 .Include(p => p.Discount)
                 .Include(p => p.Values)
-                .ThenInclude(v => v.Attribute_AttributeSet);
+                .ThenInclude(v => v.Attribute_AttributeSet)
+                .Include(p => p.Reviews);
 
             if (finalFilterSet.FinalFilters.Count() != 0)
             {

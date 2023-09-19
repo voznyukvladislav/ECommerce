@@ -261,6 +261,9 @@ namespace ECommerceCMS_API.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ReviewDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

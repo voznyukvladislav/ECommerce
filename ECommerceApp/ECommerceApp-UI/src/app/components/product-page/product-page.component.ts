@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FilterSet } from 'src/app/data/filter/filterSet';
-import { ProductSimple } from 'src/app/data/productSimple';
+import { ProductSimple } from 'src/app/data/product/productSimple';
 import { Sorting } from 'src/app/data/sorting';
 import { DbDataService } from 'src/app/services/db-data-service/db-data.service';
 import { FilterService } from 'src/app/services/filter-service/filter.service';

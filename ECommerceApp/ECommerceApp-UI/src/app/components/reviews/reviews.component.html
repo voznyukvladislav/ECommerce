@@ -1,0 +1,33 @@
+<div class="review-wrapper">
+    <div class="reviews-container">
+        <div class="review-container" *ngFor="let review of reviews">
+            <div class="review-title-container">
+                <img src="..\assets\icons\user-review.png" class="icon" draggable="false">
+                <div class="review-title">
+                    <a class="name">{{review.user.name}}</a>
+                    <a class="date">{{review.reviewDate}}</a>
+                </div>
+            </div>
+            <div class="review-rating">
+                <svg class="star" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" *ngFor="let star of starsCounter; let i = index" [ngClass]="{'filled': i < review.rating, 'unfilled': !(i < review.rating)}">
+                    <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/>
+                </svg>
+            </div>
+            <div class="review-text">{{review.text}}</div>
+        </div>
+    </div>
+    <div class="review-input-wrapper">
+        <div class="review-input-container" *ngIf="storage.getItem('userInfo.isAuthenticated') == 'true'">
+            <div class="review-input-rating-container">
+                <svg class="star-bigger" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" *ngFor="let star of starsCounter; let i = index" [ngClass]="{'filled': starIsHovered[i], 'unfilled': !starIsHovered[i]}" (mouseenter)="hoverStars(i)" (mouseleave)="unhoverStars(i)" (click)="selectRating(i)">
+                    <path d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"/>
+                </svg>
+            </div>
+            <textarea class="review-text-input" placeholder="Enter review" [(ngModel)]="review.text"></textarea>
+            <a class="send" (click)="addReview()">Send</a>
+        </div>
+        <div class="review-input-container" *ngIf="storage.getItem('userInfo.isAuthenticated') == 'false'">
+            To leave a review you need to be authenticated
+        </div>
+    </div>    
+</div>

@@ -10,6 +10,7 @@ namespace ECommerceCMS_API.Core.Entities
         public int Id { get; set; }
         public string Text { get; set; }
         public int Rating { get; set; }
+        public DateTime ReviewDate { get; set; }
 
         public Product Product { get; set; } = new Product();
         public int ProductId { get; set; }
@@ -27,6 +28,7 @@ namespace ECommerceCMS_API.Core.Entities
                 this.Id = Int32.Parse(nameValue["Review.Id"]);
             this.Text = nameValue["Review.Text"];
             this.Rating = Int32.Parse(nameValue["Review.Rating"]);
+            this.ReviewDate = DateTime.Now;
 
             this.ProductId = Int32.Parse(nameValue["Review.ProductId"]);
             this.Product = db.Products.Where(p => p.Id == this.ProductId).First();

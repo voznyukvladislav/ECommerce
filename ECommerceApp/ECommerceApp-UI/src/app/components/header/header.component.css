@@ -46,6 +46,7 @@ app-user-info {
 }
 .title-wrapper {
     margin-left: 10px;
+    text-decoration: none;
     height: 100%;
     cursor: pointer;
     transition: var(--main-transition);
