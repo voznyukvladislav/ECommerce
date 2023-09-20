@@ -74,6 +74,10 @@ namespace ECommerceApp_API.Web.Controllers
             try
             {
                 Product product = await this._cachedQueriesService.GetProduct(productId);
+                product.Reviews = await this._db.Reviews
+                    .Where(r => r.ProductId == productId)
+                    .ToListAsync();
+
                 ProductFullDTO productFullDTO = new ProductFullDTO(product);
                 productFullDTO.AttributeSets = productFullDTO
                     .AttributeSets.OrderBy(a => a.AttributeSetName)

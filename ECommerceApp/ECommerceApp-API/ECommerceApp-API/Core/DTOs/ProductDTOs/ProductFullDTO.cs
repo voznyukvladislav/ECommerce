@@ -7,6 +7,7 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public double Rating { get; set; }
+        public int ReviewsCount { get; set; }
         public string BasePrice { get; set; } = string.Empty;
         public string Price { get; set; } = string.Empty;
         public List<string> Photos { get; set; } = new();
@@ -20,6 +21,7 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
             this.Id = product.Id;
             this.Name = product.Name;
             this.Rating = product.Reviews is null ? 0.00 : product.Reviews.Average(r => r.Rating);
+            this.ReviewsCount = product.Reviews is null ? 0 : product.Reviews.Count;
             this.BasePrice = Decimal.Floor(product.Price).ToString();
             this.Price = Decimal.Floor(product.Price - product.Price * (product.Discount is null ? 0 : product.Discount.Value)).ToString();
             this.Photos = product.Photos!

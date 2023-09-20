@@ -1,8 +1,15 @@
 <div class="info">
     <a class="name">{{productFull.name}}</a>
+    <div class="rating-container">
+        <div class="stars-container">
+            <div class="stars"></div>
+            <div class="stars-filled" id="rating"></div>
+        </div>
+        <a class="reviews-count">{{productFull.reviewsCount}} reviews</a>
+    </div>
     <div class="price-container">
-        <a class="base-price" *ngIf="productFull.price != productFull.basePrice"><s>{{productFull.basePrice}}₴</s></a>
+        <a class="base-price" *ngIf="productFull.price != productFull.basePrice"><s>{{productFull.basePrice}}</s>₴</a>
         <a class="price" [ngClass]="{'discount': productFull.price != productFull.basePrice}">{{productFull.price}}₴</a>
     </div>
-    <app-button [iconSrc]="'..\\assets\\icons\\purchase.png'"></app-button>
+    <app-button [iconSrc]="'..\\assets\\icons\\purchase.png'" [buttonText]="'Purhase'"></app-button>
 </div>

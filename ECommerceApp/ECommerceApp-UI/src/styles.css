@@ -57,8 +57,8 @@ html {
     --active-block-option-font-size: 18px;
 
     --product-detail-page-product-name-font-size: 22px;
-    --product-detail-page-product-base-price-font-size: 18px;
-    --product-detail-page-product-price-font-size: 20px;
+    --product-detail-page-product-base-price-font-size: 26px;
+    --product-detail-page-product-price-font-size: 26px;
 
     /* Transitions */
     --main-transition: all 0.5s ease;

@@ -98,10 +98,12 @@ app-slider {
     height: 100%;
     transition: var(--main-transition);
     overflow-y: auto;
+    border: 1px solid black;
 }
 app-product-detail-info {
     width: 25%;
     transition: var(--main-transition);
+    border: 1px solid black;
 }
 app-properties {
     width: 100%;
