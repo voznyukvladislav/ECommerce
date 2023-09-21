@@ -74,11 +74,11 @@ namespace ECommerceApp_API.Web.Controllers
             try
             {
                 Product product = await this._cachedQueriesService.GetProduct(productId);
-                product.Reviews = await this._db.Reviews
+                /*product.Reviews = await this._db.Reviews
                     .Where(r => r.ProductId == productId)
-                    .ToListAsync();
+                    .ToListAsync();*/
 
-                ProductFullDTO productFullDTO = new ProductFullDTO(product);
+                ProductFullDTO productFullDTO = new ProductFullDTO(product, this._db);
                 productFullDTO.AttributeSets = productFullDTO
                     .AttributeSets.OrderBy(a => a.AttributeSetName)
                     .ToList();

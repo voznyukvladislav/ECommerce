@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Review } from 'src/app/data/product/review';
 import { DbDataService } from 'src/app/services/db-data-service/db-data.service';
 
@@ -11,6 +11,8 @@ export class ReviewsComponent implements OnInit {
 
   @Input() reviews: Review[] = [];
   @Input() productId: number = 0;
+
+  @Output() loadReviews = new EventEmitter<void>();
 
   storage: Storage = localStorage;
 

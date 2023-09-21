@@ -1,4 +1,5 @@
-﻿using ECommerceCMS_API.Core.Entities;
+﻿using ECommerceApp_API.Infrastructure.Data;
+using ECommerceCMS_API.Core.Entities;
 
 namespace ECommerceApp_API.Core.DTOs.ProductDTOs
 {
@@ -16,12 +17,12 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
 
         public ProductFullDTO() { }
 
-        public ProductFullDTO(Product product)
+        public ProductFullDTO(Product product, ECommerceDbContext db)
         {
             this.Id = product.Id;
             this.Name = product.Name;
             this.Rating = product.Reviews is null ? 0.00 : product.Reviews.Average(r => r.Rating);
-            this.ReviewsCount = product.Reviews is null ? 0 : product.Reviews.Count;
+            this.ReviewsCount = db.Reviews.Where(r => r.ProductId == product.Id).Count();
             this.BasePrice = Decimal.Floor(product.Price).ToString();
             this.Price = Decimal.Floor(product.Price - product.Price * (product.Discount is null ? 0 : product.Discount.Value)).ToString();
             this.Photos = product.Photos!

@@ -17,7 +17,7 @@ export class ProductDetailPageComponent implements OnInit {
 
   activeBlock: string = "About";
 
-  reviewPageSize: number = 10;
+  reviewPageSize: number = 5;
   reviewCurrentPage: number = 1;
   reviewsExist: boolean = true;
 
@@ -43,9 +43,7 @@ export class ProductDetailPageComponent implements OnInit {
                   else {
                     this.reviewsExist = false;
                   }
-                  console.log("Reviews raw", reviews);
                   this.productFull.reviews = this.productFull.reviews.concat(reviews);
-                  console.log("Reviews", this.productFull.reviews);
                 }
               });
             }
@@ -64,4 +62,19 @@ export class ProductDetailPageComponent implements OnInit {
     console.log(this.itemIsActive);
   }
 
+  loadReviews() {
+    if (this.reviewsExist) {
+      this.dbDataService.getReviews(this.productId, this.reviewPageSize, this.reviewCurrentPage).subscribe({
+        next: (reviews: any) => {
+          if (reviews.length != 0) {
+            this.reviewCurrentPage++;
+          }
+          else {
+            this.reviewsExist = false;
+          }
+          this.productFull.reviews = this.productFull.reviews.concat(reviews);
+        }
+      });
+    }
+  }
 }
