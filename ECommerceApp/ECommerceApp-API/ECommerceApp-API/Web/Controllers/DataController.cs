@@ -1,5 +1,7 @@
 ﻿using ECommerceApp_API.Core.DTOs;
+using ECommerceApp_API.Core.DTOs.OrderDTOs;
 using ECommerceApp_API.Core.DTOs.ProductDTOs;
+using ECommerceApp_API.Core.Entities;
 using ECommerceApp_API.Core.Interfaces;
 using ECommerceApp_API.Infrastructure.Data;
 using ECommerceCMS_API.Core.Entities;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ECommerceApp_API.Web.Controllers
 {
@@ -152,6 +155,114 @@ namespace ECommerceApp_API.Web.Controllers
                 return BadRequest();
             }
         }
+
+        /*[Authorize]
+        [HttpPost]
+        [Route("addShoppingCartProduct")]
+        public IActionResult AddShoppingCartProduct(int productId)
+        {
+            try
+            {
+                Product product = this._db.Products
+                    .Where(p => p.Id == productId)
+                    .First();
+
+                var email = this.HttpContext.User.Identities.ElementAt(0).Claims
+                    .Where(c => c.Type == ClaimTypes.Email)
+                    .Select(c => c.Value)
+                    .First();
+
+                User user = this._db.Users
+                    .Where(u => u.Email == email)
+                    .Include(u => u.ShoppingCarts)
+                    .ThenInclude(sc => sc.Products!)
+                    .ThenInclude(p => p.Product)
+                    .First();
+
+                ShoppingCart shoppingCart = user.ShoppingCarts.First();
+                if (shoppingCart.Products is null) 
+                    shoppingCart.Products = new();
+
+                // If such product is not already in shopping cart
+                if (shoppingCart.Products.Where(scp => scp.ProductId == productId).FirstOrDefault() is null)
+                {
+                    shoppingCart.Products.Add(new Core.Entities.ShoppingCart_Product
+                    {
+                        ProductId = productId,
+                        Product = product,
+                        ShoppingCart = shoppingCart,
+                        ShoppingCartId = shoppingCart.Id,
+                        Count = 1
+                    });
+
+                    this._db.SaveChanges();
+                }
+
+                return NoContent();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("updateShoppingCartProductCount")]
+        public IActionResult UpdateShoppingCartProductCount(int productId, int count)
+        {
+            try
+            {
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("getShoppingCart")]
+        public IActionResult GetShoppingCart()
+        {
+            try
+            {
+                var email = this.HttpContext.User.Identities.ElementAt(0).Claims
+                    .Where(c => c.Type == ClaimTypes.Email)
+                    .Select(c => c.Value)
+                    .First();
+
+                User user = this._db.Users
+                    .Where(u => u.Email == email)
+                    .Include(u => u.ShoppingCarts)
+                    .ThenInclude(sc => sc.Products!)
+                    .ThenInclude(p => p.Product)
+                    .ThenInclude(p => p.Photos)
+
+                    .Include(u => u.ShoppingCarts)
+                    .ThenInclude(sc => sc.Products!)
+                    .ThenInclude(p => p.Product)
+                    .ThenInclude(p => p.Discount)
+
+                    .First();
+
+                List<ShoppingCart_Product_DTO> shoppingCartProductDTOs = user.ShoppingCarts
+                    .First()
+                    .Products!.Select(p => new ShoppingCart_Product_DTO { 
+                        Id = p.Id,
+                        Count = p.Count,
+                        ProductSimple = new ProductSimpleDTO(p.Product)
+                    })
+                    .ToList();
+
+                return Ok(shoppingCartProductDTOs);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }*/
 
         // Debug methods
         [HttpPost]

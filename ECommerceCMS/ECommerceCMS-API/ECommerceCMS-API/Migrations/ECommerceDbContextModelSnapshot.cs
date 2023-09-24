@@ -180,6 +180,9 @@ namespace ECommerceCMS_API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -188,6 +191,35 @@ namespace ECommerceCMS_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order_Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Order_Product");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Photo", b =>
@@ -313,6 +345,32 @@ namespace ECommerceCMS_API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.ShoppingCart_Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShoppingCartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ShoppingCartId");
+
+                    b.ToTable("ShoppingCart_Product");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.SubCategory", b =>
@@ -454,36 +512,6 @@ namespace ECommerceCMS_API.Migrations
                     b.ToTable("MeasurementMeasurementSet");
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrdersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("OrderProduct");
-                });
-
-            modelBuilder.Entity("ProductShoppingCart", b =>
-                {
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShoppingCartsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductsId", "ShoppingCartsId");
-
-                    b.HasIndex("ShoppingCartsId");
-
-                    b.ToTable("ProductShoppingCart");
-                });
-
             modelBuilder.Entity("AttributeSetTemplate", b =>
                 {
                     b.HasOne("ECommerceCMS_API.Core.Entities.AttributeSet", null)
@@ -536,6 +564,25 @@ namespace ECommerceCMS_API.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order_Product", b =>
+                {
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Order", "Order")
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Product", "Product")
+                        .WithMany("Orders")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Photo", b =>
@@ -604,6 +651,25 @@ namespace ECommerceCMS_API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.ShoppingCart_Product", b =>
+                {
+                    b.HasOne("ECommerceCMS_API.Core.Entities.Product", "Product")
+                        .WithMany("ShoppingCarts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerceCMS_API.Core.Entities.ShoppingCart", "ShoppingCart")
+                        .WithMany("Products")
+                        .HasForeignKey("ShoppingCartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ShoppingCart");
+                });
+
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.SubCategory", b =>
                 {
                     b.HasOne("ECommerceCMS_API.Core.Entities.Category", "Category")
@@ -670,36 +736,6 @@ namespace ECommerceCMS_API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderProduct", b =>
-                {
-                    b.HasOne("ECommerceCMS_API.Core.Entities.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ECommerceCMS_API.Core.Entities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ProductShoppingCart", b =>
-                {
-                    b.HasOne("ECommerceCMS_API.Core.Entities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ECommerceCMS_API.Core.Entities.ShoppingCart", null)
-                        .WithMany()
-                        .HasForeignKey("ShoppingCartsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Attribute", b =>
                 {
                     b.Navigation("Attribute_AttributeSet");
@@ -727,11 +763,20 @@ namespace ECommerceCMS_API.Migrations
                     b.Navigation("Values");
                 });
 
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Product", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("Photos");
 
                     b.Navigation("Reviews");
+
+                    b.Navigation("ShoppingCarts");
 
                     b.Navigation("Values");
                 });
@@ -739,6 +784,11 @@ namespace ECommerceCMS_API.Migrations
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.ShoppingCart", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.SubCategory", b =>

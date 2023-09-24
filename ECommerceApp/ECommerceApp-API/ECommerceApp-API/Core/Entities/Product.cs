@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerceApp_API.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ECommerceCMS_API.Core.Entities
 {
@@ -19,9 +20,9 @@ namespace ECommerceCMS_API.Core.Entities
         public int? DiscountId { get; set; }
 
         public List<Value> Values { get; set; } = new List<Value>();
-        public List<ShoppingCart>? ShoppingCarts { get; set; }
+        public List<ShoppingCart_Product>? ShoppingCarts { get; set; }
         public List<Photo>? Photos { get; set; }
-        public List<Order>? Orders { get; set; }
+        public List<Order_Product>? Orders { get; set; }
         public List<Review>? Reviews { get; set; }
 
         public Product()

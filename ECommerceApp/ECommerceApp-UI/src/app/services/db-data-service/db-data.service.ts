@@ -29,4 +29,8 @@ export class DbDataService {
   addReview(review: Review, productId: number) {
     return this.http.post(`${Constants.api}/${Constants.data}/${Constants.addReview}?productId=${productId}`, review, { withCredentials: true });
   }
+
+  getShoppingCart() {
+    return this.http.get(`${Constants.api}/${Constants.data}/${Constants.getShoppingCart}`, { withCredentials: true })
+  }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerceApp_API.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ECommerceCMS_API.Core.Entities
 {
@@ -10,8 +11,10 @@ namespace ECommerceCMS_API.Core.Entities
 
         public User User { get; set; } = new User();
         public int UserId { get; set; }
-        
-        public List<Product> Products { get; set; } = new List<Product>();
+
+        public decimal TotalPrice { get; set; }
+
+        public List<Order_Product> Products { get; set; } = new();
 
         public Order()
         {

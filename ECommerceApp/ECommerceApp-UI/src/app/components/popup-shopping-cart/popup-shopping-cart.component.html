@@ -1,0 +1,49 @@
+<div class="popup-wrapper" [ngClass]="{'opacity0 scale0 z-index-background': !popupShoppingCartData.isOpened, 'opacity1 scale1 z-index-10': popupShoppingCartData.isOpened}"
+ (keydown.enter)="actionWrapper()"
+ (keydown.escape)="close()">
+    <div class="shading opacity07" (click)="close()"></div>
+    <div class="popup-container opacity0 scale0" #popup (click)="debug()">
+        <div class="menu">
+            <a class="title">{{popupShoppingCartData.title}}</a>
+            <a class="icon-container" (click)="close()">
+                <img src="..\assets\icons\white-cross.png" class="icon" draggable="false">
+            </a>
+        </div>
+        <div class="content-wrapper" *ngIf="popupShoppingCartData.shoppingCartProducts.length != 0">
+            <div class="shopping-cart-item" *ngFor="let item of popupShoppingCartData.shoppingCartProducts; let i = index">
+                <div class="shopping-cart-item-menu">
+                    <div class="shopping-cart-item-menu-icon-container" (click)="removeProduct(i)">
+                        <img draggable="false" src="..\assets\icons\cross.png" class="shopping-cart-item-menu-icon">
+                    </div>
+                </div>
+                <div class="shopping-cart-item-title">
+                    <div class="shopping-cart-item-title-item">{{item.productSimple.name}}</div>
+                    <div class="shopping-cart-item-title-item">{{item.productSimple.price}}₴</div>
+                </div>
+                <div class="shopping-cart-content">
+                    <img draggable="false" src="{{item.productSimple.photo}}" class="shopping-cart-item-img">
+                    <div class="shopping-cart-item-counter-container">
+                        <div class="shopping-cart-item-counter-button" (click)="decrement(i)">
+                            <img draggable="false" src="..\assets\icons\triangle.png" class="shopping-cart-item-counter-img rotated270">
+                        </div>
+                        <a class="shopping-cart-item-counter">{{item.count}}</a>
+                        <div class="shopping-cart-item-counter-button" (click)="increment(i)">
+                            <img draggable="false" src="..\assets\icons\triangle.png" class="shopping-cart-item-counter-img rotated90">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="empty" *ngIf="popupShoppingCartData.shoppingCartProducts.length == 0">
+            Your shopping cart is empty
+        </div>
+        <div class="bottom-menu">
+            <a class="icon-container flex1" (click)="actionWrapper()">
+                <img src="..\assets\icons\white-accept.png" class="icon" draggable="false">
+            </a>
+            <a class="icon-container flex1" (click)="close()">
+                <img src="..\assets\icons\white-cross.png" class="icon" draggable="false">
+            </a>
+        </div>
+    </div>
+</div>

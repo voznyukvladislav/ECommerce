@@ -14,7 +14,9 @@ namespace ECommerceCMS_API.Infrastructure.Data
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<MeasurementSet> MeasurementSets { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Order_Product> Order_Product { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ShoppingCart_Product> ShoppingCart_Product { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Role> Roles { get; set; }

@@ -3,16 +3,19 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { AuthenticationHandler } from 'src/app/data/authenticationHandler';
 import { Constants } from 'src/app/data/constants';
-import { PopupData } from 'src/app/data/popupData';
+import { PopupData } from 'src/app/data/popup/popupData';
 import { MessageService } from '../message-service/message.service';
 import { AuthenticationHandlerService } from '../authentication-handler-service/authentication-handler.service';
+import { PopupShoppingCartData } from 'src/app/data/popup/popupShoppingCartData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
   popupData: BehaviorSubject<PopupData> = new BehaviorSubject<PopupData>(new PopupData());
+  popupShoppingCartData: BehaviorSubject<PopupShoppingCartData> = new BehaviorSubject<PopupShoppingCartData>(new PopupShoppingCartData());
 
+  // Login and register popup
   getPopupData(): BehaviorSubject<PopupData> {
     return this.popupData;
   }
@@ -45,6 +48,15 @@ export class PopupService {
 
   static register(http: HttpClient, popupData: PopupData) {
     http.post(`${Constants.api}/${Constants.login}/${Constants.register}`, popupData, { withCredentials: true }).subscribe();
+  }
+
+  // Shopping cart popup
+  getPopupShoppingCartData() {
+    return this.popupShoppingCartData;
+  }
+
+  callPopupShoppingCart(popupShoppingCartData: PopupShoppingCartData) {
+    this.popupShoppingCartData.next(popupShoppingCartData);
   }
 
   constructor(private http: HttpClient) { }

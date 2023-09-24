@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { PopupData } from 'src/app/data/popupData';
+import { PopupData } from 'src/app/data/popup/popupData';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
 import { InputsHandlerComponent } from '../inputs/inputs-handler/inputs-handler.component';
 

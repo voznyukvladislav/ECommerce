@@ -10,7 +10,7 @@
     [ngClass]="{'opened opacity1': contextMenuIsOpened, 'closed opacity0': !contextMenuIsOpened}"
     (mouseenter)="contextMenuInteration()" (mouseleave)="contextMenuInteration()">
     <div class="user-info-panel" *ngIf="isAuthenticated">
-        <div class="user-info-panel-item-container">
+        <div class="user-info-panel-item-container" (click)="openShoppingCart()">
             <a class="info">Shopping cart</a>
             <img src="..\assets\icons\shopping-cart.png" class="icon">
         </div>

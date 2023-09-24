@@ -33,6 +33,7 @@ import { ProductDetailInfoComponent } from './components/product-detail-info/pro
 import { PropertiesComponent } from './components/properties/properties.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ButtonComponent } from './components/button/button.component';
+import { PopupShoppingCartComponent } from './components/popup-shopping-cart/popup-shopping-cart.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { ButtonComponent } from './components/button/button.component';
     ProductDetailInfoComponent,
     PropertiesComponent,
     ReviewsComponent,
-    ButtonComponent
+    ButtonComponent,
+    PopupShoppingCartComponent
   ],
   imports: [
     BrowserModule,

@@ -89,6 +89,7 @@ builder.Services.AddTransient<ISidebarService, SidebarService>();
 builder.Services.AddTransient<IPopupService, PopupService>();
 builder.Services.AddTransient<IFilterService, FilterService>();
 builder.Services.AddTransient<ICachedQueriesService, CachedQueriesService>();
+builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 
 // Add middleware
 var app = builder.Build();

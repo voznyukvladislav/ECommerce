@@ -31,6 +31,14 @@ export class Constants {
     public static getReviews: string = "getReviews";
     public static addReview: string = "addReview";
 
+    // Shopping cart controller
+    public static shoppingCart: string = "shoppingCart";
+
+    public static getShoppingCart: string = "getShoppingCart";
+    public static addShoppingCartProduct: string = "addShoppingCartProduct";
+    public static removeShoppingCartProduct: string = "removeShoppingCartProduct";
+    public static updateShoppingCartProductCount: string = "updateShoppingCartProductCount"
+
     // Filter controller
     public static filter: string = "filter";
 

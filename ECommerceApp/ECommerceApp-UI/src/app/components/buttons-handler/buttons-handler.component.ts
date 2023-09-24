@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { Button } from 'src/app/data/button';
-import { PopupData } from 'src/app/data/popupData';
+import { PopupData } from 'src/app/data/popup/popupData';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
 
 @Component({

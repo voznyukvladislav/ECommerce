@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PopupService } from './services/popup-service/popup.service';
-import { PopupData } from './data/popupData';
+import { PopupData } from './data/popup/popupData';
 import { Message } from './data/message';
 import { MessageService } from './services/message-service/message.service';
 import { AuthenticationHandler } from './data/authenticationHandler';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from './data/constants';
 import { AuthenticationHandlerService } from './services/authentication-handler-service/authentication-handler.service';
+import { PopupShoppingCartData } from './data/popup/popupShoppingCartData';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,8 @@ import { AuthenticationHandlerService } from './services/authentication-handler-
 export class AppComponent implements OnInit {
   title = 'ECommerceApp-UI';
   popupData: PopupData = new PopupData();
+
+  popupShoppingCartData: PopupShoppingCartData = new PopupShoppingCartData();
 
   messages: Message[] = [];
   
@@ -28,6 +31,12 @@ export class AppComponent implements OnInit {
     this.popupService.getPopupData().subscribe({
       next: data => {
         this.popupData = data;
+      }
+    });
+
+    this.popupService.getPopupShoppingCartData().subscribe({
+      next: data => {
+        this.popupShoppingCartData = data;
       }
     });
 

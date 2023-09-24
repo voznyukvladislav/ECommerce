@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ECommerceApp_API.Core.Entities;
+using System.ComponentModel.DataAnnotations;
 
 namespace ECommerceCMS_API.Core.Entities
 {
@@ -6,7 +7,7 @@ namespace ECommerceCMS_API.Core.Entities
     {
         [Key]
         public int Id { get; set; }
-        public List<Product>? Products { get; set; }
+        public List<ShoppingCart_Product>? Products { get; set; }
         public User User { get; set; } = new User();
         public int UserId { get; set; }
     }

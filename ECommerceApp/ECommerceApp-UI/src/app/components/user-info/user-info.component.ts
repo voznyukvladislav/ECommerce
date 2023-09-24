@@ -2,11 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Subject, from } from 'rxjs';
 import { Constants } from 'src/app/data/constants';
-import { PopupData } from 'src/app/data/popupData';
+import { PopupData } from 'src/app/data/popup/popupData';
+import { PopupShoppingCartData } from 'src/app/data/popup/popupShoppingCartData';
 import { UserInfo } from 'src/app/data/userInfo';
 import { AuthenticationHandlerService } from 'src/app/services/authentication-handler-service/authentication-handler.service';
+import { DbDataService } from 'src/app/services/db-data-service/db-data.service';
 import { MessageService } from 'src/app/services/message-service/message.service';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart-service/shopping-cart.service';
 
 @Component({
   selector: 'app-user-info',
@@ -18,6 +21,7 @@ export class UserInfoComponent implements OnInit {
   title: string = "Log In";
 
   popupData: PopupData = new PopupData();
+  popupShoppingCartData: PopupShoppingCartData = new PopupShoppingCartData();
 
   contextMenuIsOpened: boolean = false;
 
@@ -28,7 +32,8 @@ export class UserInfoComponent implements OnInit {
     private popupService: PopupService,
     private http: HttpClient,
     private messageService: MessageService,
-    private authenticationHandlerService: AuthenticationHandlerService) {
+    private authenticationHandlerService: AuthenticationHandlerService,
+    private shoppingCartService: ShoppingCartService) {
       this.userInfo = AuthenticationHandlerService.getUserInfo(localStorage);
       this.isAuthenticated = AuthenticationHandlerService.getAuthenticationStatus(localStorage);
 
@@ -86,5 +91,17 @@ export class UserInfoComponent implements OnInit {
         this.messageService.addMessage(message);
       }
     })
+  }
+
+  openShoppingCart() {
+    this.shoppingCartService.getShoppingCart().subscribe({
+      next: (data: any) => {
+        this.popupShoppingCartData.shoppingCartProducts = data;
+        this.popupShoppingCartData.isOpened = true;
+        this.popupShoppingCartData.title = "Shopping Cart";
+        this.popupService.callPopupShoppingCart(this.popupShoppingCartData);
+        console.log(this.popupShoppingCartData);
+      }
+    });
   }
 }

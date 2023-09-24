@@ -1,0 +1,181 @@
+.popup-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.shading {
+    position: absolute;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+}
+.popup-container {
+    width: 50%;
+    background-color: var(--main-color);
+    position: absolute;
+    transition: var(--main-transition);
+    border: 1px solid black;
+    box-shadow: 0 0 5px black;
+    max-height: 700px;
+}
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
+    background-color: var(--secondary-color);
+}
+.title {
+    padding: 5px 20px;
+    color: var(--main-color);
+    cursor: default;
+}
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    transition: var(--main-transition);
+    cursor: pointer;
+}
+.icon-container:hover {
+    background-color: var(--secondary-color-hover);
+}
+.icon {
+    width: 30px;
+    height: 30px;
+}
+.content-wrapper {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    min-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    max-height: 600px;
+}
+.shopping-cart-item {
+    border: 1px solid black;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.shopping-cart-item-menu {
+    width: 100%;
+    background-color: var(--main-color-hover);
+    display: flex;
+    justify-content: end;
+}
+.shopping-cart-item-menu-icon-container {
+    width: 30px;
+    height: 30px;
+    background-color: var(--main-color-hover);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+.shopping-cart-item-menu-icon-container:hover {
+    background-color: var(--main-color-hover-hover);
+}
+.shopping-cart-item-menu-icon {
+    width: 20px;
+    height: 20px;
+}
+.shopping-cart-item-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+.shopping-cart-item-title-item {
+    font-size: 14px;
+    font-weight: 600;
+}
+.shopping-cart-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    box-sizing: border-box;
+}
+.shopping-cart-item-img {
+    width: 150px;
+    height: 150px;
+    aspect-ratio: auto;
+}
+.shopping-cart-item-counter-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    gap: 10px;
+}
+.shopping-cart-item-counter {
+    font-weight: 600;
+    font-size: 16px;
+}
+.shopping-cart-item-counter-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    transition: var(--main-transition);
+}
+.shopping-cart-item-counter-button:hover .shopping-cart-item-counter-img.rotated90 {
+    transform: rotate(90deg) scale(1);
+}
+.shopping-cart-item-counter-button:hover .shopping-cart-item-counter-img.rotated270 {
+    transform: rotate(270deg) scale(1);
+}
+.shopping-cart-item-counter-img {
+    width: 30px;
+    height: 30px;
+    transition: var(--main-transition);
+}
+.rotated90 {
+    transform: scale(0.85) rotate(90deg);
+}
+.rotated270 {
+    transform: scale(0.85) rotate(270deg);
+}
+.empty {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    min-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    max-height: 600px;
+    font-weight: 600;
+    font-size: 24px;
+}
+.bottom-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-top: 1px solid black;
+    background-color: var(--secondary-color);
+}
