@@ -33,7 +33,7 @@
             <app-properties [attributeSets]="productFull.attributeSets"></app-properties>
         </div>
         <div id="reviews" class="content" *ngIf="productFull" [ngClass]="{'active': itemIsActive[2], 'not-active': !itemIsActive[2]}">
-            <app-reviews [reviews]="productFull.reviews" [productId]="productId" (loadReviews)="loadReviews()"></app-reviews>
+            <app-reviews [reviews]="productFull.reviews" [productFull]="productFull" (reviewsExist)="reviewsExistUpdate()" (loadReviews)="loadReviews()"></app-reviews>
         </div>
     </div>
 </div>

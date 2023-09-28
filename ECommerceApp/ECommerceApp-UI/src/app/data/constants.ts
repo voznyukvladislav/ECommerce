@@ -27,7 +27,16 @@ export class Constants {
 
     public static getSubCategoryParent: string = "getSubCategoryParent";
     public static getSubCategory: string = "getSubCategory";
+
+    // Product controller
+    public static product: string = "product";
+    
     public static getProduct: string = "getProduct";
+    public static getProductRating: string = "getProductRating";
+
+    // Review controller
+    public static review: string = "review";
+
     public static getReviews: string = "getReviews";
     public static addReview: string = "addReview";
 

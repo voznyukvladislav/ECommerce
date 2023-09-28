@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductFull } from 'src/app/data/product/productFull';
 import { DbDataService } from 'src/app/services/db-data-service/db-data.service';
+import { ProductService } from 'src/app/services/product-service/product.service';
+import { RatingService } from 'src/app/services/rating-service/rating.service';
+import { ReviewService } from 'src/app/services/review-service/review.service';
 
 @Component({
   selector: 'app-product-detail-page',
@@ -21,7 +24,12 @@ export class ProductDetailPageComponent implements OnInit {
   reviewCurrentPage: number = 1;
   reviewsExist: boolean = true;
 
-  constructor(private dbDataService: DbDataService, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private dbDataService: DbDataService,
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private reviewService: ReviewService,
+    private ratingService: RatingService) {
   }
 
   ngOnInit(): void {
@@ -29,13 +37,20 @@ export class ProductDetailPageComponent implements OnInit {
       next: (params: any) => {
         this.productId = params.id;
 
-        this.dbDataService.getProduct(this.productId).subscribe({
+        this.productService.getProduct(this.productId).subscribe({
           next: (product: any) => {
             this.productFull = product;
             console.log(this.productFull);
 
+            this.productService.getProductRating(this.productFull.id).subscribe({
+              next: rating => {
+                this.productFull.rating = rating;
+                this.ratingService.updateRating(this.productFull.rating);
+              }
+            })
+
             if (this.reviewsExist) {
-              this.dbDataService.getReviews(this.productId, this.reviewPageSize, this.reviewCurrentPage).subscribe({
+              this.reviewService.getReviews(this.productId, this.reviewPageSize, this.reviewCurrentPage).subscribe({
                 next: (reviews: any) => {
                   if (reviews.length != 0) {
                     this.reviewCurrentPage++;
@@ -64,7 +79,7 @@ export class ProductDetailPageComponent implements OnInit {
 
   loadReviews() {
     if (this.reviewsExist) {
-      this.dbDataService.getReviews(this.productId, this.reviewPageSize, this.reviewCurrentPage).subscribe({
+      this.reviewService.getReviews(this.productId, this.reviewPageSize, this.reviewCurrentPage).subscribe({
         next: (reviews: any) => {
           if (reviews.length != 0) {
             this.reviewCurrentPage++;
@@ -76,5 +91,15 @@ export class ProductDetailPageComponent implements OnInit {
         }
       });
     }
+  }
+
+  reviewsExistUpdate() {
+    this.reviewCurrentPage = 2;
+    this.reviewsExist = true;
+  }
+
+  updateProductRating(rating: number) {
+    this.productFull.rating = rating;
+    console.log("Product after rating update: ", this.productFull)
   }
 }

@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ProductFull } from 'src/app/data/product/productFull';
 import { Review } from 'src/app/data/product/review';
 import { DbDataService } from 'src/app/services/db-data-service/db-data.service';
+import { ProductService } from 'src/app/services/product-service/product.service';
+import { RatingService } from 'src/app/services/rating-service/rating.service';
+import { ReviewService } from 'src/app/services/review-service/review.service';
 
 @Component({
   selector: 'app-reviews',
@@ -10,9 +14,10 @@ import { DbDataService } from 'src/app/services/db-data-service/db-data.service'
 export class ReviewsComponent implements OnInit {
 
   @Input() reviews: Review[] = [];
-  @Input() productId: number = 0;
+  @Input() productFull: ProductFull = new ProductFull();
 
   @Output() loadReviews = new EventEmitter<void>();
+  @Output() reviewsExist = new EventEmitter<void>();
 
   storage: Storage = localStorage;
 
@@ -22,7 +27,10 @@ export class ReviewsComponent implements OnInit {
   starsCounter: number[] = [1, 2, 3, 4, 5];
   starIsHovered: boolean[] = [true, false, false, false, false];
 
-  constructor(private dbDataService: DbDataService) { }
+  constructor(
+    private productService: ProductService,
+    private reviewService: ReviewService,
+    private ratingService: RatingService) { }
 
   ngOnInit(): void {
   }
@@ -54,14 +62,33 @@ export class ReviewsComponent implements OnInit {
     this.review.user.email = this.storage.getItem("userInfo.email")!;
     this.review.user.name = this.storage.getItem("userInfo.name")!;
 
-    this.dbDataService.addReview(this.review, this.productId).subscribe({
-      next: (newReview: any) => {
-        this.reviews.unshift(newReview);
-
-        this.review = new Review();
-        this.rating = 1;
-        this.unhoverStars(this.starsCounter.length);
-      }
-    });
+    if (this.review.text) {
+      this.reviewService.addReview(this.review, this.productFull.id).subscribe({
+        next: (newReview: any) => {
+          this.reviews.unshift(newReview);
+          this.productFull.reviewsCount++;
+  
+          this.review = new Review();
+          this.rating = 1;
+          this.unhoverStars(this.starsCounter.length);
+  
+          if(this.reviews.length > 5) {
+            for(let i = this.reviews.length - 1; i > 4; i--) {
+              this.reviews.pop();
+            }
+          }
+  
+          this.reviewsExist.emit();
+  
+  
+          this.productService.getProductRating(this.productFull.id).subscribe({
+            next: (rating: any) => {
+              this.productFull.rating = rating;
+              this.ratingService.updateRating(this.productFull.rating);
+            }
+          })
+        }
+      });
+    }
   }
 }

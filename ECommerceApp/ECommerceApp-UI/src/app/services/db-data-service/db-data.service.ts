@@ -18,9 +18,9 @@ export class DbDataService {
     return this.http.get(`${Constants.api}/${Constants.data}/${Constants.getSubCategory}?subCategoryId=${subCategoryId}`)
   }
 
-  getProduct(productId: number) {
-    return this.http.get(`${Constants.api}/${Constants.data}/${Constants.getProduct}?productId=${productId}`);
-  }
+  // getProduct(productId: number) {
+  //   return this.http.get(`${Constants.api}/${Constants.data}/${Constants.getProduct}?productId=${productId}`);
+  // }
 
   getReviews(productId: number, count: number, page: number) {
     return this.http.get(`${Constants.api}/${Constants.data}/${Constants.getReviews}?productId=${productId}&count=${count}&page=${page}`);

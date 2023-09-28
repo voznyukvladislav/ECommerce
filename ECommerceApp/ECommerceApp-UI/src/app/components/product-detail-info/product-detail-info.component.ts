@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Message, MessageStatusNames } from 'src/app/data/message';
 import { PopupShoppingCartData } from 'src/app/data/popup/popupShoppingCartData';
 import { ProductFull } from 'src/app/data/product/productFull';
 import { MessageService } from 'src/app/services/message-service/message.service';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
+import { RatingService } from 'src/app/services/rating-service/rating.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart-service/shopping-cart.service';
 
 @Component({
@@ -19,7 +21,11 @@ export class ProductDetailInfoComponent implements OnInit, AfterViewInit {
 
   starsCounter: number[] = [1, 2, 3, 4, 5];
 
-  constructor(private popupService: PopupService, private shoppingCartService: ShoppingCartService, private messageService: MessageService) { 
+  constructor(
+    private popupService: PopupService,
+    private shoppingCartService: ShoppingCartService,
+    private messageService: MessageService,
+    private ratingService: RatingService) { 
     
   }
 
@@ -28,13 +34,14 @@ export class ProductDetailInfoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      let rating = document.getElementById("rating");
-      let filled = (this.productFull.rating / 5) * 100;
-      console.log(filled);
-      console.log(this.productFull);
-      //filled = 50;
-      rating!.style.width = `${filled}px`;
-    }, 100);
+      this.ratingService.getRating().subscribe({
+        next: rating => {
+          let ratingBlock = document.getElementById("rating");
+          let filled = (rating / 5) * 100;
+          ratingBlock!.style.width = `${filled}px`;
+        }
+      });
+    }, 200);
   }
 
   purchase() {
