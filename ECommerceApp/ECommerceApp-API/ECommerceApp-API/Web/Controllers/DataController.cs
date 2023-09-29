@@ -56,7 +56,7 @@ namespace ECommerceApp_API.Web.Controllers
             {
                 SubCategory subCategory = this._db.SubCategories
                     .Where(s => s.Id == subCategoryId)
-                    .FirstOrDefault()!;
+                    .First();
 
                 SimpleDTO subCategoryDTO = new SimpleDTO();
                 subCategoryDTO.Id = $"{subCategory.Id}";
@@ -112,6 +112,26 @@ namespace ECommerceApp_API.Web.Controllers
                 return Ok();
             }
             catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("generateOrderStatuses")]
+        public async Task<IActionResult> GenerateOrderStatusesAsync()
+        {
+            try
+            {
+                await this._db.OrderStatuses.AddAsync(new OrderStatus() { Status = "Registered" });
+                await this._db.OrderStatuses.AddAsync(new OrderStatus() { Status = "Sent" });
+                await this._db.OrderStatuses.AddAsync(new OrderStatus() { Status = "Received" });
+
+                await this._db.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch
             {
                 return BadRequest();
             }

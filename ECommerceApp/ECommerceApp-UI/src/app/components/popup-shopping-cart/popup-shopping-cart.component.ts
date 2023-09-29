@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { PopupShoppingCartData } from 'src/app/data/popup/popupShoppingCartData';
+import { OrderService } from 'src/app/services/order-service/order.service';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
 import { ShoppingCartService } from 'src/app/services/shopping-cart-service/shopping-cart.service';
 
@@ -15,7 +17,11 @@ export class PopupShoppingCartComponent implements OnInit, AfterViewInit {
 
   popupShoppingCartData: PopupShoppingCartData = new PopupShoppingCartData();
 
-  constructor(private popupService: PopupService, private shoppingCartService: ShoppingCartService) {
+  constructor(
+    private popupService: PopupService,
+    private shoppingCartService: ShoppingCartService,
+    private orderService: OrderService,
+    private router: Router) {
     this.popupService.getPopupShoppingCartData().subscribe({
       next: data => {
         this.popupShoppingCartData = data;
@@ -33,7 +39,22 @@ export class PopupShoppingCartComponent implements OnInit, AfterViewInit {
   }
 
   actionWrapper() {
-    this.popupShoppingCartData.action();
+    let confirmation;
+    if (this.popupShoppingCartData.shoppingCartProducts.length > 1) {
+      confirmation = confirm("Are you sure want to order these products?");
+    }
+    else if (this.popupShoppingCartData.shoppingCartProducts.length == 1) {
+      confirmation = confirm("Are you sure want to order this product?");  
+    }
+    
+    if (confirmation) {
+      this.orderService.addOrder(this.popupShoppingCartData.shoppingCartProducts).subscribe({
+        next: () => {
+          this.close();
+          this.router.navigate(['orders']);
+        }
+      });
+    }
   }
 
   debug() {

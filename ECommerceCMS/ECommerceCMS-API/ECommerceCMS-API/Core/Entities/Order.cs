@@ -12,7 +12,10 @@ namespace ECommerceCMS_API.Core.Entities
 
         public User User { get; set; } = new User();
         public int UserId { get; set; }
-        
+
+        public OrderStatus OrderStatus { get; set; } = new();
+        public int OrderStatusId { get; set; }
+
         public decimal TotalPrice { get; set; }
 
         public List<Order_Product> Products { get; set; } = new();

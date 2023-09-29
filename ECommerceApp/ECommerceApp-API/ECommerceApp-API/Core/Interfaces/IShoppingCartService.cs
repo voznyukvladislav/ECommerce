@@ -7,6 +7,7 @@ namespace ECommerceApp_API.Core.Interfaces
 {
     public interface IShoppingCartService
     {
+        public Task ClearShoppingCart(User user);
         public Task AddShoppingCartProductAsync(User user, int productId);
         public Task RemoveShoppingCartProductAsync(User user, int productId);
         public Task<List<ShoppingCart_Product_DTO>> GetShoppingCartAsync(User user);

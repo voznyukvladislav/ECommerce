@@ -55,5 +55,12 @@ export class Constants {
     public static getFilters: string = "getFilters";
     public static getProducts: string = "getProducts";
 
+    // Order contoller
+    public static order: string = "order";
+
+    public static addOrder: string = "addOrder";
+    public static getOrders: string = "getOrders";
+    public static getOrderDetails: string = "getOrderDetails";
+
     // Controllers and methods end
 }

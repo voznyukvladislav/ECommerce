@@ -1,0 +1,26 @@
+<div class="order-detail-wrapper">
+    <div class="order-details">
+        <div class="order-data">
+            <a class="item">Order id: {{order.id}}</a>
+            <a class="item">Date: {{order.date}}</a>
+            <a class="item">Status: {{order.status}}</a>
+            <a class="item">Total price: {{order.price}}</a>
+        </div>
+        <div class="order-detail" *ngFor="let product of order.orderProducts; let i = index">
+            <div class="top-menu">
+                <a class="item-small">#{{i + 1}}</a>
+            </div>
+            <div class="mid-menu">
+                <a class="item">{{product.name}}</a>
+                <a class="item">Price: {{product.price}}₴</a>
+            </div>
+            <div class="mid-menu">
+                <img src="{{product.photo}}" class="img">
+                <a class="item">Count: {{product.count}}</a>
+            </div>
+            <div class="bot-menu">
+                <a class="item">Total price: {{product.totalPrice}}₴</a>
+            </div>
+        </div>
+    </div>
+</div>

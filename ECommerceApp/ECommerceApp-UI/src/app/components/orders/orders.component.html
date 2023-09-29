@@ -1,0 +1,21 @@
+<div class="orders-wrapper">
+    <div class="orders">
+        <div class="order" *ngFor="let order of orders; let i = index" [routerLink]="['/orders', order.id]">
+            <div class="order-top-menu">
+                <a class="item-small">#{{i + 1}}</a>
+                <a class="item-small">Status: {{order.status}}</a>
+            </div>
+            <div class="order-mid-menu">
+                <a class="item">Id: {{order.id}}</a>
+                <a class="item">Date: {{order.date}}</a>
+            </div>
+            <div class="order-bot-menu">
+                <div class="order-product-position">
+                    <a class="item width100">Positions count: {{order.positionsCount}}</a>
+                    <a class="item width100">Products count: {{order.productsCount}}</a>
+                </div>
+                <a class="item">Price: {{order.price}}₴</a>
+            </div>
+        </div>
+    </div>
+</div>

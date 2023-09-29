@@ -34,6 +34,8 @@ import { PropertiesComponent } from './components/properties/properties.componen
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { ButtonComponent } from './components/button/button.component';
 import { PopupShoppingCartComponent } from './components/popup-shopping-cart/popup-shopping-cart.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { OrderDetailComponent } from './components/order-detail/order-detail.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { PopupShoppingCartComponent } from './components/popup-shopping-cart/pop
     PropertiesComponent,
     ReviewsComponent,
     ButtonComponent,
-    PopupShoppingCartComponent
+    PopupShoppingCartComponent,
+    OrdersComponent,
+    OrderDetailComponent
   ],
   imports: [
     BrowserModule,

@@ -92,6 +92,7 @@ builder.Services.AddTransient<ICachedQueriesService, CachedQueriesService>();
 builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IReviewService, ReviewService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 
 // Add middleware
 var app = builder.Build();

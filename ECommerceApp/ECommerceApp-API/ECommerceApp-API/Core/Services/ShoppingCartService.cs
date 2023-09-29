@@ -17,6 +17,22 @@ namespace ECommerceApp_API.Core.Services
             this._db = db;
         }
 
+        public async Task ClearShoppingCart(User user)
+        {
+            ShoppingCart shoppingCart = await this._db.ShoppingCarts
+                .Where(sc => sc.UserId == user.Id)
+                .Include(sc => sc.Products!)
+                .ThenInclude(scp => scp.Product)
+                .FirstAsync();
+
+            shoppingCart.Products?.ForEach(scp =>
+            {
+                this._db.ShoppingCart_Product.Remove(scp);
+            });
+
+            await this._db.SaveChangesAsync();
+        }
+
         public async Task AddShoppingCartProductAsync(User user, int productId)
         {
             Product product = await this._db.Products

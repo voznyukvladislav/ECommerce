@@ -15,6 +15,7 @@ namespace ECommerceApp_API.Infrastructure.Data
         public DbSet<Measurement> Measurements { get; set; }
         public DbSet<MeasurementSet> MeasurementSets { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Order_Product> Order_Product { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ShoppingCart_Product> ShoppingCart_Product { get; set; }

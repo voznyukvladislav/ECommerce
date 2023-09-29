@@ -180,6 +180,9 @@ namespace ECommerceCMS_API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("OrderStatusId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -188,9 +191,28 @@ namespace ECommerceCMS_API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OrderStatusId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.OrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order_Product", b =>
@@ -212,6 +234,9 @@ namespace ECommerceCMS_API.Migrations
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -557,11 +582,19 @@ namespace ECommerceCMS_API.Migrations
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order", b =>
                 {
+                    b.HasOne("ECommerceCMS_API.Core.Entities.OrderStatus", "OrderStatus")
+                        .WithMany("Orders")
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ECommerceCMS_API.Core.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("OrderStatus");
 
                     b.Navigation("User");
                 });
@@ -766,6 +799,11 @@ namespace ECommerceCMS_API.Migrations
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Order", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("ECommerceCMS_API.Core.Entities.OrderStatus", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("ECommerceCMS_API.Core.Entities.Product", b =>
