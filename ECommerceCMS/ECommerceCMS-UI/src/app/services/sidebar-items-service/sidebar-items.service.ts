@@ -46,6 +46,7 @@ export class SidebarItemsService {
         subItems: [
           { title: 'Users', link: 'users' },
           { title: 'Orders', link: 'orders' },
+          { title: 'Order_Products', link: 'order_product' },
           { title: 'Shopping Carts', link: 'shoppingCarts' },
           { title: 'Reviews', link: 'reviews' },
           { title: 'Roles', link: 'roles' }

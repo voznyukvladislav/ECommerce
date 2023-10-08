@@ -163,6 +163,26 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "Order_Product",
+                    (pageNum, pageSize) => {
+                        List<Order_Product> data = this.ECommerceDbContext
+                            .Order_Product
+                            .OrderBy(a => a.Id)
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize)
+                            .Include(o => o.Order)
+                            .Include(o => o.Product)
+                            .ToList();
+
+                        List<Order_Product_DTO> dtos = new List<Order_Product_DTO>();
+                        data.ForEach(i =>
+                        {
+                            dtos.Add(new Order_Product_DTO(i));
+                        });
+                        return JsonSerializer.Serialize(dtos);
+                    }
+                },
+                {
                     "Photos",
                     (pageNum, pageSize) =>
                     {
@@ -309,6 +329,10 @@ namespace ECommerceCMS_API.Core.Services
                             .Skip((pageNum - 1) * pageSize)
                             .Take(pageSize)
                             .Include(u => u.Role)
+                            .Include(u => u.Reviews)
+                            .Include(u => u.ShoppingCarts)
+                            .Include(u => u.Orders)
+                            .ThenInclude(o => o.Products)
                             .ToList();
 
                         List<UserDTO> dtos = new List<UserDTO>();
@@ -347,144 +371,153 @@ namespace ECommerceCMS_API.Core.Services
                     "Attributes",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Attributes.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Attributes.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }                    
                 },
                 {
                     "AttributeSets",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.AttributeSets.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.AttributeSets.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Categories",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Categories.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Categories.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Discounts",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Discounts.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Discounts.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Measurements",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Measurements.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Measurements.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "MeasurementSets",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.MeasurementSets.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.MeasurementSets.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Orders",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Orders.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Orders.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
+                    }
+                },
+                {
+                    "Order_Product",
+                    (pageSize) =>
+                    {
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Order_Product.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Photos",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Photos.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Photos.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Products",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Products.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Products.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Reviews",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Reviews.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Reviews.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Roles",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Roles.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Roles.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "ShoppingCarts",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.ShoppingCarts.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.ShoppingCarts.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "SubCategories",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.SubCategories.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.SubCategories.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Templates",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Templates.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Templates.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Users",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Users.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Users.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
                 {
                     "Values",
                     (pageSize) =>
                     {
-                        int pagesNum = this.ECommerceDbContext.Values.Count() / pageSize;
-                        if(pagesNum < 1) pagesNum = 1;
-                        return pagesNum;
+                        double pagesNum = Convert.ToDouble(this.ECommerceDbContext.Values.Count()) / Convert.ToDouble(pageSize);
+                        if(pagesNum < 1) return 1;
+                        return (int) Math.Ceiling(pagesNum);
                     }
                 },
             };
@@ -598,6 +631,22 @@ namespace ECommerceCMS_API.Core.Services
                         result.ForEach(i =>
                         {
                             resultDTOs.Add(new OrderDTO(i));
+                        });
+                        return JsonSerializer.Serialize(resultDTOs);
+                    }
+                },
+                {
+                    "Order_Product",
+                    (input) =>
+                    {
+                        List<Order_Product> result = this.ECommerceDbContext
+                        .Order_Product
+                        .Where(el => el.Id == input)
+                        .ToList();
+                        List<Order_Product_DTO> resultDTOs = new List<Order_Product_DTO>();
+                        result.ForEach(i =>
+                        {
+                            resultDTOs.Add(new Order_Product_DTO(i));
                         });
                         return JsonSerializer.Serialize(resultDTOs);
                     }
@@ -841,6 +890,19 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "Order_Product",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .Order_Product
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
                     "Photos",
                     (pageNum, pageSize) =>
                     {
@@ -1039,6 +1101,42 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "Order_Product",
+                    (inputBlockDTO) =>
+                    {
+                        Order_Product orderProduct = new Order_Product(this.ECommerceDbContext, inputBlockDTO);
+                        Order order = this.ECommerceDbContext.Orders
+                            .Where(o => o.Id == orderProduct.OrderId)
+                            .Include(o => o.Products)
+                            .First();
+
+                        if (!order.Products.Any(op => op.Id == orderProduct.Id))
+                        {
+                            this.ECommerceDbContext.Order_Product.Add(orderProduct);
+                            this.ECommerceDbContext.SaveChanges();
+                        }
+                        else
+                        {
+                            Order_Product opDb = order.Products
+                                .Where(op => op.Id == orderProduct.Id)
+                                .First();
+                            opDb.Count += orderProduct.Count;
+
+                            orderProduct = opDb;
+
+                            this.ECommerceDbContext.Order_Product.Update(orderProduct);
+                            this.ECommerceDbContext.SaveChanges();
+                        }
+                        
+                        order.TotalPrice = order.Products.Sum(op => op.TotalPrice);
+
+                        this.ECommerceDbContext.Orders.Update(order);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
                     "Photos",
                     (inputBlockDTO) =>
                     {
@@ -1214,6 +1312,26 @@ namespace ECommerceCMS_API.Core.Services
                     (inputBlockDTO) =>
                     {
                         Order order = new Order(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Orders.Update(order);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "Order_Product",
+                    (inputBlockDTO) =>
+                    {
+                        Order_Product orderProduct = new Order_Product(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.Order_Product.Update(orderProduct);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        Order order = this.ECommerceDbContext.Orders
+                            .Where(o => o.Id == orderProduct.OrderId)
+                            .Include(o => o.Products)
+                            .First();
+
+                        order.TotalPrice = order.Products.Sum(op => op.TotalPrice);
                         this.ECommerceDbContext.Orders.Update(order);
                         this.ECommerceDbContext.SaveChanges();
 
@@ -1429,6 +1547,31 @@ namespace ECommerceCMS_API.Core.Services
                             .Where(a => a.Id == id)
                             .First()
                         );
+
+                    break;
+
+                case "Order_product":
+                    Order order = ECommerceDbContext.Order_Product
+                        .Where(op => op.Id == id)
+                        .Include(op => op.Order)
+                        .Select(op => op.Order)
+                        .First();
+                    
+                    ECommerceDbContext.Order_Product
+                        .Remove(ECommerceDbContext
+                            .Order_Product
+                            .Where(op => op.Id == id)
+                            .First()
+                        );
+                    ECommerceDbContext.SaveChanges();
+
+                    order.Products = this.ECommerceDbContext.Order_Product
+                        .Where(op => op.OrderId == order.Id)
+                        .ToList();
+
+                    order.TotalPrice = order.Products.Sum(op => op.TotalPrice);
+                    ECommerceDbContext.Orders.Update(order);
+                    ECommerceDbContext.SaveChanges();
 
                     break;
 

@@ -1,4 +1,5 @@
-﻿using ECommerceCMS_API.Core.Entities;
+﻿using ECommerceCMS_API.Core.DTOs.EntityDTOs;
+using ECommerceCMS_API.Core.Entities;
 
 namespace ECommerceCMS_API.Core.DTOs
 {
@@ -43,6 +44,11 @@ namespace ECommerceCMS_API.Core.DTOs
         {
             this.Id = data.Id;
             this.Name = $"Date: {data.Date}, UserId: {data.UserId}";
+        }
+        public SimpleDTO(Order_Product orderProduct)
+        {
+            this.Id = orderProduct.Id;
+            this.Name = $"Order: {orderProduct.OrderId}, Product: {orderProduct.ProductId}";
         }
         public SimpleDTO(Photo data)
         {

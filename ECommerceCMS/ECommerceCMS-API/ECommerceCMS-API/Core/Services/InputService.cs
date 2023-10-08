@@ -95,6 +95,18 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "Order_Product", () =>
+                    {
+                        InputBlockDTO inputBlockDTO = new InputBlockDTO();
+                        inputBlockDTO.Title = "Order_Product";
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order_Product.Count", "Enter products count"));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order_Product.OrderId", "Select order", "Orders"));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order_Product.ProductId", "Select product", "Products"));
+
+                        return inputBlockDTO;
+                    }
+                },
+                {
                     "Photos", () =>
                     {
                         InputBlockDTO inputBlockDTO = new InputBlockDTO();
@@ -325,6 +337,25 @@ namespace ECommerceCMS_API.Core.Services
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order.Date", "Enter order date", order.Date.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order.UserId", "Select user", "Users", order.UserId.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateManyOfMany("Order.Products", "Select products", "Products", productIds));
+
+                        return inputBlockDTO;
+                    }
+                },
+                {
+                    "Order_Product", (id) =>
+                    {
+                        Order_Product orderProduct = this._db.Order_Product
+                            .Where(op => op.Id == id)
+                            .Include(op => op.Product)
+                            .Include(op => op.Order)
+                            .First();
+
+                        InputBlockDTO inputBlockDTO = new InputBlockDTO();
+                        inputBlockDTO.Title = "Order_Product";
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Order_Product.Id", orderProduct.Id.ToString()));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Order_Product.OrderId", orderProduct.OrderId.ToString()));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Order_Product.ProductId", orderProduct.ProductId.ToString()));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order_Product.Count", "Enter products count", orderProduct.Count.ToString()));
 
                         return inputBlockDTO;
                     }

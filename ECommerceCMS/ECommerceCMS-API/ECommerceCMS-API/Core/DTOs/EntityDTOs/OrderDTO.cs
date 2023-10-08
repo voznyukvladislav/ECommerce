@@ -8,6 +8,7 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
         public DateTime Date { get; set; }
         public int UserId { get; set; }
         public string Products { get; set; }
+        public decimal TotalPrice { get; set; }
         public OrderDTO()
         {
 
@@ -18,7 +19,8 @@ namespace ECommerceCMS_API.Core.DTOs.EntityDTOs
             Date = order.Date;
             UserId = order.UserId;
             if (order.Products.Count != 0)
-                Products = string.Join(",", order.Products.Select(p => p.Id));
+                Products = string.Join(",", order.Products.Select(p => p.ProductId));
+            TotalPrice = order.TotalPrice;
         }
     }
 }

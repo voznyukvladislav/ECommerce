@@ -37,7 +37,19 @@ namespace ECommerceCMS_API.Core.Entities
             productIds.ForEach(pi =>
             {
                 //this.Products.Add(db.Products.Where(p => p.Id == Int32.Parse(pi)).First());
+                int productId = Convert.ToInt32(pi);
+                this.Products.Add(new Order_Product()
+                {
+                    Count = 1,
+                    Order = this,
+                    Price = db.Products.Where(p => p.Id == productId).Select(p => p.Price).First(),
+                    ProductId = Convert.ToInt32(pi),
+                    TotalPrice = db.Products.Where(p => p.Id == productId).Select(p => p.Price).First(),
+                    Product = db.Products.Where(p => p.Id == productId).First()
+                });
             });
+
+            this.TotalPrice = this.Products.Sum(p => p.TotalPrice);
         }
     }
 }

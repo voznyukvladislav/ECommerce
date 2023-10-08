@@ -37,6 +37,10 @@ namespace ECommerceCMS_API.Core.Services
                     JsonSerializer.Serialize(new MeasurementSetDTO())
                 },
                 {
+                    "Order_Product",
+                    JsonSerializer.Serialize(new Order_Product_DTO())
+                },
+                {
                     "Orders",
                     JsonSerializer.Serialize(new OrderDTO())
                 },
