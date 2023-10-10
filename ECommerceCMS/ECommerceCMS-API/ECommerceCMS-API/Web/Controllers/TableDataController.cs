@@ -28,9 +28,9 @@ namespace ECommerceCMS_API.Web.Controllers
             try
             {
                 return Ok(this.TableDataService.GetTableData(tableName, pageNum, pageSize));
-            } catch(Exception ex)
+            } catch(Exception)
             {
-                return BadRequest(ex.Message);
+                return BadRequest();
             }
         }
 
@@ -41,9 +41,9 @@ namespace ECommerceCMS_API.Web.Controllers
             try
             {
                 return Ok(this.TableDataService.GetTablePagesNumber(tableName, pageSize));
-            } catch(Exception ex)
+            } catch(Exception)
             {
-                return BadRequest(ex.Message);
+                return BadRequest();
             }
         }
 
@@ -55,9 +55,9 @@ namespace ECommerceCMS_API.Web.Controllers
             try
             {
                 return Ok(this.TableDataService.GetSearchResult(tableName, Int32.Parse(input)));
-            } catch (Exception ex)
+            } catch (Exception)
             {
-                return BadRequest(ex.Message);
+                return BadRequest();
             }
         }
 
@@ -69,9 +69,9 @@ namespace ECommerceCMS_API.Web.Controllers
             try
             {
                 return Ok(this.TableDataService.GetSimpleDto(tableName, pageNum, pageSize));
-            } catch(Exception ex)
+            } catch(Exception)
             {
-                return BadRequest(ex.Message);
+                return BadRequest();
             }
         }
 
@@ -138,8 +138,8 @@ namespace ECommerceCMS_API.Web.Controllers
             {
                 return Ok(this.TableDataService.GetMeasurementsFromSet(measurementSetId));
             }
-            catch(Exception ex) {
-                return BadRequest(ex);
+            catch(Exception) {
+                return BadRequest();
             }            
         }
 

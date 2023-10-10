@@ -12,6 +12,7 @@ import { LoginService } from 'src/app/services/login-service/login.service';
 import { AuthenticationHandler } from 'src/app/data/authentication-handler';
 import { MessageService } from 'src/app/services/message-service/message.service';
 import { Message } from 'src/app/data/message';
+import { ErrorHandler } from 'src/app/data/error-handler';
 
 @Component({
   selector: 'app-table-page',
@@ -30,6 +31,8 @@ export class TablePageComponent implements OnInit {
   popupServiceItem: PopupServiceItem = new PopupServiceItem();
 
   inputSearch: InputDTO = new InputDTO();
+
+  storage: Storage = localStorage;
 
   private querySub: Subscription;
 
@@ -58,10 +61,7 @@ export class TablePageComponent implements OnInit {
         queryParam => {
           this.loginService.isAuthorized().subscribe({
             error: error => {
-              AuthenticationHandler.LogOut(localStorage);
-              let message: Message = error.error;
-              console.log(message);
-              this.messageService.addMessage(message);
+              ErrorHandler.HandleError(error, this.storage, this.messageService);
             }
           });
 
@@ -255,13 +255,7 @@ export class TablePageComponent implements OnInit {
         location.reload();
       },
       error: error => {
-        let message = error.error;
-        this.messageService.addMessage(message);
-
-        if(error.status == 401) {
-          AuthenticationHandler.LogOut(localStorage);
-          location.reload();
-        }
+        ErrorHandler.HandleError(error, this.storage, this.messageService);
       }
     });
   }

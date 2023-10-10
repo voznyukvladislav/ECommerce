@@ -9,6 +9,7 @@ import { InputsService } from 'src/app/services/inputs-service/inputs.service';
 import { LoginService } from 'src/app/services/login-service/login.service';
 import { MessageService } from 'src/app/services/message-service/message.service';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
+import { ErrorHandler } from 'src/app/data/error-handler';
 
 @Component({
   selector: 'app-header-user',
@@ -41,26 +42,21 @@ export class HeaderUserComponent implements OnInit {
         this.popupService.open(popupServiceItem);
       },
       error: (error: any) => {
-        console.log(error);
+        ErrorHandler.HandleError(error, this.storage, this.messageService);
       }
     })
   }
 
-  loginRequest(inputBlockDTO: InputBlockDTO, http: HttpClient, eventEmitter: EventEmitter<Message>) {
-    http.post(`${Constants.url}/${Constants.login}`, inputBlockDTO, { withCredentials: true }).subscribe({
+  loginRequest() {
+    console.log(this.inputBlockDTO);
+    this.loginService.login(this.inputBlockDTO).subscribe({
       next: (data: any) => {
         AuthenticationHandler.Authenticate(data.userDTO, localStorage);
         let message: Message = data.message;
         this.messageService.addMessage(message);
       },
       error: (error: any) => {
-        let message: Message = error.error;
-        this.messageService.addMessage(message);
-
-        // If user is not authenticated
-        if(error.status == 401) {
-          AuthenticationHandler.LogOut(localStorage);
-        }
+        ErrorHandler.HandleError(error, this.storage, this.messageService);
       }
     })
   }
@@ -73,11 +69,7 @@ export class HeaderUserComponent implements OnInit {
         this.messageService.addMessage(message);        
       }, 
       error: (error: any) => {
-
-        // If user session has been expired
-        if(error.status == 401) {
-          AuthenticationHandler.LogOut(localStorage);
-        }
+        ErrorHandler.HandleError(error, this.storage, this.messageService);
       }
     });
   }

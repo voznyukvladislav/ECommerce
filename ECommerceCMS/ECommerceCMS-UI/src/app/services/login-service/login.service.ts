@@ -11,7 +11,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(inputBlockDTO: InputBlockDTO) {
-    return this.http.post(`${Constants.url}/${Constants.login}`, inputBlockDTO);
+    return this.http.post(`${Constants.url}/${Constants.login}`, inputBlockDTO, { withCredentials: true });
   }
 
   logout() {

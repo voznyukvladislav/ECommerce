@@ -25,6 +25,10 @@ export class PopupComponent implements OnInit {
     this.onPopupInteraction.emit(this.isOpened);
   }
   
+  debug() {
+    console.log(this.popupServiceItem);
+  }
+
   ngOnInit(): void {
     //console.log(this.inputBlockDTO);
   }

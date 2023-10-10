@@ -3,6 +3,15 @@ export class Message {
     status: string = "";
     text: string = "";
 
+    static messageIsFull(message: Message): boolean {
+        if (message.title && message.status && message.text) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     static messageIsEmpty(message: Message): boolean {
         if(message.title || message.status || message.text) {
             return true;
