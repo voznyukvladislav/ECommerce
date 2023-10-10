@@ -152,6 +152,7 @@ namespace ECommerceCMS_API.Core.Services
                             .Take(pageSize)
                             .Include(o => o.User)
                             .Include(o => o.Products)
+                            .Include(o => o.OrderStatus)
                             .ToList();
 
                         List<OrderDTO> dtos = new List<OrderDTO>();
@@ -178,6 +179,24 @@ namespace ECommerceCMS_API.Core.Services
                         data.ForEach(i =>
                         {
                             dtos.Add(new Order_Product_DTO(i));
+                        });
+                        return JsonSerializer.Serialize(dtos);
+                    }
+                },
+                {
+                    "OrderStatuses",
+                    (pageNum, pageSize) => {
+                        List<OrderStatus> data = this.ECommerceDbContext
+                            .OrderStatuses
+                            .OrderBy(a => a.Id)
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList();
+
+                        List<OrderStatusDTO> dtos = new List<OrderStatusDTO>();
+                        data.ForEach(i =>
+                        {
+                            dtos.Add(new OrderStatusDTO(i));
                         });
                         return JsonSerializer.Serialize(dtos);
                     }
@@ -903,6 +922,19 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "OrderStatuses",
+                    (pageNum, pageSize) =>
+                    {
+                        List<SimpleDTO> result = this.ECommerceDbContext
+                        .OrderStatuses
+                        .Select(a => new SimpleDTO(a))
+                        .Skip((pageNum - 1) * pageSize)
+                        .Take(pageSize)
+                        .ToList();
+                        return JsonSerializer.Serialize(result);
+                    }
+                },
+                {
                     "Photos",
                     (pageNum, pageSize) =>
                     {
@@ -1137,6 +1169,17 @@ namespace ECommerceCMS_API.Core.Services
                     }
                 },
                 {
+                    "OrderStatuses",
+                    (inputBlockDTO) =>
+                    {
+                        OrderStatus orderStatus = new OrderStatus(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.OrderStatuses.Add(orderStatus);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
                     "Photos",
                     (inputBlockDTO) =>
                     {
@@ -1333,6 +1376,17 @@ namespace ECommerceCMS_API.Core.Services
 
                         order.TotalPrice = order.Products.Sum(op => op.TotalPrice);
                         this.ECommerceDbContext.Orders.Update(order);
+                        this.ECommerceDbContext.SaveChanges();
+
+                        return;
+                    }
+                },
+                {
+                    "OrderStatuses",
+                    (inputBlockDTO) =>
+                    {
+                        OrderStatus orderStatus = new OrderStatus(this.ECommerceDbContext, inputBlockDTO);
+                        this.ECommerceDbContext.OrderStatuses.Update(orderStatus);
                         this.ECommerceDbContext.SaveChanges();
 
                         return;

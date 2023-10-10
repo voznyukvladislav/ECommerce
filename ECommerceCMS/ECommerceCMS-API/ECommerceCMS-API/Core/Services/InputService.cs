@@ -89,6 +89,7 @@ namespace ECommerceCMS_API.Core.Services
                         inputBlockDTO.Title = "Orders";
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order.Date", "Enter order date"));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order.UserId", "Select user", "Users"));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order.OrderStatusId", "Select order status", "OrderStatuses"));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateManyOfMany("Order.Products", "Select products", "Products"));
 
                         return inputBlockDTO;
@@ -102,6 +103,16 @@ namespace ECommerceCMS_API.Core.Services
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order_Product.Count", "Enter products count"));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order_Product.OrderId", "Select order", "Orders"));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order_Product.ProductId", "Select product", "Products"));
+
+                        return inputBlockDTO;
+                    }
+                },
+                {
+                    "OrderStatuses", () =>
+                    {
+                        InputBlockDTO inputBlockDTO = new InputBlockDTO();
+                        inputBlockDTO.Title = "OrderStatuses";
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("OrderStatus.Status", "Enter status name"));
 
                         return inputBlockDTO;
                     }
@@ -327,14 +338,17 @@ namespace ECommerceCMS_API.Core.Services
                         Order order = this._db.Orders
                             .Where(o => o.Id == id)
                             .Include(o => o.Products)
+                            .ThenInclude(op => op.Product)
                             .First();
 
-                        string productIds = String.Join(' ', order.Products.Select(p => p.Id));
+                        //string productIds = String.Join(' ', order.Products.Select(p => p.Id));
+                        string productIds = String.Join(' ', order.Products.Select(op => op.Product.Id));
 
                         InputBlockDTO inputBlockDTO = new InputBlockDTO();
                         inputBlockDTO.Title = "Orders";
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Order.Id", order.Id.ToString()));
-                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order.Date", "Enter order date", order.Date.ToString()));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order.Date", "Enter order date", order.Date.ToShortDateString()));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order.OrderStatusId", "Select order status", "OrderStatuses", order.UserId.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateOneOfMany("Order.UserId", "Select user", "Users", order.UserId.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateManyOfMany("Order.Products", "Select products", "Products", productIds));
 
@@ -356,6 +370,21 @@ namespace ECommerceCMS_API.Core.Services
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Order_Product.OrderId", orderProduct.OrderId.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("Order_Product.ProductId", orderProduct.ProductId.ToString()));
                         inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("Order_Product.Count", "Enter products count", orderProduct.Count.ToString()));
+
+                        return inputBlockDTO;
+                    }
+                },
+                {
+                    "OrderStatuses", (id) =>
+                    {
+                        OrderStatus orderStatus = this._db.OrderStatuses
+                            .Where(o => o.Id == id)
+                            .First();
+
+                        InputBlockDTO inputBlockDTO = new InputBlockDTO();
+                        inputBlockDTO.Title = "OrderStatuses";
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateStatic("OrderStatus.Id", orderStatus.Id.ToString()));
+                        inputBlockDTO.InputDTOs.Add(InputDTO.CreateSimple("OrderStatus.Status", "Enter status name", orderStatus.Status));
 
                         return inputBlockDTO;
                     }

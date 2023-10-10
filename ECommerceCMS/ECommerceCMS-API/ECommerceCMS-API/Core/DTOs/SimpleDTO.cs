@@ -50,6 +50,13 @@ namespace ECommerceCMS_API.Core.DTOs
             this.Id = orderProduct.Id;
             this.Name = $"Order: {orderProduct.OrderId}, Product: {orderProduct.ProductId}";
         }
+
+        public SimpleDTO(OrderStatus orderStatus)
+        {
+            this.Id = orderStatus.Id;
+            this.Name = orderStatus.Status;
+        }
+
         public SimpleDTO(Photo data)
         {
             this.Id = data.Id;

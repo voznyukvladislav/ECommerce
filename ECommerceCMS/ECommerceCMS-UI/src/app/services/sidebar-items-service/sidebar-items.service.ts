@@ -47,6 +47,7 @@ export class SidebarItemsService {
           { title: 'Users', link: 'users' },
           { title: 'Orders', link: 'orders' },
           { title: 'Order_Products', link: 'order_product' },
+          { title: "Order Statuses", link: 'orderStatuses' },
           { title: 'Shopping Carts', link: 'shoppingCarts' },
           { title: 'Reviews', link: 'reviews' },
           { title: 'Roles', link: 'roles' }

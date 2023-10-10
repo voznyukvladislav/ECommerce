@@ -27,28 +27,53 @@ namespace ECommerceCMS_API.Core.Entities
         public Order(ECommerceDbContext db, InputBlockDTO inputBlockDTO)
         {
             Dictionary<string, string> nameValue = inputBlockDTO.GetNameValueDictionary();
+            List<Order_Product> orderProducts = new();
             if (nameValue.ContainsKey("Order.Id"))
+            {
                 this.Id = Int32.Parse(nameValue["Order.Id"]);
+                orderProducts = db.Order_Product.Where(op => op.OrderId == this.Id).ToList();
+            }
+
             this.Date = DateTime.Parse(nameValue["Order.Date"]);
             this.UserId = Int32.Parse(nameValue["Order.UserId"]);
             this.User = db.Users.Where(u => u.Id == this.UserId).First();
+            this.OrderStatusId = Int32.Parse(nameValue["Order.OrderStatusId"]);
+            this.OrderStatus = db.OrderStatuses.Where(os => os.Id == this.OrderStatusId).First();
 
             List<string> productIds = nameValue["Order.Products"].Split(' ').ToList();
             productIds.ForEach(pi =>
             {
                 //this.Products.Add(db.Products.Where(p => p.Id == Int32.Parse(pi)).First());
                 int productId = Convert.ToInt32(pi);
-                this.Products.Add(new Order_Product()
+                if (!orderProducts.Any(op => op.ProductId == productId))
                 {
-                    Count = 1,
-                    Order = this,
-                    Price = db.Products.Where(p => p.Id == productId).Select(p => p.Price).First(),
-                    ProductId = Convert.ToInt32(pi),
-                    TotalPrice = db.Products.Where(p => p.Id == productId).Select(p => p.Price).First(),
-                    Product = db.Products.Where(p => p.Id == productId).First()
-                });
+                    Order_Product orderProduct = new Order_Product()
+                    {
+                        Count = 1,
+                        Order = this,
+                        Price = db.Products.Where(p => p.Id == productId).Select(p => p.Price).First(),
+                        ProductId = productId,
+                        TotalPrice = db.Products.Where(p => p.Id == productId).Select(p => p.Price).First(),
+                        Product = db.Products.Where(p => p.Id == productId).First()
+                    };
+                    this.Products.Add(orderProduct);
+                    orderProducts.Add(orderProduct);
+                }
             });
+            db.Orders.Update(this);
+            db.SaveChanges();
+            
+            orderProducts = db.Order_Product.Where(op => op.OrderId == this.Id).ToList();
+            orderProducts.ForEach(op =>
+            {
+                if (!productIds.Contains($"{op.ProductId}"))
+                {
+                    db.Order_Product.Remove(op);
+                }
+            });
+            db.SaveChanges();
 
+            this.Products = db.Order_Product.Where(op => op.OrderId == this.Id).ToList();
             this.TotalPrice = this.Products.Sum(p => p.TotalPrice);
         }
     }
