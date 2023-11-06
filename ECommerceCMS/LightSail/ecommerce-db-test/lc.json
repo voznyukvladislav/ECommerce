@@ -1,0 +1,11 @@
+{
+    "serviceName": "ecommerce-cms-aws",
+    "containers": {
+        "ecommerce-db-container": {
+            "image": ":ecommerce-db.latest.1",
+            "ports": {
+                "1488": "TCP"
+            }
+        }
+    }
+}

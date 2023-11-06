@@ -18,6 +18,8 @@ namespace ECommerceCMS_API.Web.Controllers
         public TableDataController(ITableDataService tableDataService, ECommerceDbContext db) {
             this.TableDataService = tableDataService;
             this.Db = db;
+
+            this.Db.Database.EnsureCreated();
         }
 
         [HttpGet]
@@ -207,6 +209,15 @@ namespace ECommerceCMS_API.Web.Controllers
             this.Db.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("getUsers")]
+        public IActionResult GetUsers()
+        {
+            var users = this.Db.Users.ToList();
+
+            return Ok(users);
         }
     }
 }

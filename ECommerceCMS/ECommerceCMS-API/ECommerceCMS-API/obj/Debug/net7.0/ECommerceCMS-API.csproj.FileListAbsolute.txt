@@ -73,3 +73,5 @@ D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMS-API\ECommerceCMS-API\obj\
 D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMS-API\ECommerceCMS-API\obj\Debug\net7.0\ECommerceCMS-API.pdb
 D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMS-API\ECommerceCMS-API\obj\Debug\net7.0\ECommerceCMS-API.genruntimeconfig.cache
 D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMS-API\ECommerceCMS-API\obj\Debug\net7.0\ref\ECommerceCMS-API.dll
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMS-API\ECommerceCMS-API\bin\Debug\net7.0\MySqlConnector.dll
+D:\AngularProjects\ECommerce\ECommerceCMS\ECommerceCMS-API\ECommerceCMS-API\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll

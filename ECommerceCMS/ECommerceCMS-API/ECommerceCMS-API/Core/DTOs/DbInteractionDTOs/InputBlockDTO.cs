@@ -28,7 +28,7 @@
         public List<Dictionary<string, string>> GetInputGroupValueDictionary()
         {
             List<Dictionary<string, string>> nameValueList = new List<Dictionary<string, string>>();
-            this.InputGroupDTOs.ForEach(inputGroup =>
+            this.InputGroupDTOs?.ForEach(inputGroup =>
             {                
                 inputGroup.InputDTOs.ForEach(input =>
                 {

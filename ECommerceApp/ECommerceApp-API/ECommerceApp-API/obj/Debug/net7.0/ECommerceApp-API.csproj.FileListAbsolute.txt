@@ -75,3 +75,5 @@ D:\AngularProjects\ECommerce\ECommerceApp\ECommerceApp-API\ECommerceApp-API\obj\
 D:\AngularProjects\ECommerce\ECommerceApp\ECommerceApp-API\ECommerceApp-API\obj\Debug\net7.0\ECommerceApp-API.genruntimeconfig.cache
 D:\AngularProjects\ECommerce\ECommerceApp\ECommerceApp-API\ECommerceApp-API\obj\Debug\net7.0\ref\ECommerceApp-API.dll
 D:\AngularProjects\ECommerce\ECommerceApp\ECommerceApp-API\ECommerceApp-API\bin\Debug\net7.0\Bogus.dll
+D:\AngularProjects\ECommerce\ECommerceApp\ECommerceApp-API\ECommerceApp-API\bin\Debug\net7.0\MySqlConnector.dll
+D:\AngularProjects\ECommerce\ECommerceApp\ECommerceApp-API\ECommerceApp-API\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll

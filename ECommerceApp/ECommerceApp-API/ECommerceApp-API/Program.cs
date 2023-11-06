@@ -78,8 +78,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ECommerceDbContext>(options =>
 {
-    string? connectionString = configuration!.GetConnectionString("LocalConnection");
-    options.UseSqlServer(connectionString!);
+    string? connectionString = configuration!.GetConnectionString("LightSailConnection");
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 34)));
+
+    //options.UseSqlServer(connectionString!);
 });
 
 builder.Services.AddCors();

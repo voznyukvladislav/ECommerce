@@ -4,7 +4,7 @@ export class Constants {
     public static attributeFilterHeight: number = 20;
 
     // API constants
-    public static api: string = "https://localhost:7041/api";
+    public static api: string = "https://ecommerce-app-api.2lenjba8jhduu.eu-central-1.cs.amazonlightsail.com/api";
     
     // Controllers and methods start
     // Menu controller

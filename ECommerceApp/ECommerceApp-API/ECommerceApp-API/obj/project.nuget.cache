@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6H2byi9okCzbue5gfLo/ksRFDwxWW+DHCB5ySPRCrt7x00le5KO6Ksu0kXvEq96+wP+hxYW50hISJBD+WDRUbA==",
+  "dgSpecHash": "ssl56+rBwP7xu93jczBcPz5WMw7Sv3rka0AIc1TraJcIJRMnViPeAr0ICcD1CWWfbOhMvxEMP4a0s4BmF1S2AA==",
   "success": true,
   "projectFilePath": "D:\\AngularProjects\\ECommerce\\ECommerceApp\\ECommerceApp-API\\ECommerceApp-API\\ECommerceApp-API.csproj",
   "expectedPackageFiles": [
@@ -43,9 +43,12 @@
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.19.4\\microsoft.visualstudio.azure.containers.tools.targets.1.19.4.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\mysqlconnector\\2.2.5\\mysqlconnector.2.2.5.nupkg.sha512",
+    "C:\\Users\\LEGA-USER\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\7.0.0\\pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "C:\\Users\\LEGA-USER\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",

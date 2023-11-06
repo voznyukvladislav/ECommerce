@@ -17,9 +17,13 @@ namespace ECommerceCMS_API.Web.Controllers
     public class LoginController : ControllerBase
     {
         private readonly ECommerceDbContext _db;
-        public LoginController(ECommerceDbContext db)
+        private readonly ILogger<LoginController> _logger;
+        public LoginController(ECommerceDbContext db, ILogger<LoginController> logger)
         {
             _db = db;
+            _logger = logger;
+
+            this._db.Database.EnsureCreated();
         }
 
         [HttpPost]
@@ -28,6 +32,8 @@ namespace ECommerceCMS_API.Web.Controllers
         {
             try
             {
+                this._logger.LogError(this._db.Database.GetConnectionString());
+
                 Message message;
                 if (this.HttpContext.User.Identity!.IsAuthenticated)
                 {
@@ -90,6 +96,43 @@ namespace ECommerceCMS_API.Web.Controllers
             await this.HttpContext.SignOutAsync();
             Message message = Message.CreateSuccessful("Logout", "You've logged out successfully.");
             return Ok(message);
+        }
+
+
+        // Debug methods
+        [HttpPost]
+        [Route("addAdmin")]
+        public async Task<IActionResult> AddAdmin()
+        {
+            try
+            {
+                Role admin = new Role()
+                {
+                    Name = "Admin"
+                };
+                this._db.Roles.Add(admin);
+                await this._db.SaveChangesAsync();
+
+                User user = new User()
+                {
+                    Name = "Vladyslav",
+                    Surname = "Vozniuk",
+                    Login = "Vladosekus",
+                    Password = "gfhjkm",
+                    Email = "voznyukvladislav@ukr.net",
+                    Phone = "0983230459",
+                    Role = admin,
+                    RoleId = admin.Id
+                };
+                this._db.Users.Add(user);
+                await this._db.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch(Exception) 
+            {
+                return BadRequest();
+            }
         }
     }
 }

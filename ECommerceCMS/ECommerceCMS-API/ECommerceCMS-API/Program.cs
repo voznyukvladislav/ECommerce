@@ -36,7 +36,7 @@ builder.Services
         configureOptions.ExpireTimeSpan = TimeSpan.FromSeconds(6000);
         configureOptions.SlidingExpiration = false;
         configureOptions.Cookie.HttpOnly = false;
-        configureOptions.Cookie.SameSite = SameSiteMode.None;
+        configureOptions.Cookie.SameSite = SameSiteMode.Lax;
         configureOptions.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 
         // To prevent unnecessary redirections
@@ -79,8 +79,10 @@ var configuration = new ConfigurationBuilder()
 // Database context
 builder.Services.AddDbContext<ECommerceDbContext>(options =>
 {
-    var connectionString = configuration.GetConnectionString("LocalConnection");
-    options.UseSqlServer(connectionString);
+    var connectionString = configuration.GetConnectionString("LightSailConnection");
+    Console.WriteLine(connectionString);
+    //options.UseSqlServer(connectionString);
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 34)));
 });
 
 builder.Services.AddTransient<ITableMetaDataService, TableMetadataService>();

@@ -54,6 +54,7 @@ export class TableDataService {
     headers.set('Accept', "application/json");
     return this.http.post(`${Constants.url}/${Constants.insertData}`, inputBlock, { withCredentials: true, headers: { 'Content-Type': 'application/json' }});
   }
+  
   updateData(inputBlock: InputBlockDTO) {
     let headers = new HttpHeaders();
     //headers.set('Content-Type', 'application/json');
