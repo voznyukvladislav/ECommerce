@@ -93,8 +93,10 @@ namespace ECommerceCMS_API.Web.Controllers
                 List<Review> reviews = new();
                 for (int i = 0; i < users.Count; i++)
                 {
-                    for (int j = 0; j < products.Count; j++)
+                    int reviewsNum = new Random().Next(1, 5);
+                    for (int j = 0; j < reviewsNum; j++)
                     {
+                        int productIndex = new Random().Next(0, products.Count);
                         reviews.Add(DataGenerator.GenerateReview(users[i], products[j]));
                     }
                 }
@@ -136,6 +138,23 @@ namespace ECommerceCMS_API.Web.Controllers
                 admin.Password = Hashing.Hash(admin.Password);
 
                 this._db.Users.Add(admin);
+                this._db.SaveChanges();
+
+                return NoContent();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        [Route("deleteReviews")]
+        public IActionResult DeleteReviews()
+        {
+            try
+            {
+                this._db.Reviews.RemoveRange(this._db.Reviews.ToList());
                 this._db.SaveChanges();
 
                 return NoContent();

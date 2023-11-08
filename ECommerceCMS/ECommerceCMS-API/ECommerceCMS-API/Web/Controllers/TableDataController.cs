@@ -19,7 +19,7 @@ namespace ECommerceCMS_API.Web.Controllers
             this.TableDataService = tableDataService;
             this.Db = db;
 
-            this.Db.Database.EnsureCreated();
+            //this.Db.Database.EnsureCreated();
         }
 
         [HttpGet]

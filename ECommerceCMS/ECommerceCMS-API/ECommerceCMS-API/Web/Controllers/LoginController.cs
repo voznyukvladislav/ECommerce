@@ -23,7 +23,7 @@ namespace ECommerceCMS_API.Web.Controllers
             _db = db;
             _logger = logger;
 
-            this._db.Database.EnsureCreated();
+            //this._db.Database.EnsureCreated();
         }
 
         [HttpPost]

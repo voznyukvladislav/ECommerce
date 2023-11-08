@@ -43,7 +43,7 @@ namespace ECommerceCMS_API.Infrastructure.Data
                 .RuleFor(r => r.ProductId, f => product.Id)
                 .RuleFor(r => r.Rating, f => new Random().Next(1, 6))
                 .RuleFor(r => r.Text, f => f.Lorem.Text())
-                .RuleFor(r => r.ReviewDate, f => f.Date.Between(DateTime.MinValue, DateTime.Now));
+                .RuleFor(r => r.ReviewDate, f => f.Date.Between(new DateTime(2023, 6, 1), DateTime.Now));
 
             return faker.Generate();
         }

@@ -17,7 +17,7 @@ export class InputOneOfManyComponent extends InputComponent implements OnInit {
   items: Array<SimpleDTO> = new Array<SimpleDTO>();
   selectedItem: SimpleDTO = new SimpleDTO("", "");
 
-  pageSize: number = 8;
+  pageSize: number = 20;
   pageNumber: number = 1;
 
   isOpened: boolean = false;

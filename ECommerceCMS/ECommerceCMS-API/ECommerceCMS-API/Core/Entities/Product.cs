@@ -56,7 +56,14 @@ namespace ECommerceCMS_API.Core.Entities
                     value.Measurement = db.Measurements.Where(m => m.Id == value.MeasurementId).First();
                 }
 
-                value.Val = nv["Value.Val"];
+                if (nv.ContainsKey("Value.Val"))
+                {
+                    value.Val = nv["Value.Val"];
+                } 
+                else
+                {
+                    value.Val = "";
+                }
 
                 value.Attribute_AttributeSetId = db.Attribute_AttributeSets
                     .Where(aas => aas.AttributeId == Int32.Parse(nv["Value.AttributeId"])

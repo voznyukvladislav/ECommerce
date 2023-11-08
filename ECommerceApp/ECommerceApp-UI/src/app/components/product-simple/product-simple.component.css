@@ -39,8 +39,11 @@
     box-sizing: border-box;
 }
 .product-image {
-    width: 160px;
-    height: 160px;
+    min-width: 100px;
+    max-width: 250px;
+    min-height: 100px;
+    max-height: 160px;
+    aspect-ratio: auto;
 }
 .name {
     font-size: var(--product-name-font-size);
