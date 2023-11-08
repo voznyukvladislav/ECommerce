@@ -5,7 +5,8 @@ export class Constants {
 
     // API constants
     public static api: string = "https://ecommerce-app-api.2lenjba8jhduu.eu-central-1.cs.amazonlightsail.com/api";
-    
+    //public static api: string = "https://localhost:7041/api";
+
     // Controllers and methods start
     // Menu controller
     public static menu: string = "menu";

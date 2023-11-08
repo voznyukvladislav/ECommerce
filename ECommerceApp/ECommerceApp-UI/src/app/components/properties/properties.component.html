@@ -4,7 +4,7 @@
         <div class="attribute" *ngFor="let attribute of attributeSet.productAttributes">
             <a class="title">{{attribute.attributeName}}</a>
             <a class="dotter"><span>&#8203;</span></a>
-            <a class="value">{{attribute.value}}</a>
+            <a class="value">{{attribute.value + " " + attribute.measurement}}</a>
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@
     public static class Constants
     {
         public static string Url { get; set; } = "https://ecommerce-cms-api.4cstc11m1lh4c.eu-north-1.cs.amazonlightsail.com/api";
+        //public static string Url { get; set; } = "https://localhost:7275/api";
         public static string GetMeasurementsFromSet { get; } = "tableData/getMeasurementsFromSet";
         public static string GetSimpleDTO { get; } = "tableData/getSimpleDto";
         public static string GetInputGroups { get; } = "inputs/getInputGroups";

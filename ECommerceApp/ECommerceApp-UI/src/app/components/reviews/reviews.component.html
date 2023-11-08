@@ -4,7 +4,7 @@
             <div class="review-title-container">
                 <img src="..\assets\icons\user-review.png" class="icon" draggable="false">
                 <div class="review-title">
-                    <a class="name">{{review.user.name}}</a>
+                    <a class="name">{{review.user.name != ' ' ? review.user.name : review.user.login}}</a>
                     <a class="date">{{review.reviewDate}}</a>
                 </div>
             </div>

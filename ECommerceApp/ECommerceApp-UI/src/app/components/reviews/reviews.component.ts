@@ -78,8 +78,7 @@ export class ReviewsComponent implements OnInit {
             }
           }
   
-          this.reviewsExist.emit();
-  
+          this.reviewsExist.emit();  
   
           this.productService.getProductRating(this.productFull.id).subscribe({
             next: (rating: any) => {

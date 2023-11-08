@@ -33,6 +33,8 @@ namespace ECommerceApp_API.Web.Controllers
             try
             {
                 User newUser = new User(popupDTO, this._db);
+                newUser.Password = Hashing.Hash(newUser.Password);
+                newUser.ShoppingCarts.Add(new ShoppingCart() { User = newUser });
                 this._db.Users.Add(newUser);
                 await this._db.SaveChangesAsync();
 
@@ -60,6 +62,7 @@ namespace ECommerceApp_API.Web.Controllers
                 }
 
                 Dictionary<string, string> inputValue = PopupDTO.GetDictionaryFromPopup(popupDTO);
+                inputValue["InputDTO.Password"] = Hashing.Hash(inputValue["InputDTO.Password"]);
                 User? user = this._db.Users
                     .Where(u => 
                         (u.Email == inputValue["InputDTO.Login"]

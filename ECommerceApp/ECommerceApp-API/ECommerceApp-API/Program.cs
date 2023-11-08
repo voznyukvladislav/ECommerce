@@ -42,7 +42,8 @@ builder.Services
         configureOptions.ExpireTimeSpan = TimeSpan.FromSeconds(6000);
         configureOptions.SlidingExpiration = false;
         configureOptions.Cookie.HttpOnly = false;
-        configureOptions.Cookie.SameSite = SameSiteMode.None;
+        // SameSiteMod Lax for production server, None for local
+        configureOptions.Cookie.SameSite = SameSiteMode.Lax;
         configureOptions.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 
         // To prevent unnecessary redirections

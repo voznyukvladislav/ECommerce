@@ -38,7 +38,8 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
                     {
                         AttributeId = aas.AttributeId,
                         AttributeName = aas.Attribute.Name,
-                        Value = aas.Values[0].Val
+                        Value = aas.Values[0].Val,
+                        Measurement = aas.Values[0].Measurement is null ? "" : aas.Values[0].Measurement.Name
                     });
                 });
                 

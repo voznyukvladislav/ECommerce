@@ -36,6 +36,7 @@ builder.Services
         configureOptions.ExpireTimeSpan = TimeSpan.FromSeconds(6000);
         configureOptions.SlidingExpiration = false;
         configureOptions.Cookie.HttpOnly = false;
+        // SameSiteMod Lax for production server, None for local
         configureOptions.Cookie.SameSite = SameSiteMode.Lax;
         configureOptions.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
 

@@ -15,7 +15,7 @@ namespace ECommerceApp_API.Core.DTOs.ProductDTOs
         {
             this.User = new UserDTO(review.User);
             this.Rating = review.Rating;
-            this.ReviewDate = review.ReviewDate.ToShortDateString();
+            this.ReviewDate = review.ReviewDate.ToShortDateString() + " " + review.ReviewDate.ToShortTimeString();
             this.Text = review.Text;
         }
     }

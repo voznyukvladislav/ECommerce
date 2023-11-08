@@ -36,6 +36,9 @@ namespace ECommerceApp_API.Core.Services
                     .Include(p => p.Values)
                     .ThenInclude(v => v.Attribute_AttributeSet)
 
+                    .Include(p => p.Values)
+                    .ThenInclude(v => v.Measurement)
+
                     .FirstOrDefaultAsync();
 
                 if (product is not null)

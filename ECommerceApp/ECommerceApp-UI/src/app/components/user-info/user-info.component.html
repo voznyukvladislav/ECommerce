@@ -18,10 +18,10 @@
             <a class="info">Orders</a>
             <img src="..\assets\icons\list.png" class="icon">
         </div>
-        <a class="user-info-panel-item">Name: {{userInfo.name + userInfo.surname}}</a>
+        <a class="user-info-panel-item">Name: {{userInfo.name + " " + userInfo.surname}}</a>
         <a class="user-info-panel-item">Phone: {{userInfo.phone}}</a>
         <a class="user-info-panel-item">Email: {{userInfo.email}}</a>
-        <a class="user-info-panel-item" (click)="logOut()" (click)="contextMenuInteration()">Log Out</a>
+        <a class="user-info-panel-item logout" (click)="logOut()" (click)="contextMenuInteration()">Log Out</a>
     </div>
         
 </div>

@@ -59,9 +59,14 @@
 .info {
     transition: var(--main-transition);
 }
+.user-info-panel-item-container:hover .icon {
+    opacity: var(--opacity-after);
+}
 .icon {
     width: 30px;
     height: 30px;
+    opacity: var(--opacity-before);
+    transition: var(--main-transition);
 }
 .user-info-panel-item {
     padding: 10px 10px;
@@ -70,6 +75,14 @@
 }
 .user-info-panel-item:hover {
     background-color: var(--user-info-menu-color-hover);
+}
+.logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--red-color);
 }
 .opened {
     z-index: 1;

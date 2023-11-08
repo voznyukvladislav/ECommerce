@@ -32,8 +32,6 @@ namespace ECommerceCMS_API.Web.Controllers
         {
             try
             {
-                this._logger.LogError(this._db.Database.GetConnectionString());
-
                 Message message;
                 if (this.HttpContext.User.Identity!.IsAuthenticated)
                 {
@@ -42,6 +40,7 @@ namespace ECommerceCMS_API.Web.Controllers
                 }
 
                 LoginFormDTO loginFormDTO = new LoginFormDTO(inputBlockDTO);
+                loginFormDTO.Password = Hashing.Hash(loginFormDTO.Password);
                 User? user = this._db.Users
                     .Where(
                         u => (u.Login == loginFormDTO.Login

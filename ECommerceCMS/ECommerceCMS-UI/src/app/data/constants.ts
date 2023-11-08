@@ -1,6 +1,7 @@
 export class Constants {
     // Connection constants beginning
     static url: string = "https://ecommerce-cms-api.4cstc11m1lh4c.eu-north-1.cs.amazonlightsail.com/api";
+    //static url: string = "https://localhost:7275/api";
 
     static tableMetadata: string = "tableMetadata/getTableMetadata";
 

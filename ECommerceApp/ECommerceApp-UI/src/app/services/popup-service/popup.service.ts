@@ -46,8 +46,19 @@ export class PopupService {
     });
   }
 
-  static register(http: HttpClient, popupData: PopupData) {
-    http.post(`${Constants.api}/${Constants.login}/${Constants.register}`, popupData, { withCredentials: true }).subscribe();
+  static register(http: HttpClient, popupData: PopupData, messageService: MessageService) {
+    http.post(`${Constants.api}/${Constants.login}/${Constants.register}`, popupData, { withCredentials: true }).subscribe({
+      next: (data: any) => {
+        let message = data;
+        console.log("Message: ", message);
+        console.log("Message service: ", messageService);
+        messageService.addMessage(message);
+      },
+      error: (error: any) => {
+        let message = error.error;
+        messageService.addMessage(message);
+      }
+    });
   }
 
   // Shopping cart popup

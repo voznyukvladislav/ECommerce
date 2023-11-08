@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { PopupData } from 'src/app/data/popup/popupData';
 import { PopupService } from 'src/app/services/popup-service/popup.service';
 import { InputsHandlerComponent } from '../inputs/inputs-handler/inputs-handler.component';
+import { MessageService } from 'src/app/services/message-service/message.service';
 
 @Component({
   selector: 'app-popup',
@@ -15,7 +16,10 @@ export class PopupComponent implements OnInit, AfterViewInit {
 
   popupData: PopupData = new PopupData();
 
-  constructor(private popupService: PopupService, private http: HttpClient) {
+  constructor(
+    private popupService: PopupService,
+    private http: HttpClient,
+    private messageService: MessageService) {
     this.popupService.getPopupData().subscribe({
       next: data => {
         this.popupData = data;
@@ -29,7 +33,7 @@ export class PopupComponent implements OnInit, AfterViewInit {
                   popupData.title = data.title;
                   popupData.inputs = data.inputs;
                   popupData.buttons = data.buttons;
-                  popupData.action = PopupService.register.bind(this, this.http, popupData);
+                  popupData.action = PopupService.register.bind(this, this.http, popupData, this.messageService);
       
                   popupData.isOpened = true;
                   this.popupService.callPopup(popupData);

@@ -1,5 +1,6 @@
 .message-box-container {
-    width: 150px;
+    min-width: 200px;
+    max-width: 200px;
     min-height: 100px;
     box-shadow: 0 0 5px black;
     border: 1px solid black;

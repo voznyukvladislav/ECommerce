@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using ECommerceCMS_API.Core.Entities;
 
-namespace ECommerceApp_API.Infrastructure.Data
+namespace ECommerceCMS_API.Infrastructure.Data
 {
     public class DataGenerator
     {
@@ -22,10 +22,10 @@ namespace ECommerceApp_API.Infrastructure.Data
             return faker.Generate();
         }
 
-        public static List<User> GenerateUsers(ECommerceDbContext db)
+        public static List<User> GenerateUsers(ECommerceDbContext db, int usersNum)
         {
             List<User> users = new();
-            for (int i = 0; i < new Random().Next(1, 20); i++)
+            for (int i = 0; i < usersNum; i++)
             {
                 users.Add(GenerateUser(db));
             }

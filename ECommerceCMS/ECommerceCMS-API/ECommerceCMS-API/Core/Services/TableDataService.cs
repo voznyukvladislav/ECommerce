@@ -1257,6 +1257,8 @@ namespace ECommerceCMS_API.Core.Services
                     (inputBlockDTO) =>
                     {
                         User user = new User(this.ECommerceDbContext, inputBlockDTO);
+                        user.Password = Hashing.Hash(user.Password);
+
                         this.ECommerceDbContext.Users.Add(user);
 
                         ShoppingCart shoppingCart = new ShoppingCart()
@@ -1470,6 +1472,8 @@ namespace ECommerceCMS_API.Core.Services
                     (inputBlockDTO) =>
                     {
                         User user = new User(this.ECommerceDbContext, inputBlockDTO);
+                        user.Password = Hashing.Hash(user.Password);
+
                         this.ECommerceDbContext.Users.Update(user);
                         this.ECommerceDbContext.SaveChanges();
 
